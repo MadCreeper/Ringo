@@ -1,10 +1,8 @@
 <template>
-    <el-button-group>
     <el-button type="primary" :icon="ArrowLeft"><slot>Previous Page</slot></el-button>
     <el-button type="primary">
       Next Page<el-icon class="el-icon--right"><ArrowRight /></el-icon>
     </el-button>
-  </el-button-group>
 </template>
 <script setup>
 
