@@ -25,6 +25,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ### 依赖包
+https://github.com/Sitronik/vue3-beautiful-chat
+(forked from https://github.com/mattmezza/vue-beautiful-chat)
 ```
 npm install vue3-beautiful-chat
 ```
