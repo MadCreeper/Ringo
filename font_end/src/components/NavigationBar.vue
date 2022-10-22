@@ -13,7 +13,14 @@
       ><div class="grid-content ep-bg-purple"
     /></el-col>
   </el-row>
-  
+    <el-row :gutter="20">
+    <el-col :span="6" :offset="6"
+      ><div class="grid-content ep-bg-purple"
+    /></el-col>
+    <el-col :span="6" :offset="6"
+      ><div class="grid-content ep-bg-purple"
+    /></el-col>
+  </el-row>
   <el-row :gutter="24">
     <el-col :span="8">
     <div class="grid-content ep-bg-purple" >
@@ -72,6 +79,6 @@
 
 .grid-content {
   border-radius: 4px;
-  min-height: 60px;
+  min-height: 100px;
 }
 </style>

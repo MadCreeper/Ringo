@@ -8,7 +8,7 @@
       <el-main>
       <container_2></container_2>
       </el-main>
-      <el-footer id="FooterBack" height="200px"> <foo></foo></el-footer>
+      <el-footer id="FooterBack" height="200px"> <foo :ButtomLeft="ButtomLeft" :ButtomRight="ButtomRight" ></foo></el-footer>
     </el-container>
   </div>
 </template>
@@ -18,6 +18,12 @@
     import container_2 from'./ContainerTwo.vue'
     export default {
     components: {foo,Navigator,container_2},
+    data() {
+      return {
+      ButtomLeft:"求助",
+      ButtomRight:"我的提供"  
+      }
+    },
     provide() {
       return {
         message:'/info'
