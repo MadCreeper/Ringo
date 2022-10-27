@@ -123,8 +123,9 @@ export default {
 
 .card-header-tags {
   display: flex;
-  justify-content: flex-end;
+  margin-left: auto;
   align-items: center;
+  gap: 10px;
 }
 
 .text {
