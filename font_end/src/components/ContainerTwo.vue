@@ -1,6 +1,6 @@
 <!-- This is an form container Module -->
 <template>
-  <el-container class="layout-container-demo" style="height: 500px">
+  <el-container class="layout-container-demo">
     <el-aside width="200px">
       <el-scrollbar>
         <el-menu :default-openeds="['1', '3']">
@@ -100,7 +100,7 @@ const item = {
   name: 'HCY',
   address: 'THIS IS A TEST',
 }
-const tableData = ref(Array.from({ length: 20 }).fill(item))
+const tableData = ref(Array.from({ length: 10 }).fill(item))
 </script>
 
 <style scoped>

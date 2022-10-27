@@ -119,7 +119,6 @@
 </script>
 <script setup>
 import { reactive } from 'vue'
-
 // do not use same name with ref
 const form = reactive({
   name: '',
@@ -127,6 +126,7 @@ const form = reactive({
   date1: '',
   date2: '',
   delivery: false,
+
   delivery2:false,
   delivery3:false,
   type: [],
@@ -153,6 +153,7 @@ const onSubmit = () => {
 }
 .el-col {
   border-radius: 4px;
+
 }
 
 .grid-content {
