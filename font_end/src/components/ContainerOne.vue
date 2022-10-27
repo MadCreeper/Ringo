@@ -33,7 +33,6 @@
 
     }
   }
-}
 </script>
 <style>
 #headerBack{
@@ -51,9 +50,7 @@
   background-size: cover;
 }
 
-.el-container {
-  min-height: 100vh;
-}
+
 
 .flex-container {
   display: flex;
