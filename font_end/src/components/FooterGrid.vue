@@ -2,8 +2,8 @@
   <el-row :gutter="24">
     <el-col :span="9">
     <el-card id="card" :body-style="{ padding: '0px'}"> 
-      <div id="footer" style="padding: 50px">
-          <div>{{ButtomLeft }}</div>
+      <div id="footer" @click="redirectLeft" style="padding: 50px">
+          <div>{{ ButtonLeft }}</div>
       </div>
     </el-card>
     </el-col>
@@ -16,8 +16,8 @@
     </el-col>
     <el-col :span="9">
     <el-card id="card" :body-style="{ padding: '0px' }">
-    <div  id="footer" style="padding: 50px">
-      <div id="child">{{ButtomRight}}</div>
+    <div  id="footer" @click="redirectRight" style="padding: 50px">
+      <div id="child">{{ButtonRight}}</div>
     </div>
     </el-card>
     </el-col>
@@ -25,13 +25,17 @@
 </template>
 <script>
   export default {
+    inject: ['messageFooLeft','messageFooRight'],
     props:{
-      ButtomLeft:String,
-      ButtomRight:String
+      ButtonLeft:String,
+      ButtonRight:String
     },
-    data() {
-      return {
-        msg:"Tag",
+    methods: {
+      redirectLeft(){
+        this.$router.push(this.messageFooLeft)
+      },
+      redirectRight(){
+        this.$router.push(this.messageFooRight)
       }
     },
   }
@@ -61,7 +65,7 @@
   font-size: 16px;
 	padding: 10px 20px;
 	font-weight: 300;
-  color: #4cc9f0;
+  color: white;
 }
 
 #card:hover{

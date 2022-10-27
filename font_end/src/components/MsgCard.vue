@@ -5,7 +5,7 @@
     class="image"
 />
 <div style="padding: 14px">
-    <span>WhiteAblum2</span>
+    <span>Items</span>
     <div class="bottom">
     <time class="time">{{ currentDate }}</time>
     <el-button text class="button">Operating</el-button>

@@ -4,7 +4,7 @@
 <el-main>
 <el-row>
     <el-col :span="1"><el-icon><Back /></el-icon><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="8">Back<div class="grid-content ep-bg-purple-light" /></el-col>
+    <el-col :span="8" @click="redirect">Back<div class="grid-content ep-bg-purple-light" /></el-col>
     <el-col :span="15"><div class="grid-content ep-bg-purple" /></el-col>
 </el-row>
 <el-row>
@@ -98,6 +98,11 @@
     return {
       AvaterSize:100,
     }
+  },
+  methods:{
+    redirect(){
+      this.$router.push('/')
+    },
   },
   provide() {
     return {

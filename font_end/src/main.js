@@ -5,11 +5,15 @@ import {createRouter,createWebHashHistory} from 'vue-router'
 import home from './HomePage.vue'
 import Info from './PersonalInfo.vue'
 import Offer from './OfferingPage.vue'
+import Login from './LoginPage.vue'
+import manage from './ManagePage.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
     { path: '/request'},
     { path: '/offer',component:Offer},
+    { path: '/login',component:Login},
+    { path: '/Manage',component:manage},
 ]
 const router = createRouter({
     history: createWebHashHistory(),
