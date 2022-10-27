@@ -1,7 +1,7 @@
 <template>
     <div class="common-layout">
     <el-container>
-      <el-header id="headerBack" height="100px">
+      <el-header id="headerBack" height="200px" >
       <Navigator></Navigator>
       </el-header>
       <el-main id="MainBack">
@@ -26,8 +26,8 @@
         </el-col>
       </el-row>
       </el-main>
-      <el-footer id="FooterBack">
-      <foo :ButtomLeft="ButtomLeft" :ButtomRight="ButtomRight" ></foo>
+      <el-footer id="FooterBack" height="200px">
+      <foo :ButtonLeft="ButtonLeft" :ButtonRight="ButtonRight"></foo>
       </el-footer>
     </el-container>
   </div>
@@ -39,31 +39,35 @@
   export default {
     data() {
       return {
-        url:["https://pic4.zhimg.com/80/v2-5d767d334ab6090faee137ab9c21513f_qhd.jpg","https://th.bing.com/th/id/OIP.qfyS8vjj2wHeOoHJ6sznUgHaKY?pid=ImgDet&rs=1"],
-        ButtomLeft:"Tags",
-        ButtomRight:"管理"
+        url:["https://th.bing.com/th/id/R.d6d3aae7006611f68786a47e377c39ea?rik=7IrzMCwE5z2KgQ&riu=http%3a%2f%2fpic.ntimg.cn%2f20131028%2f13984383_171843651115_2.jpg&ehk=4SCA2042hzkkZofnLUSML2WgVzwz9RMXyKkXwc2zHG0%3d&risl=&pid=ImgRaw&r=0","https://th.bing.com/th/id/R.0dd6c1000fa35050a64655170c58f883?rik=mK5hurvwok%2bA8g&pid=ImgRaw&r=0"],
+        ButtonLeft:"HomePage",
+        ButtonRight:"管理"
       }
     },
     components: {Navigator,foo,car},
     provide() {
       return {
-        message:'/'
+        message:'/info',
+        messageFooLeft:'/',
+        messageFooRight:'/Manage'
       }
     }
   }
+
 </script>
 <style>
 #headerBack{
-  margin-bottom: 20px;
-  background: #fff url("https://img.acgncyw.xyz/i/2022/06/10/62a260a28440c.jpg") no-repeat;
-  background-size: cover;
+   margin-bottom: 20px;
+   background: #fff url("https://uploadfile.bizhizu.cn/up/cc/d0/87/ccd08766b03deca06263f0d8e0013dec.jpg") no-repeat;
+
+    background-size: cover;
 }
 #MainBack{
-  background: #fff url("https://img01.vgtime.com/game/cover/2017/09/05/170905151615583.jpg") no-repeat;
-  background-size: cover;
+   background:linear-gradient(120deg, yellow 0%, silver 100%);
+   background-size: cover;
 }
 #FooterBack{
-  background: #fff url("https://th.bing.com/th/id/R.d81c802b864899b019683c1b359e44fb?rik=D%2bEDqLxJgOxclA&riu=http%3a%2f%2fi0.hdslb.com%2fbfs%2farchive%2f69df8e0c73301dadbb4fd7c511312a1b81fb3746.jpg&ehk=OvjNiaQ1tIVT2likwAi5cn%2fkvem3yvud4oBOxd4QZGI%3d&risl=&pid=ImgRaw&r=0") no-repeat;
+  background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat;
   background-size: cover;
 }
 </style>

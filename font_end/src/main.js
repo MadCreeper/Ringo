@@ -4,6 +4,7 @@ import { createApp} from 'vue'
 import {createRouter,createWebHashHistory} from 'vue-router'
 import home from './HomePage.vue'
 import Info from './PersonalInfo.vue'
+
 import chat from './PrivateChat.vue'
 import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
@@ -17,9 +18,10 @@ const routes = [
     { path: '/submitneed', component: submitNeed},
     { path: '/test', component: mytest},
     { path: '/offer',component: Offer},
+    { path: '/login',component:Login},
+    { path: '/Manage',component:manage},
 ]
 const router = createRouter({
-    // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
     history: createWebHashHistory(),
     routes, // `routes: routes` 的缩写
 })

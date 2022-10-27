@@ -23,16 +23,29 @@
   </el-row>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      msg: "Tag",
-    }
-  },
-}
+  export default {
+    inject: ['messageFooLeft','messageFooRight'],
+    props:{
+      ButtonLeft:String,
+      ButtonRight:String
+    },
+    methods: {
+      redirectLeft(){
+        this.$router.push(this.messageFooLeft)
+      },
+      redirectRight(){
+        this.$router.push(this.messageFooRight)
+      }
+    },
+  }
 
 </script>
-<style scoped>
+<style>
+#card{
+  background-color: transparent;
+  border-radius: 12px;
+  min-height: 120px;
+}
 .el-row {
   margin-bottom: 20px;
 }
@@ -45,6 +58,7 @@ export default {
   border-radius: 4px;
 }
 
+
 .grid-content {
   border-radius: 4px;
   min-height: 100px;
@@ -52,6 +66,27 @@ export default {
   display: flex;
 }
 
+#card:hover{
+  color: white;
+	border: 0;
+}
+#footer:hover {
+  color: white;
+	border: 0;
+  background-color: #4cc9f0;
+	-webkit-box-shadow: 10px 10px 99px 6px rgba(76,201,240,1);
+	-moz-box-shadow: 10px 10px 99px 6px rgba(76,201,240,1);
+	box-shadow: 10px 10px 99px 6px rgba(76,201,240,1);
+}
+
+.midbutton:hover {
+  color: white;
+	border: 0;
+  background-color: #b9e769;
+  -webkit-box-shadow: 10px 10px 99px 6px rgba(185, 231, 105, 1);
+  -moz-box-shadow: 10px 10px 99px 6px rgba(185, 231, 105, 1);
+  box-shadow: 10px 10px 99px 6px rgba(185, 231, 105, 1);
+}
 .image {
   width: 100%;
   display: block;
@@ -67,6 +102,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 
 .right {
   display: flex;

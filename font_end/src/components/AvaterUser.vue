@@ -1,7 +1,9 @@
  <template>
     <div class="demo-basic--circle">
     <div class="block">
-        <el-avatar class="avater" :size="large" :src="circleUrl" @click="redirect"></el-avatar>
+        <el-avatar class="avater" :size="AvaterSize" :src="circleUrl" @click="redirect"></el-avatar>
+    </div>
+    <div>
     </div>
     </div>
 </template>
@@ -19,9 +21,15 @@ const {circleUrl} = toRefs(state)
 <script>
 export default {
   inject: ['message'],
+  props:{
+    AvaterSize:[Number, String],
+  },
   methods: {
     redirect(){
       this.$router.push(this.message)
+    },
+    CheckProps(){
+      this.Check=!this.Check
     },
   },
 }
