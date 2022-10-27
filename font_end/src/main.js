@@ -5,14 +5,14 @@ import {createRouter,createWebHashHistory} from 'vue-router'
 import home from './HomePage.vue'
 import Info from './PersonalInfo.vue'
 import chat from './PrivateChat.vue'
-import chat2 from './Chat2.vue'
+import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
-    { path: '/chat', component: chat},
+    { path: '/chattest', component: chat},
     { path: '/chat2', component: chat2},
     { path: '/submitneed', component: submitNeed},
     { path: '/test', component: mytest},

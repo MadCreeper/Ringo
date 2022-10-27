@@ -186,6 +186,10 @@ const itemTypes = [
 const onSubmit = () => {
     console.log('submit!')
 }
+
+const goBack = () => {
+    history.back();
+}
 </script>
 
 <style>

@@ -34,28 +34,22 @@ export default {
       participants: [
         {
           id: 'user1',
-          name: 'Matteo',
+          name: '张三',
           imageUrl: 'https://avatars.githubusercontent.com/u/33979935?&v=4'
         },
         {
           id: 'user2',
-          name: 'Support',
+          name: '李四',
           imageUrl: 'https://avatars.githubusercontent.com/u/90389782?v=4'
         }
       ], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
       titleImageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
       messageList: [
-          { type: 'text', author: `me`, data: { text: `Say yes!` } },
-          { type: 'text', author: `user1`, data: { text: `No.` } },
-          { type: 'text', author: `user1`, data: { text: `逸一时误一事，逸久逸久罢已零` } },
-          { type: 'text', author: `me`, data: { text: `The year's at the spring,
-                                                       And day's at the morn;
-                                                       Morning's at seven;
-                                                       The hill-side's dew-pearl'd;
-                                                       The lark's on the wing;
-                                                       The snail's on the thorn;
-                                                       God's in His heaven—
-                                                       All's right with the world!` } }
+          { type: 'text', author: `me`, data: { text: `请问是你需要口罩吗` } },
+          { type: 'text', author: `user1`, data: { text: `是的！` } },
+          { type: 'text', author: `user1`, data: { text: `我在东3楼，现在口罩用完了，非常需要口罩😭` } },
+          { type: 'text', author: `me`, data: { text: `好，我今天下午三点把口罩放在你楼下可以吗？` } },
+          { type: 'text', author: `user1`, data: { text: `可以，非常感谢！🙏` } },
       ], // the list of the messages to show, can be paginated and adjusted dynamically
       newMessagesCount: 0,
       isChatOpen: false, // to determine whether the chat window should be open or closed

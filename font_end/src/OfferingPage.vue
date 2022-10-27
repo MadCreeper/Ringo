@@ -1,7 +1,7 @@
 <template>
     <div class="common-layout">
     <el-container>
-      <el-header id="headerBack" height="200px" >
+      <el-header id="headerBack" height="100px">
       <Navigator></Navigator>
       </el-header>
       <el-main id="MainBack">
@@ -26,7 +26,7 @@
         </el-col>
       </el-row>
       </el-main>
-      <el-footer id="FooterBack" height="200px">
+      <el-footer id="FooterBack">
       <foo :ButtomLeft="ButtomLeft" :ButtomRight="ButtomRight" ></foo>
       </el-footer>
     </el-container>

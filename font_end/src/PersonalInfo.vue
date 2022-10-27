@@ -2,15 +2,11 @@
   <el-container>
     <el-main>
       <el-row>
-        <el-col :span="1">
-          <el-icon>
-            <Back />
-          </el-icon>
-          <div class="grid-content ep-bg-purple" />
-        </el-col>
-        <el-col :span="8">Back
-          <div class="grid-content ep-bg-purple-light" />
-        </el-col>
+        <el-page-header @back="goBack">
+            <template #content>
+                <span class="text-large font-600 mr-3"> 个人信息 </span>
+            </template>
+        </el-page-header>
         <el-col :span="15">
           <div class="grid-content ep-bg-purple" />
         </el-col>
@@ -99,13 +95,16 @@
           </el-form>
         </el-col>
       </el-row>
+
+      <beautifulchat>
+      </beautifulchat>
     </el-main>
   </el-container>
 
 </template>
 <script>
 export default {
-  components: { Back, AvaterUsr, InputForm, Uploader },
+  components: { AvaterUsr, InputForm, Uploader },
   data() {
     return {
       AvaterSize: 200,
@@ -117,12 +116,13 @@ export default {
     }
   }
 }
-import {
-  Back,
-} from '@element-plus/icons-vue'
+// import {
+//   Back,
+// } from '@element-plus/icons-vue'
 import AvaterUsr from './components/AvaterUser.vue'
 import InputForm from './components/InputForm.vue'
 import Uploader from './components/UploadImg.vue'
+import beautifulchat from './BeautifulChat.vue'
 </script>
 <script setup>
 import { reactive } from 'vue'
@@ -141,6 +141,9 @@ const form = reactive({
 })
 const onSubmit = () => {
   console.log('submit!')
+}
+const goBack = () => {
+    history.back();
 }
 </script>
 <style>
