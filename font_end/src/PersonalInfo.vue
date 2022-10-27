@@ -1,68 +1,171 @@
 <template>
-    <div class="common-layout">
-    <el-container>
-      <el-header id="headerBack" height="200px" >
-      <Navigator></Navigator>
-      </el-header>
-      <el-main id="MainBack">
+  <el-container>
+    <el-main>
       <el-row>
-        <el-col
-          v-for="(o, index) in 2"
-          :key="o"
-          :span="8"
-          :offset="index > -1 ? 3 : 0"
-        >
-        <car :imageurl="url[0]" />
+        <el-col :span="1">
+          <el-icon>
+            <Back />
+          </el-icon>
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+        <el-col :span="8">Back
+          <div class="grid-content ep-bg-purple-light" />
+        </el-col>
+        <el-col :span="15">
+          <div class="grid-content ep-bg-purple" />
         </el-col>
       </el-row>
       <el-row>
-        <el-col
-          v-for="(o, index) in 2"
-          :key="o"
-          :span="8"
-          :offset="index > -1 ? 3 : 0"
-        >
-        <car :imageurl="url[1]" />
+        <el-col :span="5" :offset="2">
+          <AvaterUsr :AvaterSize="AvaterSize"></AvaterUsr>
+          <div class="grid-content ep-bg-purple-light" />
+        </el-col>
+        <el-col :span="14">
+          <InputForm></InputForm>
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+        <el-col :span="2">
+          <div class="grid-content ep-bg-purple" />
         </el-col>
       </el-row>
-      </el-main>
-      <el-footer id="FooterBack" height="200px">
-      <foo></foo>
-      </el-footer>
-    </el-container>
-  </div>
+      <el-row>
+        <el-col :span="2">
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+        <el-col :span="8">
+          <Uploader></Uploader>
+          <div class="grid-content ep-bg-purple-light" />
+        </el-col>
+        <el-col :span="10">
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="2">
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+        <el-col :span="22">
+          <el-form :model="form" label-width="120px">
+            <el-form-item label="Activity name">
+              <el-input v-model="form.name" />
+            </el-form-item>
+            <el-form-item label="Activity zone">
+              <el-select v-model="form.region" placeholder="please select your zone">
+                <el-option label="Zone one" value="shanghai" />
+                <el-option label="Zone two" value="beijing" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Activity time">
+              <el-col :span="11">
+                <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%" />
+              </el-col>
+              <el-col :span="2" class="text-center">
+                <span class="text-gray-500">-</span>
+              </el-col>
+              <el-col :span="11">
+                <el-time-picker v-model="form.date2" placeholder="Pick a time" style="width: 100%" />
+              </el-col>
+            </el-form-item>
+            <el-form-item label="Setting 1 ">
+              <el-switch v-model="form.delivery" />
+            </el-form-item>
+            <el-form-item label="Setting 2">
+              <el-switch v-model="form.delivery2" />
+            </el-form-item>
+            <el-form-item label="Setting 3">
+              <el-switch v-model="form.delivery3" />
+            </el-form-item>
+            <el-form-item label="Activity type">
+              <el-checkbox-group v-model="form.type">
+                <el-checkbox label="Online activities" name="type" />
+                <el-checkbox label="Promotion activities" name="type" />
+                <el-checkbox label="Offline activities" name="type" />
+                <el-checkbox label="Simple brand exposure" name="type" />
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item label="Resources">
+              <el-radio-group v-model="form.resource">
+                <el-radio label="Sponsor" />
+                <el-radio label="Venue" />
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="Activity form">
+              <el-input v-model="form.desc" type="textarea" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">Create</el-button>
+              <el-button>Cancel</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </el-main>
+  </el-container>
+
 </template>
 <script>
-  import car from './components/MsgCard.vue'
-  import Navigator from './components/NavigationBar.vue'
-  import foo from './components/FooterGrid.vue'
-  export default {
-    data() {
-      return {
-        url:["https://pic4.zhimg.com/80/v2-5d767d334ab6090faee137ab9c21513f_qhd.jpg","https://th.bing.com/th/id/OIP.qfyS8vjj2wHeOoHJ6sznUgHaKY?pid=ImgDet&rs=1"]
-      }
-    },
-    components: {Navigator,foo,car},
-    provide() {
-      return {
-        message:'/'
-      }
+export default {
+  components: { Back, AvaterUsr, InputForm, Uploader },
+  data() {
+    return {
+      AvaterSize: 200,
+    }
+  },
+  provide() {
+    return {
+      message: '/info'
     }
   }
-
+}
+import {
+  Back,
+} from '@element-plus/icons-vue'
+import AvaterUsr from './components/AvaterUser.vue'
+import InputForm from './components/InputForm.vue'
+import Uploader from './components/UploadImg.vue'
+</script>
+<script setup>
+import { reactive } from 'vue'
+// do not use same name with ref
+const form = reactive({
+  name: '',
+  region: '',
+  date1: '',
+  date2: '',
+  delivery: false,
+  delivery2: false,
+  delivery3: false,
+  type: [],
+  resource: '',
+  desc: '',
+})
+const onSubmit = () => {
+  console.log('submit!')
+}
 </script>
 <style>
-#headerBack{
+#Head {
+  border: 1px solid;
+}
+
+#Avater {
+  height: 200px;
+}
+
+.el-row {
   margin-bottom: 20px;
-  background: #fff url("https://img.acgncyw.xyz/i/2022/06/10/62a260a28440c.jpg") no-repeat;
-  background-size: cover;
 }
-#MainBack{
-  background: #fff url("https://img01.vgtime.com/game/cover/2017/09/05/170905151615583.jpg") no-repeat;
-  background-size: cover;
+
+.el-row:last-child {
+  margin-bottom: 0;
 }
-#FooterBack{
-  background: #fff url("https://th.bing.com/th/id/R.d81c802b864899b019683c1b359e44fb?rik=D%2bEDqLxJgOxclA&riu=http%3a%2f%2fi0.hdslb.com%2fbfs%2farchive%2f69df8e0c73301dadbb4fd7c511312a1b81fb3746.jpg&ehk=OvjNiaQ1tIVT2likwAi5cn%2fkvem3yvud4oBOxd4QZGI%3d&risl=&pid=ImgRaw&r=0") no-repeat;
-  background-size: cover;
+
+.el-col {
+  border-radius: 4px;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 20px;
 }
 </style>

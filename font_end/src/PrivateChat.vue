@@ -122,7 +122,7 @@ const { circleUrl } = toRefs(state);
 
 </script>
 
-<style>
+<style scoped>
 .el-container {
     min-height: 100vh;
 }

@@ -19,7 +19,7 @@
                 <el-form-item label="需求日期段">
                     <el-col :span="11">
                         <el-date-picker v-model="form.date" type="daterange" range-separator="To"
-                            start-placeholder="Start date" end-placeholder="End date" size="small" />
+                            start-placeholder="Start date" end-placeholder="End date" size="small" style="width: 200%"/>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="紧急程度（1-5）">
@@ -189,8 +189,8 @@ const onSubmit = () => {
 </script>
 
 <style>
-.el-container {
+/* .el-container {
     min-height: 100vh;
-}
+} */
 
 </style>
