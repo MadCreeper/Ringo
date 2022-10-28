@@ -1,6 +1,6 @@
 <!-- This is an form container Module -->
 <template>
-  <el-container class="layout-container-demo">
+  <el-container class="layout-container-demo" style="height: 500px">
     <el-aside width="200px">
       <el-scrollbar>
         <el-menu :default-openeds="['1', '3']">
@@ -90,6 +90,7 @@
     </el-container>
   </el-container>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'

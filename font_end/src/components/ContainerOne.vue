@@ -33,9 +33,8 @@
 
     }
   }
-}
 </script>
-<style>
+<style  scoped>
 #headerBack{
    margin-bottom: 20px;
    background: #fff url("https://uploadfile.bizhizu.cn/up/cc/d0/87/ccd08766b03deca06263f0d8e0013dec.jpg") no-repeat;
@@ -51,9 +50,7 @@
   background-size: cover;
 }
 
-.el-container {
-  min-height: 100vh;
-}
+
 
 .flex-container {
   display: flex;
