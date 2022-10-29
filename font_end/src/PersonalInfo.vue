@@ -146,8 +146,9 @@ const goBack = () => {
     history.back();
 }
 </script>
-<style>
-#Head {
+
+<style scoped>
+#Head{
   border: 1px solid;
 }
 #Avater {
