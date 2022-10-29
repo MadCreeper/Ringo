@@ -19,16 +19,14 @@
                 <el-form-item label="需求日期段">
                     <el-col :span="11">
                         <el-date-picker v-model="form.date" type="daterange" range-separator="To"
-                            start-placeholder="Start date" end-placeholder="End date" size="small"
-                            style="width: 200%" />
+                            start-placeholder="Start date" end-placeholder="End date" size="small" style="width: 200%"/>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="紧急程度（1-5）">
-                    <el-slider v-model="form.priority" :step="1" :min="1" :max="5" :show-tooltip="false" :marks="marks"
-                        show-stops />
+                    <el-slider v-model="form.priority" :step="1" show-stops max="5" />
                 </el-form-item>
                 <el-form-item label="物品类型">
-                    <el-cascader-panel :options="itemTypes" />
+                    <el-cascader-panel :options="itemTypes" :size="small"/>
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="form.desc" type="textarea" />
@@ -60,14 +58,6 @@ const form = reactive({
     type: [],
     desc: '',
 })
-
-const marks = {
-    1: '不急',
-    2: '普通',
-    3: '较为紧急',
-    4: '非常紧急',
-    5: '十万火急'
-}
 
 const itemTypes = [
     {
@@ -126,7 +116,7 @@ const itemTypes = [
                     },
                 ],
             },
-
+            
             {
                 value: 'instant',
                 label: '即食',
@@ -202,25 +192,9 @@ const goBack = () => {
 }
 </script>
 
-<style scoped>
-.el-row {
-    margin-bottom: 20px;
-}
+<style>
+/* .el-container {
+    min-height: 100vh;
+} */
 
-.el-row:last-child {
-    margin-bottom: 0;
-}
-
-.el-col {
-    border-radius: 4px;
-}
-.el-slider{
-    /* fix slider last mark not breaking properly */
-    word-break: keep-all; 
-    width: 90%;
-}
-.grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-}
 </style>

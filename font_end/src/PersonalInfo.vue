@@ -107,7 +107,7 @@ export default {
   components: { AvaterUsr, InputForm, Uploader },
   data() {
     return {
-      AvaterSize: 200,
+      AvaterSize: 80,
     }
   },
   provide() {
@@ -146,27 +146,23 @@ const goBack = () => {
     history.back();
 }
 </script>
-<style>
-#Head {
+
+<style scoped>
+#Head{
   border: 1px solid;
 }
-
 #Avater {
   height: 200px;
 }
-
 .el-row {
   margin-bottom: 20px;
 }
-
 .el-row:last-child {
   margin-bottom: 0;
 }
-
 .el-col {
   border-radius: 4px;
 }
-
 .grid-content {
   border-radius: 4px;
   min-height: 20px;
