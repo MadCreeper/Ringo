@@ -1,4 +1,136 @@
 <template>
+  <el-container>
+    <el-header>
+      header
+    </el-header>
+  <el-main>
+    <el-row>
+          <el-card class="box-card">
+            <template #header>
+              <div class="flex-container">
+                <div class="card-header-title">
+                  <span>急需N95口罩</span>
+                </div>
+                <div class="card-header-tags">
+                  <el-tag class="ml-2" type="success">医疗</el-tag>
+                  <el-tag class="ml-2" type="warning">口罩</el-tag>
+                  <el-tag class="ml-2" type="danger">非常紧急</el-tag>
+                </div>
+              </div>
+            </template>
+            <div>
+              口罩用完了，需要口罩，谢谢！<br>
+              地址：东上院123
+            </div>
+          </el-card>
+        </el-row>
+
+        <el-row>
+          <el-card class="box-card">
+            <template #header>
+              <div class="flex-container">
+                <div class="card-header-title">
+                  <span>有没有薯片</span>
+                </div>
+                <div class="card-header-tags">
+                  <el-tag class="ml-2" type="success">食品</el-tag>
+                  <el-tag class="ml-2" type="warning">零食</el-tag>
+                  <el-tag class="ml-2" type="danger">普通</el-tag>
+                </div>
+              </div>
+            </template>
+            <div>
+              被封了无聊，想吃薯片🤤 <br>
+              地址：西11
+            </div>
+          </el-card>
+        </el-row>
+
+        <el-row>
+          <el-card class="box-card">
+            <template #header>
+              <div class="flex-container">
+                <div class="card-header-title">
+                  <span>矿泉水喝完了</span>
+                </div>
+                <div class="card-header-tags">
+                  <el-tag class="ml-2" type="success">饮用品</el-tag>
+                  <el-tag class="ml-2" type="warning">水</el-tag>
+                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
+                </div>
+              </div>
+            </template>
+            <div>
+              饮水机坏了，被封着快没水了。<br>
+              地址：东3
+            </div>
+          </el-card>
+        </el-row>
+
+        <el-row>
+          <el-card class="box-card">
+            <template #header>
+              <div class="flex-container">
+                <div class="card-header-title">
+                  <span>矿泉水喝完了</span>
+                </div>
+                <div class="card-header-tags">
+                  <el-tag class="ml-2" type="success">饮用品</el-tag>
+                  <el-tag class="ml-2" type="warning">水</el-tag>
+                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
+                </div>
+              </div>
+            </template>
+            <div>
+              饮水机坏了，被封着快没水了。<br>
+              地址：东3
+            </div>
+          </el-card>
+        </el-row>
+
+        <el-row>
+          <el-card class="box-card">
+            <template #header>
+              <div class="flex-container">
+                <div class="card-header-title">
+                  <span>矿泉水喝完了</span>
+                </div>
+                <div class="card-header-tags">
+                  <el-tag class="ml-2" type="success">饮用品</el-tag>
+                  <el-tag class="ml-2" type="warning">水</el-tag>
+                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
+                </div>
+              </div>
+            </template>
+            <div>
+              饮水机坏了，被封着快没水了。<br>
+              地址：东3
+            </div>
+          </el-card>
+        </el-row>
+
+        <el-row>
+          <el-card class="box-card">
+            <template #header>
+              <div class="flex-container">
+                <div class="card-header-title">
+                  <span>矿泉水喝完了</span>
+                </div>
+                <div class="card-header-tags">
+                  <el-tag class="ml-2" type="success">饮用品</el-tag>
+                  <el-tag class="ml-2" type="warning">水</el-tag>
+                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
+                </div>
+              </div>
+            </template>
+            <div>
+              饮水机坏了，被封着快没水了。<br>
+              地址：东3
+            </div>
+          </el-card>
+        </el-row>
+  </el-main>
+  <el-footer>
   <el-row justify="space-between">
     
       <div class="left">
@@ -14,6 +146,8 @@
       </div>
     
   </el-row>
+</el-footer>
+</el-container>
 </template>
 <script>
 export default {
@@ -26,6 +160,9 @@ export default {
 
 </script>
 <style scoped>
+.el-container{
+  height: 100vh;
+}
 .el-row {
   margin-bottom: 20px;
 }
@@ -38,7 +175,26 @@ export default {
   display : flex;
   border-radius: 4px;
 }
-
+.flex-container {
+  display: flex;
+}
+.card-header-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.card-header-tags {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 10px;
+}
+.text {
+  font-size: 14px;
+}
+.item {
+  margin-bottom: 18px;
+}
 .grid-content {
   border-radius: 4px;
   min-height: 100px;

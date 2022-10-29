@@ -138,7 +138,7 @@ const onSubmit = () => {
   console.log('submit!')
 }
 </script>
-<style>
+<style scoped>
 #Head{
   border: 1px solid;
 }

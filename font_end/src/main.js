@@ -10,6 +10,8 @@ import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
+import Login from './LoginPage.vue'
+import manage from './ManagePage.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
