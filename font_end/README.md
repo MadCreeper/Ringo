@@ -30,7 +30,10 @@ https://github.com/Sitronik/vue3-beautiful-chat
 
 ```bash
 npm install vue3-beautiful-chat
+npm install vue-snip
 ```
+
+[vue-snip]<https://vuejsexamples.com/truncating-multiple-lines-text-element-with-vuejs/>
 
 ```bash
 npx patch-package vue3-beautiful-chat
