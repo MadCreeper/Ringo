@@ -4,131 +4,12 @@
       header
     </el-header>
   <el-main>
-    <el-row>
-          <el-card class="box-card">
-            <template #header>
-              <div class="flex-container">
-                <div class="card-header-title">
-                  <span>急需N95口罩</span>
-                </div>
-                <div class="card-header-tags">
-                  <el-tag class="ml-2" type="success">医疗</el-tag>
-                  <el-tag class="ml-2" type="warning">口罩</el-tag>
-                  <el-tag class="ml-2" type="danger">非常紧急</el-tag>
-                </div>
-              </div>
-            </template>
-            <div>
-              口罩用完了，需要口罩，谢谢！<br>
-              地址：东上院123
+          <el-card>
+            <div v-snip:js="3">
+              {{long_str_cn}}
             </div>
+            
           </el-card>
-        </el-row>
-
-        <el-row>
-          <el-card class="box-card">
-            <template #header>
-              <div class="flex-container">
-                <div class="card-header-title">
-                  <span>有没有薯片</span>
-                </div>
-                <div class="card-header-tags">
-                  <el-tag class="ml-2" type="success">食品</el-tag>
-                  <el-tag class="ml-2" type="warning">零食</el-tag>
-                  <el-tag class="ml-2" type="danger">普通</el-tag>
-                </div>
-              </div>
-            </template>
-            <div>
-              被封了无聊，想吃薯片🤤 <br>
-              地址：西11
-            </div>
-          </el-card>
-        </el-row>
-
-        <el-row>
-          <el-card class="box-card">
-            <template #header>
-              <div class="flex-container">
-                <div class="card-header-title">
-                  <span>矿泉水喝完了</span>
-                </div>
-                <div class="card-header-tags">
-                  <el-tag class="ml-2" type="success">饮用品</el-tag>
-                  <el-tag class="ml-2" type="warning">水</el-tag>
-                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
-                </div>
-              </div>
-            </template>
-            <div>
-              饮水机坏了，被封着快没水了。<br>
-              地址：东3
-            </div>
-          </el-card>
-        </el-row>
-
-        <el-row>
-          <el-card class="box-card">
-            <template #header>
-              <div class="flex-container">
-                <div class="card-header-title">
-                  <span>矿泉水喝完了</span>
-                </div>
-                <div class="card-header-tags">
-                  <el-tag class="ml-2" type="success">饮用品</el-tag>
-                  <el-tag class="ml-2" type="warning">水</el-tag>
-                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
-                </div>
-              </div>
-            </template>
-            <div>
-              饮水机坏了，被封着快没水了。<br>
-              地址：东3
-            </div>
-          </el-card>
-        </el-row>
-
-        <el-row>
-          <el-card class="box-card">
-            <template #header>
-              <div class="flex-container">
-                <div class="card-header-title">
-                  <span>矿泉水喝完了</span>
-                </div>
-                <div class="card-header-tags">
-                  <el-tag class="ml-2" type="success">饮用品</el-tag>
-                  <el-tag class="ml-2" type="warning">水</el-tag>
-                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
-                </div>
-              </div>
-            </template>
-            <div>
-              饮水机坏了，被封着快没水了。<br>
-              地址：东3
-            </div>
-          </el-card>
-        </el-row>
-
-        <el-row>
-          <el-card class="box-card">
-            <template #header>
-              <div class="flex-container">
-                <div class="card-header-title">
-                  <span>矿泉水喝完了</span>
-                </div>
-                <div class="card-header-tags">
-                  <el-tag class="ml-2" type="success">饮用品</el-tag>
-                  <el-tag class="ml-2" type="warning">水</el-tag>
-                  <el-tag class="ml-2" type="danger">较紧急</el-tag>
-                </div>
-              </div>
-            </template>
-            <div>
-              饮水机坏了，被封着快没水了。<br>
-              地址：东3
-            </div>
-          </el-card>
-        </el-row>
   </el-main>
   <el-footer>
   <el-row justify="space-between">
@@ -154,6 +35,8 @@ export default {
   data() {
     return {
       msg: "Tag",
+      long_str: "Pippa Passes, verse drama in four parts by Robert Browning, published in 1841. The poem’s sections—Morning, Noon, Evening, and Night—are linked by episodes that either comment on the preceding scene or presage the scene to follow. On New Year’s morning, her only holiday for the entire year, Pippa, an impoverished young silk-winder, sings as she wanders aimlessly. In each section of the poem, people who are at critical points in their lives make significant and far-reaching decisions when they hear Pippa sing as she passes by.",
+      long_str_cn: "噫吁嚱，危乎高哉！蜀道之难，难于上青天！蚕丛及鱼凫，开国何茫然！尔来四万八千岁，不与秦塞通人烟。西当太白有鸟道，可以横绝峨眉巅。地崩山摧壮士死，然后天梯石栈相钩连。上有六龙回日之高标，下有冲波逆折之回川。黄鹤之飞尚不得过，猿猱欲度愁攀援。青泥何盘盘，百步九折萦岩峦。扪参历井仰胁息，以手抚膺坐长叹。",
     }
   },
 }

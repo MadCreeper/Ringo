@@ -11,8 +11,6 @@ import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
-import Login from './LoginPage.vue'
-import manage from './ManagePage.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -32,11 +30,13 @@ import Chat from 'vue3-beautiful-chat'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import App from './App.vue'
+import VueSnip from 'vue-snip'
 
 const app = createApp(App)
 app.use(router)
 app.use(ElementPlus)
 app.use(Chat)
+app.use(VueSnip)
 app.mount('#app')
 
 
