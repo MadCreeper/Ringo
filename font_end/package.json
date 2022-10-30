@@ -5,13 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall" : "patch-package"
   },
   "dependencies": {
     "core-js": "^3.8.3",
     "element-plus": "^2.2.18",
     "vue": "^3.2.41",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vue-snip": "^2.0.0",
+    "vue3-beautiful-chat": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
