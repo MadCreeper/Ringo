@@ -19,7 +19,7 @@
       </div>      
 
       <div class="center">
-        <button class="footer_button" role="button">➕</button>
+        <button class="footer_button" role="button"></button>
       </div>
 
       <div class="right">

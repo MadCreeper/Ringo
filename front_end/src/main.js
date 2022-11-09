@@ -11,6 +11,7 @@ import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
+import HelloWorld from './HelloWorld.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -21,6 +22,7 @@ const routes = [
     { path: '/offer',component: Offer},
     { path: '/login',component:Login},
     { path: '/Manage',component:manage},
+    { path: '/Hello',component:HelloWorld }
 ]
 const router = createRouter({
     history: createWebHashHistory(),
