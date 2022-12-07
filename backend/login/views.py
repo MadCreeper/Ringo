@@ -26,9 +26,9 @@ veriCodeHash= {}
 
 class UserRegisterView(APIView):
     # 测试用代码：
-    # queryset = User.objects.all()
-    # # serializer_class = UserSerializer
-    # serializer_class = HelperSerializer
+    queryset = User.objects.all()
+    # serializer_class = UserSerializer
+    serializer_class = HelperSerializer
 
     def post(self, request, format = None):
         dataDict = request.data
@@ -59,7 +59,7 @@ class UserRegisterView(APIView):
             veriCodeStored = veriCodeHash.get(email)
             if not veriCodeStored or veriCodeStored[1] != veriCode:
                 # 验证码验证不通过
-                return Response()
+                return Response({'errorCode': ERR_REG_WRONG_VERIFICATION})
             veriCodeHash.pop(email)
             mData = {
                 'username' : request.data.get('username'),
@@ -77,4 +77,17 @@ class UserRegisterView(APIView):
 class UserPasswordChangeView(APIView):
     serializer = UserSerializer
     def post(self, request, format = None):
+        return Response()
+
+
+
+class UserPasswordFoggotenView(APIView):
+    serializer = UserSerializer
+    def post(self, request, format = None):
+        dataDict = request.data
+        email = dataDict.get('email')
+        veriCode = dataDict.get('veriCode')
+        password = dataDict.get('password')
+        if not User.objects.exists(email = email):
+            return Response()
         return Response()
