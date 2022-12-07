@@ -68,14 +68,18 @@ class Goods(models.Model):
     property_type = models.IntegerField(choices=PROPERTY_TYPE, verbose_name="物品属性", help_text="物品是需求条目还是提供条目(1:需求 2:提供)")
     # category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="物品类别")
     category = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="种类", help_text="物品种类")
-    emergency = models.IntegerField(choices=EMERGENCY_TYPE, verbose_name="紧急度", help_text="紧急度(only 需求)")
+    emergency = models.IntegerField(choices=EMERGENCY_TYPE, verbose_name="紧急度", default=1,help_text="紧急度(only 需求)")
+    expected_end_time = models.DateTimeField(verbose_name="结束时间", default=datetime.now, help_text="预期结束时间点(only 需求)")
     goods_sn = models.AutoField(primary_key=True, verbose_name="物品唯一编号")
     user = models.CharField(max_length=50, default="", verbose_name="用户名")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u"用户")
+
     name = models.CharField(max_length=100, verbose_name="物品名")
+    address = models.TextField(max_length=100, verbose_name="地址")
     goods_brief = models.TextField(max_length=100, verbose_name="物品简短描述")
     goods_desc = models.TextField(max_length=500, verbose_name="物品详细描述", default='')
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+
 
     class Meta:
         verbose_name = '物品信息'
