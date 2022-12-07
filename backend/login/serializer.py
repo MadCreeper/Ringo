@@ -13,9 +13,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 class HelperSerializer(serializers.ModelSerializer):
     veriCode = serializers.CharField()
-
+    
     class Meta:
         model = User
         fields = ['id','username', 'email', 'password', 'veriCode']
+
+class HelperSerializer2(serializers.ModelSerializer):
+    veriCode = serializers.CharField()
+
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'veriCode']
 
 
