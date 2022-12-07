@@ -22,8 +22,7 @@ class GoodsCategory(models.Model):
 
     category_type = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="类目级别", help_text="类目级别")
     # 设置models有一个指向自己的外键
-    parent_category = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, verbose_name="父类目级别",
-                                        related_name="sub_cat")
+    parent_category = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, verbose_name="父类目级别")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
@@ -45,13 +44,13 @@ class Goods(models.Model):
     """
     物品种类
     """
-    CATEGORY_TYPE = (
-        (0, "食品"),
-        (1, "药品"),
-        (2, "生活用品"),
-        (3, "娱乐"),
-        (4, "器械"),
-    )
+    # CATEGORY_TYPE = (
+    #     (0, "食品"),
+    #     (1, "药品"),
+    #     (2, "生活用品"),
+    #     (3, "娱乐"),
+    #     (4, "器械"),
+    # )
 
     """
     需求紧急度
@@ -66,8 +65,8 @@ class Goods(models.Model):
 
 
     property_type = models.IntegerField(choices=PROPERTY_TYPE, verbose_name="物品属性", help_text="物品是需求条目还是提供条目(1:需求 2:提供)")
-    # category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="物品类别")
-    category = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="种类", help_text="物品种类")
+    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="物品类别")
+    # category = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="种类", help_text="物品种类")
     emergency = models.IntegerField(choices=EMERGENCY_TYPE, verbose_name="紧急度", default=1,help_text="紧急度(only 需求)")
     expected_end_time = models.DateTimeField(verbose_name="结束时间", default=datetime.now, help_text="预期结束时间点(only 需求)")
     goods_sn = models.AutoField(primary_key=True, verbose_name="物品唯一编号")

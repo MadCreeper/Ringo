@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from goods.views import GoodsListViewSet
+from goods.views import GoodsListViewSet, GoodsCategoryViewset
 from user_operation.views import  UserOfferingViewset, UserNeedsViewset
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
@@ -34,10 +34,9 @@ router.register(r'apis/goods', GoodsListViewSet, basename="goods")
 # 配置Offerings的url
 router.register(r'apis/offering', UserOfferingViewset, basename="offering")
 
-# 配置Needs的url
+router.register(r'apis/category', GoodsCategoryViewset, basename="category")
+
 router.register(r'apis/need', UserNeedsViewset, basename="need")
-
-
 
 urlpatterns = [
     re_path('^', include(router.urls)),
