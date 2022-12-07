@@ -2,7 +2,7 @@
 from django.db.models import Q
 from django_filters import rest_framework as filters
 from goods.models import Goods
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 
 
 class GoodsFilter(filters.FilterSet):

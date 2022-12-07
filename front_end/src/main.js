@@ -11,6 +11,8 @@ import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
+import detailPage from './DetailPage.vue'
+
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -21,6 +23,7 @@ const routes = [
     { path: '/offer',component: Offer},
     { path: '/login',component:Login},
     { path: '/Manage',component:manage},
+    { path: '/details', component : detailPage},
 ]
 const router = createRouter({
     history: createWebHashHistory(),
@@ -28,12 +31,16 @@ const router = createRouter({
 })
 import Chat from 'vue3-beautiful-chat'
 import ElementPlus from 'element-plus'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import App from './App.vue'
 import VueSnip from 'vue-snip'
 
 const app = createApp(App)
 app.use(router)
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
 app.use(ElementPlus)
 app.use(Chat)
 app.use(VueSnip)
