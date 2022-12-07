@@ -27,14 +27,14 @@ from django.views.generic import TemplateView
 
 router = DefaultRouter()
 
-router.register(r'goods', GoodsListViewSet, basename="goods")
+router.register(r'apis/goods', GoodsListViewSet, basename="goods")
 
 
 # 配置Offerings的url
-router.register(r'offering', UserOfferingViewset, basename="offering")
+router.register(r'apis/offering', UserOfferingViewset, basename="offering")
 
 # 配置Needs的url
-router.register(r'need', UserNeedsViewset, basename="need")
+router.register(r'apis/need', UserNeedsViewset, basename="need")
 
 
 
