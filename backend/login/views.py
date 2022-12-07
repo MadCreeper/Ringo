@@ -5,7 +5,7 @@ from rest_framework import status
 from login.models import User
 from login.serializer import UserSerializer, HelperSerializer
 import json
-import login.helpers.codeGenerator, login.helpers.mailSend
+from login.helpers import codeGenerator, mailSend
 import datetime
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -19,9 +19,9 @@ ERR_REG_EMAIL_EXIST = 1002
 ERR_REG_WRONG_VERIFICATION = 1003
 ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT = 1004
 
-
-ERR_LOGIN_USER_NOT_EXIST = 2001
-ERR_LOGIN_WRONG_PWD = 2002
+ERR_PWDCHANGE_EMAIL_NOTEXIST = 2001
+ERR_PWDCHANGE_VERIFY_FAIL = 2002
+ERR_PWDCHANGE_VERIFY_TOO_FREQUENT = 2003
 
 # stores 
 veriCodeHash= {}
@@ -56,10 +56,10 @@ class UserRegisterView(APIView):
                 delta = now - timestamp
                 if delta < 60:
                     # 申请验证码时间过短，不允许
-                    return Response(data={'errorCode':ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT, **dataDict})
-            veriCode = login.helpers.codeGenerator.generateCode()
+                    return Response(data={'errorCode':ERR_PWDCHANGE_VERIFY_TOO_FREQUENT, **dataDict})
+            veriCode = codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
-            login.helpers.mailSend.sendMail(reveiver=email, validation=veriCode)
+            mailSend.sendMail(reveiver=email, validation=veriCode)
             return Response(data = {'errorCode':ERR_NO_ERR, **dataDict})
         else:
             veriCode = dataDict.get('veriCode')
@@ -89,12 +89,37 @@ class UserPasswordChangeView(APIView):
 
 
 class UserPasswordFoggotenView(APIView):
-    serializer = UserSerializer
+    # 测试用代码
+    serializer_class = HelperSerializer
+
     def post(self, request, format = None):
-        dataDict = request.data
+        dataDict = {
+            'email': request.data.get('email'),
+            'veriCode': request.data.get('veriCode'),
+            'password': request.data.get('password')
+        }
+
         email = dataDict.get('email')
         veriCode = dataDict.get('veriCode')
         password = dataDict.get('password')
-        if not User.objects.exists(email = email):
-            return Response()
-        return Response()
+        if not User.objects.filter(email = email):
+            return Response({'errorCode':ERR_PWDCHANGE_EMAIL_NOTEXIST, **dataDict})
+        elif not veriCode:
+            # 进入发码逻辑
+            if veriCodeHash.get(email):
+                # 查看验证码是否已经被发送过
+                timestamp = veriCodeHash.get(email)[0]
+                now = datetime.datetime.now().timestamp()
+                delta = now - timestamp
+                if delta < 60:
+                    # 申请验证码时间过短，不允许
+                    return Response(data={'errorCode':ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT, **dataDict})
+            veriCode = codeGenerator.generateCode()
+            veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
+            mailSend.sendMail(reveiver=email, validation=veriCode)
+            return Response(data = {'errorCode':ERR_NO_ERR, **dataDict})
+        else:
+            curr_user = User.objects.get(email = email)
+            curr_user.set_password(password)
+            serializer = UserSerializer(curr_user)
+            return Response(data = {'errorCode':ERR_NO_ERR, **serializer.data})

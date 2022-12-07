@@ -25,4 +25,5 @@ urlpatterns = [
     path('api-login/', include('login.urls')),
     path('docs/', include_docs_urls(title='RingoApis')),
     path('api-jwt-token-auth/', obtain_jwt_token),
+    
 ]
