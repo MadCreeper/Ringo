@@ -15,7 +15,7 @@ mail_sender = "lingo_sjtu@qq.com"
 mail_token = "muwnanuvchkpdfcd"
 
 
-def send_mail(reveiver, validation):
+def sendMail(reveiver, validation):
     mimeMulti = MIMEMultipart('related')
     mimeMulti["From"] = f"sender_name<{mail_sender}>"
     mimeMulti["To"] = f"receiver_1_name<{reveiver}>"
@@ -31,5 +31,3 @@ def send_mail(reveiver, validation):
     stp.login(mail_sender, mail_token)
     stp.sendmail(mail_sender, reveiver, mimeMulti.as_string())
     stp.quit()
-
-send_mail("ogas_dandelion@sjtu.edu.cn", 114514)
