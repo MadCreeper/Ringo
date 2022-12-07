@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
 # Create your models here.
-from tyadmin_api_cli.fields import richTextField
 
 # User = get_user_model()
 
@@ -47,12 +46,12 @@ class Goods(models.Model):
     物品种类
     """
     CATEGORY_TYPE = (
-        (0, "1"),
-        (1, "2"),
-        (2, "3"),
-        (3, "4"),
-        (4, "5"),
-        (5, "6"),
+        (0, "食品"),
+        (1, "药品"),
+        (2, "生活用品"),
+        (3, "娱乐"),
+        (4, "器械"),
+        (5, ""),
     )
 
     """
@@ -73,8 +72,8 @@ class Goods(models.Model):
     user = models.CharField(max_length=50, default="", verbose_name="用户名")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u"用户")
     name = models.CharField(max_length=100, verbose_name="物品名")
-    goods_brief = models.TextField(max_length=500, verbose_name="物品简短描述")
-    goods_desc = richTextField(verbose_name="物品详细描述", default='')
+    goods_brief = models.TextField(max_length=100, verbose_name="物品简短描述")
+    goods_desc = models.TextField(max_length=500, verbose_name="物品详细描述", default='')
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
