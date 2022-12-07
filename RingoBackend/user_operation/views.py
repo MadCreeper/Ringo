@@ -27,9 +27,9 @@ class UserOfferingViewset(viewsets.ModelViewSet):
     delete:
         删除提供物品
     """
-    authentication_classes = (CsrfExemptSessionAuthentication, )
+   #  authentication_classes = (CsrfExemptSessionAuthentication, )
     queryset=Goods.objects.all()
-   #  permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    permission_classes = (IsAuthenticated, )
    #  authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = GoodsSerializer
 
@@ -52,12 +52,12 @@ class UserNeedsViewset(viewsets.ModelViewSet):
         删除需求物品
     """
     queryset=Goods.objects.all()
-    authentication_classes = (CsrfExemptSessionAuthentication, )
-   #  permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # authentication_classes = (CsrfExemptSessionAuthentication, )
+    permission_classes = (IsAuthenticated, )
    #  authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = GoodsSerializer
 
    #  def get_queryset(self):
    #      return Goods.objects.filter(user=self.request.user, property_type=0)
     def get_queryset(self):
-       return Goods.objects.filter(property_type=1, user=str(self.request.user))
+       return Goods.objects.filter(property_type=0, user=str(self.request.user))

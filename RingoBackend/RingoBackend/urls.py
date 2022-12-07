@@ -23,6 +23,7 @@ from rest_framework.documentation import include_docs_urls
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.generic import TemplateView
+from rest_framework_jwt.views import obtain_jwt_token
 
 
 router = DefaultRouter()
@@ -42,4 +43,6 @@ urlpatterns = [
     re_path('^', include(router.urls)),
     path('docs/', include_docs_urls(title='RingoApis')),
     path('admin/', admin.site.urls),
+    path('apis/login/', include('login.urls')),
+    path('apis/jwt-token-auth/', obtain_jwt_token),
 ]
