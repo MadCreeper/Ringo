@@ -12,7 +12,8 @@ import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
 import detailPage from './DetailPage.vue'
-
+import register from  './RegisterPage.vue'
+import changecode from './ChangeCodePage.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -24,6 +25,8 @@ const routes = [
     { path: '/login',component:Login},
     { path: '/Manage',component:manage},
     { path: '/details', component : detailPage},
+    { path: '/register', component : register},
+    { path: '/changecode', component : changecode},
 ]
 const router = createRouter({
     history: createWebHashHistory(),
