@@ -12,6 +12,14 @@ from rest_framework.parsers import JSONParser
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password
 # Create your views here.
+# Constants
+ERR_REG_USERNAME_EXIST = 1001
+ERR_REG_EMAIL_EXIST = 1002
+ERR_REG_WRONG_VERIFICATION = 1003
+ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT = 1004
+
+ERR_LOGIN_USER_NOT_EXIST = 2001
+ERR_LOGIN_WRONG_PWD = 2002
 
 # stores 
 veriCodeHash= {}
@@ -65,12 +73,8 @@ class UserRegisterView(APIView):
             return Response()
 
 
-class UserLoginView(APIView):
-    serializer_class = UserSerializer
-    def post(self, request, format = None):
-        return Response()
 
 class UserPasswordChangeView(APIView):
     serializer = UserSerializer
-    def post(self, request, format = None)
+    def post(self, request, format = None):
         return Response()

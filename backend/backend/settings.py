@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'login',
     'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -137,5 +139,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+    ),
+}
+
+# 登录使用jwt验证，此处进行基本设置
+# 包括过期时间、前缀、更新、默认handler
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA' : datetime.timedelta(hours=2),
+    'JWT_AUTH_PREFIX' : 'JWT',
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_RESPONSE_PAYLOAD_HANDLER':'login.jwt_utils.jwt_response_payload_handler'
 }

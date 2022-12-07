@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
-
+from rest_framework_jwt.views import obtain_jwt_token
 
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/', include('needs.urls')),
     path('api-login/', include('login.urls')),
     path('docs/', include_docs_urls(title='RingoApis')),
+    path('api-jwt-token-auth/', obtain_jwt_token),
 ]

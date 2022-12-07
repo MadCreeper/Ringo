@@ -17,4 +17,5 @@ class HelperSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id','username', 'email', 'password', 'veriCode']
-    
+
+

@@ -1,0 +1,12 @@
+// 前端发送：
+{
+    "username":"Lyudmila",
+    "password":"password",
+    "email":"email",
+    "veriCode":"114514"
+}
+
+// 后端返回数据：
+{
+    "errorCode":1
+}
