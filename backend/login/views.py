@@ -13,10 +13,12 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password
 # Create your views here.
 # Constants
+ERR_NO_ERR = 0
 ERR_REG_USERNAME_EXIST = 1001
 ERR_REG_EMAIL_EXIST = 1002
 ERR_REG_WRONG_VERIFICATION = 1003
 ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT = 1004
+
 
 ERR_LOGIN_USER_NOT_EXIST = 2001
 ERR_LOGIN_WRONG_PWD = 2002
@@ -31,15 +33,20 @@ class UserRegisterView(APIView):
     serializer_class = HelperSerializer
 
     def post(self, request, format = None):
-        dataDict = request.data
+        dataDict = {
+            'username' : request.data.get('username'),
+            'email' : request.data.get('email'),
+            'password' : request.data.get('password'),
+            'veriCode' : request.data.get('veriCode')
+        }
         username = dataDict.get('username')
         email = dataDict.get('email')
         if User.objects.filter(username = username):
             # 用户名已存在
-            return Response(data={'errorCode':'usernameExists'})
+            return Response(data={'errorCode':ERR_REG_USERNAME_EXIST, **dataDict})
         elif User.objects.filter(email = email):
             # 邮箱已被注册
-            return Response(data = {'errorCode':'emailExists'})
+            return Response(data = {'errorCode':ERR_REG_EMAIL_EXIST, **dataDict})
         elif not dataDict.get('veriCode'):
             # 未填写验证码信息， 发送验证码
             if veriCodeHash.get(email):
@@ -49,17 +56,17 @@ class UserRegisterView(APIView):
                 delta = now - timestamp
                 if delta < 60:
                     # 申请验证码时间过短，不允许
-                    return Response(data={'errorCode':'timeTooShort'})
+                    return Response(data={'errorCode':ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT, **dataDict})
             veriCode = login.helpers.codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
             login.helpers.mailSend.sendMail(reveiver=email, validation=veriCode)
-            return Response()
+            return Response(data = {'errorCode':ERR_NO_ERR, **dataDict})
         else:
             veriCode = dataDict.get('veriCode')
             veriCodeStored = veriCodeHash.get(email)
             if not veriCodeStored or veriCodeStored[1] != veriCode:
                 # 验证码验证不通过
-                return Response({'errorCode': ERR_REG_WRONG_VERIFICATION})
+                return Response({'errorCode': ERR_REG_WRONG_VERIFICATION, **dataDict})
             veriCodeHash.pop(email)
             mData = {
                 'username' : request.data.get('username'),
@@ -69,7 +76,7 @@ class UserRegisterView(APIView):
             serializer = UserSerializer(data=mData)
             if serializer.is_valid():
                 serializer.save()
-                return Response(data = {}, status = status.HTTP_201_CREATED)
+                return Response(data = serializer.data, status = status.HTTP_201_CREATED)
             return Response()
 
 
