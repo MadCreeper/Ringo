@@ -34,6 +34,7 @@
                     <el-input v-model="form.desc" type="textarea" />
                 </el-form-item>
                 <el-form-item>
+                    <el-alert v-if="show" title="success alert" type="success" effect="dark" />
                     <el-button type="primary" @click="onSubmit">提交</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
@@ -45,7 +46,28 @@
         </el-footer>
     </el-container>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            show:false
+        }
+    },
+    methods:{
 
+        cnSubmit(){
+
+        console.log('submit!')
+        this.show=true;
+        setTimeout(() => {
+            this.$router.push('/')            
+        }, 10000)
+
+    }
+        
+    }
+}
+</script>
 <script setup>
 
 import { reactive } from 'vue'
@@ -193,9 +215,6 @@ const itemTypes = [
     },
 ]
 
-const onSubmit = () => {
-    console.log('submit!')
-}
 
 const goBack = () => {
     history.back();
