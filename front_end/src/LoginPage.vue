@@ -65,7 +65,7 @@ export default {
             login(params).then(response => {
             console.log(response.status)
             this.reciveform=response.data
-            window.localStorage["token"] = JSON.stringify(response.data.token);
+            window.localStorage["token"] = response.data.token;
             this.$router.push('/')
         }).catch(
             err=> {
@@ -73,7 +73,7 @@ export default {
                 alert("用户密码不匹配,验证未通过")
                 window.localStorage.removeItem("token")
                 this.$router.go(0)
-                
+
             }
         )
         }

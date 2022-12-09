@@ -152,7 +152,12 @@ export default {
       getGoods().then(response => {
         this.needs = response.data.results
         console.log(this.needs)
-      })
+      }).catch(
+        err=> {
+                console.log(err)
+                this.$router.push('/login')
+            }
+      )
     }
   },
   created: function () {
