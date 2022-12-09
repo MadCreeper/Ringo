@@ -104,6 +104,7 @@ class UserPasswordChangeView(APIView):
         }
         if authenticate(username = curr_user.get('username'), password = data.get('original_password')) is not None:
             curr_user.set_password(data.get('new_password'))
+            curr_user.save()
             return Response(data = {**serializer.data, ERROR_CODE:NO_ERR})
         else:
             return Response(data = {**serializer.data, ERROR_CODE: ERR_PWDCHANGE_WRONGPWD})
@@ -151,5 +152,6 @@ class UserPasswordFoggotenView(APIView):
             veriCodeHash.pop(email)
             curr_user = User.objects.get(email = email)
             curr_user.set_password(password)
+            curr_user.save()
             serializer = UserSerializer(curr_user)
             return Response(data = {ERROR_CODE:NO_ERR, **serializer.data})
