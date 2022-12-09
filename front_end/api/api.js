@@ -22,6 +22,7 @@ export const getGoods = params => { return axios.get(`${local_host}/apis/goods/`
 //物品详情
 export const getGoodsDetail = goodId => { return axios.get(`${local_host}/apis/goods/${goodId}`+'/') }
 
+
 //登录
 export const login = params => {
   return axios.post(`${local_host}/login/`, params)
@@ -29,7 +30,10 @@ export const login = params => {
 
 //注册
 
-export const register = params => { return axios.post(`${local_host}/users/`, params) }
+export const register = params => { return axios.post(`${local_host}/api-login/register`,params) }
+
+//修改密码
+export const changecode = params => { return axios.post(`${local_host}/api-login/forget_password`,params) }
 
 //短信
 export const getMessage = params => { return axios.post(`${local_host}/code/`, params) }

@@ -9,10 +9,10 @@
     <div class="right">
         <h4>修改密码</h4>
         <form action="" method="post" class="word">
-            <input class="acc" name="user" type="text" placeholder="请输入新密码">
-            <input class="acc" name="password" type="password" placeholder="请重复密码">
-            <input class="acc" name="password" type="text" placeholder="请输入验证码">
-            <input class="submit" type="submit" value="change">
+            <input v-model="this.sendform.email" class="acc" name="user" type="text" placeholder="请输入邮箱">
+            <input v-model="this.sendform.veriCode" v-if="check" class="acc" name="password" type="text" placeholder="请输入验证码">
+            <input v-model="this.sendform.password" v-if="check" class="acc" name="user" type="text" placeholder="请输入新密码">
+            <input class="submit" type="button" value="register" @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
     </div>
@@ -24,19 +24,51 @@
 </template>
 
 <script>
+import { reactive } from 'vue'
+
+import {changecode } from '../api/api.js'
   export default {
     data() {
         return {
             data:{
-            isShow:1,
-            isRegister:0,
+            check:false,
+            sendform :reactive({
+                username:"",
+                password:"",
+                email:"",
+                veriCode:""
+            }),
+            recvform :reactive({
+                errorCode:-1,
+                username:"",
+                password:"",
+                email:"",
+                veriCode:""
+             }),
             },
         }
     },
     methods:{
-        register(){
-        this.isRegister=1;
-        this.$router.push('/register')
+        onSubmit(params){
+            changecode(params).then(response => {
+            if (this.check==true){
+            console.log(response.data)
+            this.reciveform=response.data
+            if(this.reciveform.errorCode==2001){
+                alert("该邮箱没有被注册,请重新输入")
+            }
+            else if(this.reciveform.errorCode==2002){
+                alert("你输入了错误的验证码,请重新尝试")
+            }
+            else if(this.reciveform.errorCode==2003){
+                alert("您输入的时间间隔过短,请等待一段时间重新尝试")
+            }
+            else if (this.reciveform.errorCode==0){
+                    alert("注册成功")
+                    this.$router.push('/login')
+            }
+        }
+        })
         }
     }
 }

@@ -12,7 +12,7 @@ from rest_framework_jwt.authentication import jwt_decode_handler
 # Create your views here.
 # Constants
 ERR_NO_ERR = 0
-ERR_INVALID_EMAIL = 1
+ERR_INVALID_EMAIL = 1005
 
 ERR_REG_USERNAME_EXIST = 1001
 ERR_REG_EMAIL_EXIST = 1002

@@ -9,10 +9,11 @@
     <div class="right">
         <h4>注册</h4>
         <form action="" method="post" class="word">
-            <input class="acc" name="user" type="text" placeholder="用户名">
-            <input class="acc" name="password" type="password" placeholder="密码">
-            <input class="acc" name="password" type="text" placeholder="请输入验证码">
-            <input class="submit" type="submit" value="register">
+            <input v-model="this.sendform.email" class="acc" name="password" type="text" placeholder="请输入邮箱">
+            <input v-model="this.sendform.username" class="acc" name="user" type="text" placeholder="请输入用户名">
+            <input v-model="this.sendform.veriCode" v-if="check" class="acc" name="password" type="text" placeholder="请输入验证码">
+            <input v-model="this.sendform.password" v-if="check" class="acc" name="password" type="password" placeholder="请输入密码">
+            <input class="submit" type="button" value="register" @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
     </div>
@@ -22,27 +23,77 @@
       <el-footer id="FooterBack" height="200px"> <foo :ButtonLeft="ButtonLeft" :ButtonRight="ButtonRight" ></foo></el-footer>
     </el-container>
 </template>
-
 <script>
-  export default {
+// const reciveform = reactive({
+//     errcode:0,
+//     username:"",
+//     password:"",
+//     email:"",
+//     veriCode:""
+// })
+import { reactive } from 'vue'
+
+import {register } from '../api/api.js'
+
+export default {
     data() {
         return {
-            data:{
-            isShow:1,
-            isRegister:0,
-            },
+            check:false,
+            sendform :reactive({
+                username:"",
+                password:"",
+                email:"",
+                veriCode:""
+        }),
+        recvform :reactive({
+                errorCode:-1,
+                username:"",
+                password:"",
+                email:"",
+                veriCode:""
+        }),
         }
     },
     methods:{
-        register(){
-        this.isRegister=1;
-        this.$router.push('/register')
+
+        onSubmit(params){
+            register(params).then(response => {
+            if (this.check==true){
+            console.log(response.data)
+            this.reciveform=response.data
+            if (this.reciveform.errorCode==1001){
+                alert("用户名已经存在,请重新输入用户名")
+            } 
+            else if(this.reciveform.errorCode==101){
+                alert("请输入正确格式的邮箱")
+            }
+            else if(this.reciveform.errorCode==1002){
+                alert("该邮箱已经被注册,请重新输入邮箱")
+            }
+            else if(this.reciveform.errorCode==1004){
+                alert("您输入的时间间隔过短,请等待一段时间后重新输入")
+            }
+            else if(this.reciveform.errorCode==1003){
+                alert("您输入了错误的验证码,请重试")
+            }
+            else if (this.reciveform.errorCode==0){
+                    alert("注册成功")
+                    this.$router.push('/login')
+            }
         }
+        })
+        if (this.check==false){
+        this.check=true
+        }
+        
+
+}
+        
     }
 }
 
-
 </script>
+
 
 <style scoped>
 #headerBack{
