@@ -25,7 +25,7 @@ export const getGoodsDetail = goodId => { return axios.get(`${local_host}/apis/g
 
 //登录
 export const login = params => {
-  return axios.post(`${local_host}/login/`, params)
+  return axios.post(`${local_host}/apis/login/login`, params)
 }
 
 //注册

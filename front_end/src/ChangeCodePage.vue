@@ -52,17 +52,21 @@ export default {
     methods:{
         onSubmit(params){
             changecode(params).then(response => {
+            console.log(response.data)
             if (this.check==true){
             console.log(response.data)
             this.reciveform=response.data
             if(this.reciveform.errorCode==2001){
                 alert("该邮箱没有被注册,请重新输入")
+                this.$router.go(0)
             }
             else if(this.reciveform.errorCode==2002){
                 alert("你输入了错误的验证码,请重新尝试")
+                this.$router.go(0)
             }
             else if(this.reciveform.errorCode==2003){
                 alert("您输入的时间间隔过短,请等待一段时间重新尝试")
+                this.$router.go(0)
             }
             else if (this.reciveform.errorCode==0){
                     alert("修改成功")
@@ -71,7 +75,7 @@ export default {
         }
         if (this.check==false){
         this.check=true
-        this.flag="注册"
+        this.flag="修改密码"
         }
         })
 
