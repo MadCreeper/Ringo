@@ -1,13 +1,26 @@
 import axios from 'axios'
-
 axios.defaults.timeout = 50000
 
-axios.interceptors.request.use(config => {
-  // ...
+axios.interceptors.request.use(
+  config => {
+  let url = config.url;
+  console.log(url)
+  if (localStorage.token) { //判断token是否存在
+    config.headers.Authorization ="JWT "+localStorage.token;  //将token设置成请求头
+  }
   return config
 }, error => {
   return Promise.error(error)
 })
+
+axios.interceptors.request.use(
+  response => {
+  return response
+}, error => {
+  console.log(error)
+  if (error.response.status===401){
+  window.location.href("/login")
+}})
 
 function getNeeds () {
     return axios.get(`http://localhost:8000/api/needs/`)
