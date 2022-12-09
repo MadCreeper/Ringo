@@ -11,20 +11,20 @@ from rest_framework import permissions
 from rest_framework_jwt.authentication import jwt_decode_handler
 # Create your views here.
 # Constants
+# 通用错误码
 NO_ERR = 0
 MAIL_SEND_SUCCESS = 1
 
-
+ERR_INVALID_EMAIL = 101
+# 错误码：用户注册
 ERR_REG_USERNAME_EXIST = 1001
 ERR_REG_EMAIL_EXIST = 1002
 ERR_REG_WRONG_VERIFICATION = 1003
 ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT = 1004
-
-
+# 错误码：用户更改密码
 ERR_PWDCHANGE_EMAIL_NOTEXIST = 2001
 ERR_PWDCHANGE_VERIFY_FAIL = 2002
 ERR_PWDCHANGE_VERIFY_TOO_FREQUENT = 2003
-ERR_INVALID_EMAIL = 3000
 ERROR_CODE = 'errorCode'
 # stores 
 veriCodeHash= {}
@@ -47,7 +47,6 @@ class UserRegisterView(APIView):
         if User.objects.filter(username = username):
             # 用户名已存在
             return Response(data={ERROR_CODE: ERR_REG_USERNAME_EXIST, **dataDict})
-
         elif not emailChecker.check_mail_regex(email):
             return Response(data={ERROR_CODE: ERR_INVALID_EMAIL, **dataDict})
         elif User.objects.filter(email = email):
@@ -95,7 +94,11 @@ class UserPasswordChangeView(APIView):
         token_user = jwt_decode_handler(jwtToken)
         curr_user = User.objects.get(id = token_user['user_id'])
         serializer = UserSerializer(curr_user)
-
+        data = {
+            'original_password':request.data.get('original_password'),
+            'new_password':request.data.get('new_password')
+        }
+        
         return Response(data = serializer.data)
 
 
@@ -116,6 +119,8 @@ class UserPasswordFoggotenView(APIView):
         password = dataDict.get('password')
         if not emailChecker.check_mail_regex(email):
             return Response(data={ERROR_CODE: ERR_INVALID_EMAIL, **dataDict})
+        elif emailChecker.check_mail_regex(email):
+            return Response(data = {ERROR_CODE: ERR_INVALID_EMAIL, **dataDict})
         elif not User.objects.filter(email = email):
             return Response({ERROR_CODE:ERR_PWDCHANGE_EMAIL_NOTEXIST, **dataDict})
         elif not veriCode:
