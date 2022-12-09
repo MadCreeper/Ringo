@@ -12,9 +12,10 @@
             <input v-model="this.sendform.email" class="acc" name="user" type="text" placeholder="请输入邮箱">
             <input v-model="this.sendform.veriCode" v-if="check" class="acc" name="password" type="text" placeholder="请输入验证码">
             <input v-model="this.sendform.password" v-if="check" class="acc" name="user" type="text" placeholder="请输入新密码">
-            <input class="submit" type="button" value="register" @click="this.onSubmit(this.sendform)">
+            <input class="submit" type="button" :value=this.flag @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
+        <a @click="register">返回登陆</a>
     </div>
     </div>
     </div>
@@ -27,25 +28,25 @@
 import { reactive } from 'vue'
 
 import {changecode } from '../api/api.js'
-  export default {
+
+export default {
     data() {
         return {
-            data:{
+            flag:"提交",
             check:false,
             sendform :reactive({
                 username:"",
                 password:"",
                 email:"",
                 veriCode:""
-            }),
-            recvform :reactive({
+        }),
+        recvform :reactive({
                 errorCode:-1,
                 username:"",
                 password:"",
                 email:"",
                 veriCode:""
-             }),
-            },
+        }),
         }
     },
     methods:{
@@ -64,11 +65,16 @@ import {changecode } from '../api/api.js'
                 alert("您输入的时间间隔过短,请等待一段时间重新尝试")
             }
             else if (this.reciveform.errorCode==0){
-                    alert("注册成功")
+                    alert("修改成功")
                     this.$router.push('/login')
             }
         }
+        if (this.check==false){
+        this.check=true
+        this.flag="注册"
+        }
         })
+
         }
     }
 }

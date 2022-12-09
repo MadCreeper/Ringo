@@ -38,6 +38,10 @@
         register(){
         this.isRegister=1;
         this.$router.push('/register')
+        },
+        changecode(){
+        this.isRegister=1;
+        this.$router.push('/changecode')
         }
     }
 }

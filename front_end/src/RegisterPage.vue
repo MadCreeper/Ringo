@@ -13,9 +13,10 @@
             <input v-model="this.sendform.username" class="acc" name="user" type="text" placeholder="请输入用户名">
             <input v-model="this.sendform.veriCode" v-if="check" class="acc" name="password" type="text" placeholder="请输入验证码">
             <input v-model="this.sendform.password" v-if="check" class="acc" name="password" type="password" placeholder="请输入密码">
-            <input class="submit" type="button" value="register" @click="this.onSubmit(this.sendform)">
+            <input class="submit" type="button" :value=flag @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
+        <a @click="login">返回登陆</a>
     </div>
     </div>
     </div>
@@ -38,6 +39,7 @@ import {register } from '../api/api.js'
 export default {
     data() {
         return {
+            flag:"提交",
             check:false,
             sendform :reactive({
                 username:"",
@@ -55,7 +57,9 @@ export default {
         }
     },
     methods:{
-
+        login(){
+        this.$router.push('/login')
+        },
         onSubmit(params){
             register(params).then(response => {
             if (this.check==true){
@@ -63,18 +67,23 @@ export default {
             this.reciveform=response.data
             if (this.reciveform.errorCode==1001){
                 alert("用户名已经存在,请重新输入用户名")
+                this.$router.go(0)
             } 
             else if(this.reciveform.errorCode==101){
                 alert("请输入正确格式的邮箱")
+                this.$router.go(0)
             }
             else if(this.reciveform.errorCode==1002){
                 alert("该邮箱已经被注册,请重新输入邮箱")
+                this.$router.go(0)
             }
             else if(this.reciveform.errorCode==1004){
                 alert("您输入的时间间隔过短,请等待一段时间后重新输入")
+                this.$router.go(0)
             }
             else if(this.reciveform.errorCode==1003){
                 alert("您输入了错误的验证码,请重试")
+                this.$router.go(0)
             }
             else if (this.reciveform.errorCode==0){
                     alert("注册成功")
@@ -84,6 +93,7 @@ export default {
         })
         if (this.check==false){
         this.check=true
+        this.flag="注册"
         }
         
 
