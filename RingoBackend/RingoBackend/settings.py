@@ -154,3 +154,7 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': False,
     'JWT_RESPONSE_PAYLOAD_HANDLER':'login.jwt_utils.jwt_response_payload_handler'
 }
+
+AUTHENTICATION_BACKENDS = [
+    'login.views.CustomAuthenticationBackend',
+]

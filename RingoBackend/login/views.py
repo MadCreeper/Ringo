@@ -10,6 +10,10 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import permissions
 from rest_framework_jwt.authentication import jwt_decode_handler
 from django.contrib.auth import authenticate
+
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
+
 # Create your views here.
 # Constants
 
@@ -159,3 +163,15 @@ class UserPasswordFoggotenView(APIView):
             curr_user.save()
             serializer = UserSerializer(curr_user)
             return Response(data = {ERROR_CODE:NO_ERR, **serializer.data})
+
+
+
+class CustomAuthenticationBackend(ModelBackend):
+    def authenticate(self, request, username, password, **kwargs):
+        try:
+            user = User.objects.get(Q(username=username) | Q(email = username))
+            if user.check_password(password):
+                return user
+        except Exception as e:
+            return None
+        return None
