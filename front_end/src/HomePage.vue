@@ -11,7 +11,8 @@
             <el-switch v-model="fill" />
           </div>
           <el-space :fill="fill" wrap>
-            <el-card v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }" v-for="need in needs" :key="need">
+            <el-card @click="gotoDetails(need.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
+              v-for="need in needs" :key="need">
               <template #header>
                 <div v-bind:class="{ 'card-header': fill, 'card-header-fold': !fill }">
                   <!-- switch styles for fill or not fill -->
@@ -21,7 +22,7 @@
                   <div class="line-break"></div>
 
                   <div class="tags">
-                    <el-tag class="ml-2" type="success">{{ categories[need.category] }}</el-tag>
+                    <el-tag class="ml-2" type="success" v-if="need.category">{{ need.category.name }}</el-tag>
                     <el-tag class="ml-2" type="danger">{{ emergency_levels[need.emergency] }}</el-tag>
                   </div>
 
@@ -36,7 +37,7 @@
 
                 </div>
                 <div class="username-display">
-                    用户：{{ need.user}}
+                  用户：{{ need.user }}
                 </div>
               </template>
               <!-- user name -->
@@ -49,12 +50,13 @@
                 {{ need.goods_brief }}
               </div>
               <div>
-                <el-icon><House /></el-icon> {{ "地址: " + "test" }}
+                <el-icon>
+                  <House />
+                </el-icon> {{ "地址: " + need.address }}
               </div>
               <div class="submit-time">
-                {{need.add_time}}
+                {{ need.add_time }}
               </div>
-
             </el-card>
           </el-space>
         </div>
@@ -74,9 +76,7 @@ const fill = ref(true)
 import foo from './components/FooterGrid.vue'
 import Navigator from './components//NavigationBar.vue'
 import { getGoods } from '../api/api';
-import { categories, emergency_levels } from './dataTypes'
-// import { useRouter } from 'vue-router'
-// const router = useRouter()
+import { emergency_levels } from './dataTypes'
 
 
 export default {
@@ -153,29 +153,37 @@ export default {
         this.needs = response.data.results
         console.log(this.needs)
       }).catch(
-        err=> {
-                console.log(err)
-                this.$router.push('/login')
-            }
+        err => {
+          console.log(err)
+          this.$router.push('/login')
+        }
       )
-    }
-  },
-  created: function () {
-    console.log("hello")
-    this.loadNeeds()
-  },
-  provide() {
-    return {
-      message: '/info',
-      messageFooLeft: '/request',
-      messageFooRight: '/offer'
-    }
+    },
+    gotoDetails(need_id) {
+      this.$router.push({
+        path: '/details',
+        query: {
+          id: need_id
+        }
+      })
+      console.log("test details")
+    },
+    created: function () {
+      console.log("hello")
+      this.loadNeeds()
+    },
+    provide() {
+      return {
+        message: '/info',
+        messageFooLeft: '/request',
+        messageFooRight: '/offer'
+      }
+    },
   }
-}
 </script>
 <style scoped>
 .el-container {
-  height: 100vh;
+  height: 95vh;
 }
 
 .box-card {
@@ -185,7 +193,7 @@ export default {
 
 .box-card-fold {
   width: 40vw;
-  height: 200px;
+  height: fit-content;
   text-overflow: ellipsis;
 }
 
@@ -229,13 +237,13 @@ export default {
 
 .username-display {
   font-size: small;
-  color:dimgray;
+  color: dimgray;
 }
 
 .submit-time {
   text-align: right;
   font-size: smaller;
-  color:dimgray;
+  color: dimgray;
 }
 
 #headerBack {
@@ -245,7 +253,7 @@ export default {
 }
 
 #MainBack {
-  background: linear-gradient(120deg, yellow 0%, silver 100%);
+  background: linear-gradient(0deg, rgb(213, 255, 216) 0%, rgb(240, 240, 240) 100%);
   background-size: cover;
 }
 

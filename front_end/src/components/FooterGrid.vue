@@ -45,7 +45,7 @@
 #card{
   background-color: transparent;
   border-radius: 12px;
-  min-height: 120px;
+  /* min-height: 120px; */
 }
 .el-row {
   margin-bottom: 20px;
@@ -65,7 +65,7 @@
   font-size: 16px;
 	padding: 10px 20px;
 	font-weight: 300;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 #card:hover{

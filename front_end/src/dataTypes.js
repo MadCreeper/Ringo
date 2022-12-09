@@ -14,3 +14,8 @@ export const emergency_levels = {
     4: "很急",
     5: "十万火急",
 };
+
+export const item_type = {
+    0: "需求物品",
+    1: "提供物品",
+};

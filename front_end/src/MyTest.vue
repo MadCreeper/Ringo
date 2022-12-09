@@ -14,7 +14,13 @@
 </script>
 <script>
 import { getNeeds } from '../api/index';
+import { onMounted } from 'vue';
 export default {
+  setup () {
+     onMounted(() => {
+       console.log('mounted in the composition api!')
+     })
+   },
   data() {
     return {
       ButtonLeft: "求助",
@@ -39,5 +45,7 @@ export default {
   
 }
 </script>
+
+
 <style scoped>
 </style>
