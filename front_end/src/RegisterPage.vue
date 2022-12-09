@@ -34,7 +34,7 @@
 // })
 import { reactive } from 'vue'
 
-import {register } from '../api/api.js'
+import { register } from '../api/api.js'
 
 export default {
     data() {
@@ -47,7 +47,7 @@ export default {
                 email:"",
                 veriCode:""
         }),
-        recvform :reactive({
+        reciveform :reactive({
                 errorCode:-1,
                 username:"",
                 password:"",

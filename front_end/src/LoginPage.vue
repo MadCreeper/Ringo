@@ -9,9 +9,9 @@
     <div class="right">
         <h4>登陆</h4>
         <form action="" method="post" class="word">
-            <input class="acc" name="user" type="text" placeholder="用户名">
-            <input class="acc" name="password" type="password" placeholder="密码">
-            <input class="submit" type="submit" value="Login">
+            <input v-model="this.sendform.username" class="acc" name="user" type="text" placeholder="用户名">
+            <input v-model="this.sendform.password" class="acc" name="password" type="password" placeholder="密码">
+            <input class="submit" type="button" :value=flag @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
         <a @click="register">注册账号</a>
@@ -23,31 +23,62 @@
       <el-footer id="FooterBack" height="200px"> <foo :ButtonLeft="ButtonLeft" :ButtonRight="ButtonRight" ></foo></el-footer>
     </el-container>
 </template>
-
 <script>
-  export default {
+// const reciveform = reactive({
+//     errcode:0,
+//     username:"",
+//     password:"",
+//     email:"",
+//     veriCode:""
+// })
+import { reactive } from 'vue'
+
+import { login } from '../api/api.js'
+
+export default {
     data() {
         return {
-            data:{
-            isShow:1,
-            isRegister:0,
-            },
+            flag:"提交",
+            check:false,
+            sendform :reactive({
+                username:"",
+                password:"",
+        }),
+        reciveform :reactive({
+                errorCode:-1,
+                username:"",
+                password:"",
+                email:"",
+                veriCode:""
+        }),
         }
     },
     methods:{
         register(){
-        this.isRegister=1;
         this.$router.push('/register')
         },
         changecode(){
-        this.isRegister=1;
         this.$router.push('/changecode')
+        },
+        onSubmit(params){
+
+            login(params).then(response => {
+            console.log(response.status)
+            this.reciveform=response.data
+            this.$router.push('/')
+        }).catch(
+            err=> {
+                console.log(err.code)
+                alert("用户密码不匹配,验证未通过")
+            }
+        )
         }
+
     }
 }
 
-
 </script>
+
 
 <style scoped>
 #headerBack{

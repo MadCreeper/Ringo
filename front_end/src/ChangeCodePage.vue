@@ -15,7 +15,7 @@
             <input class="submit" type="button" :value=this.flag @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
-        <a @click="register">返回登陆</a>
+        <a @click="login">返回登陆</a>
     </div>
     </div>
     </div>
@@ -40,9 +40,8 @@ export default {
                 email:"",
                 veriCode:""
         }),
-        recvform :reactive({
+        reciveform :reactive({
                 errorCode:-1,
-                username:"",
                 password:"",
                 email:"",
                 veriCode:""
@@ -50,12 +49,18 @@ export default {
         }
     },
     methods:{
+
+        login(){
+        this.$router.push('/login')
+        },
+        
         onSubmit(params){
             changecode(params).then(response => {
-            console.log(response.data)
+            console.log(this.check)
             if (this.check==true){
-            console.log(response.data)
             this.reciveform=response.data
+            console.log(response.data)
+            console.log(this.reciveform.errorCode)
             if(this.reciveform.errorCode==2001){
                 alert("该邮箱没有被注册,请重新输入")
                 this.$router.go(0)
@@ -64,8 +69,16 @@ export default {
                 alert("你输入了错误的验证码,请重新尝试")
                 this.$router.go(0)
             }
+            else if(this.reciveform.errorCode==101){
+                alert("请输入正确格式的邮箱")
+                this.$router.go(0)
+            }
             else if(this.reciveform.errorCode==2003){
                 alert("您输入的时间间隔过短,请等待一段时间重新尝试")
+                this.$router.go(0)
+            }
+            else if(this.reciveform.errorCode==1003){
+                alert("您输入了错误的验证码,请重试")
                 this.$router.go(0)
             }
             else if (this.reciveform.errorCode==0){
@@ -73,12 +86,11 @@ export default {
                     this.$router.push('/login')
             }
         }
+        })
         if (this.check==false){
         this.check=true
         this.flag="修改密码"
         }
-        })
-
         }
     }
 }
