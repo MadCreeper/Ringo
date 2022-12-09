@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate
 NO_ERR = 0
 MAIL_SEND_SUCCESS = 1
 
+EMPTY_DATA = 102
 ERR_INVALID_EMAIL = 101
 # 错误码：用户注册
 ERR_REG_USERNAME_EXIST = 1001
@@ -94,7 +95,7 @@ class UserPasswordChangeView(APIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
     def post(self, request, format = None):
-        jwtToken = request.META['HTTP_AUTHORIZATION'][:5]
+        jwtToken = request.META['HTTP_AUTHORIZATION'][5:]
         token_user = jwt_decode_handler(jwtToken)
         curr_user = User.objects.get(id = token_user['user_id'])
         serializer = UserSerializer(curr_user)
@@ -102,10 +103,13 @@ class UserPasswordChangeView(APIView):
             'original_password':request.data.get('original_password'),
             'new_password':request.data.get('new_password')
         }
-        if authenticate(username = curr_user.get('username'), password = data.get('original_password')) is not None:
-            curr_user.set_password(data.get('new_password'))
-            curr_user.save()
-            return Response(data = {**serializer.data, ERROR_CODE:NO_ERR})
+        if authenticate(username = curr_user.username, password = data.get('original_password')) is not None:
+            if data.get('new_password'):
+                curr_user.set_password(data.get('new_password'))
+                curr_user.save()
+                return Response(data = {**serializer.data, ERROR_CODE:NO_ERR,})
+            else:
+                return Response(data = {**serializer.data, ERROR_CODE: EMPTY_DATA})
         else:
             return Response(data = {**serializer.data, ERROR_CODE: ERR_PWDCHANGE_WRONGPWD})
         
