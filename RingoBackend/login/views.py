@@ -9,6 +9,7 @@ import datetime
 from django.contrib.auth.hashers import make_password
 from rest_framework import permissions
 from rest_framework_jwt.authentication import jwt_decode_handler
+from django.contrib.auth import authenticate
 # Create your views here.
 # Constants
 
@@ -26,7 +27,9 @@ ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT = 1004
 ERR_PWDCHANGE_EMAIL_NOTEXIST = 2001
 ERR_PWDCHANGE_VERIFY_FAIL = 2002
 ERR_PWDCHANGE_VERIFY_TOO_FREQUENT = 2003
+ERR_PWDCHANGE_WRONGPWD = 2004
 ERROR_CODE = 'errorCode'
+
 # stores 
 veriCodeHash= {}
 
@@ -99,8 +102,12 @@ class UserPasswordChangeView(APIView):
             'original_password':request.data.get('original_password'),
             'new_password':request.data.get('new_password')
         }
+        if authenticate(username = curr_user.get('username'), password = data.get('original_password')) is not None:
+            curr_user.set_password(data.get('new_password'))
+            return Response(data = {**serializer.data, ERROR_CODE:NO_ERR})
+        else:
+            return Response(data = {**serializer.data, ERROR_CODE: ERR_PWDCHANGE_WRONGPWD})
         
-        return Response(data = serializer.data)
 
 
 
@@ -120,8 +127,6 @@ class UserPasswordFoggotenView(APIView):
         password = dataDict.get('password')
         if not emailChecker.check_mail_regex(email):
             return Response(data={ERROR_CODE: ERR_INVALID_EMAIL, **dataDict})
-        elif emailChecker.check_mail_regex(email):
-            return Response(data = {ERROR_CODE: ERR_INVALID_EMAIL, **dataDict})
         elif not User.objects.filter(email = email):
             return Response({ERROR_CODE:ERR_PWDCHANGE_EMAIL_NOTEXIST, **dataDict})
         elif not veriCode:

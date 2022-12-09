@@ -5,4 +5,4 @@ from django.contrib.auth.models import User
 class UserProfile():
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=20)
-    
+            

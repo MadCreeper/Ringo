@@ -43,5 +43,5 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='RingoApis')),
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
-    path('apis/jwt-token-auth/', obtain_jwt_token),
+    # path('apis/jwt-token-auth/', obtain_jwt_token),
 ]
