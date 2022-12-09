@@ -33,20 +33,18 @@ class GoodsPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class GoodsCategoryViewset(viewsets.ModelViewSet):
+class GoodsCategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     物品类别管理
     list:
         获取物品类别列表
-    create:
-        添加物品类别
-    update:
-        更新物品类别
-    delete:
-        删除物品类别
+    retrieve:
+        获取商品分类详情
     """
     queryset = GoodsCategory.objects.all()
     serializer_class = CategorySerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('category_type',)
 
 class GoodsListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
@@ -70,12 +68,13 @@ class GoodsListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewset
     search_fields = ('name', 'goods_brief', 'goods_desc')
 
 
-class CategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    """
-    list:
-        商品分类列表数据
-    retrieve:
-        获取商品分类详情
-    """
-    queryset = GoodsCategory.objects.filter(category_type=1)
-    serializer_class = CategorySerializer
+# class CategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+#     """
+#     list:
+#         商品分类列表数据
+#     retrieve:
+#         获取商品分类详情
+#     """
+#     queryset = GoodsCategory.objects.filter(category_type=1)
+#     serializer_class = CategorySerializer
+#     filter_fields = ('category_type')

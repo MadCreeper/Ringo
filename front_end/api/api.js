@@ -8,10 +8,10 @@ export const queryCategorygoods = () => { return axios.get(`${local_host}/apis/i
 //获取物品类别信息
 export const getCategory = params => {
   if('id' in params){
-    return axios.get(`${local_host}/categories/`+params.id+'/');
+    return axios.get(`${local_host}/apis/category/`+params.id+'/');
   }
   else {
-    return axios.get(`${local_host}/categories/`, params);
+    return axios.get(`${local_host}/apis/category/`, params);
   }
 };
 
