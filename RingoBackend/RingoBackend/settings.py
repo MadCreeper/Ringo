@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user_operation',
     'corsheaders',
     'login',
+    'django_filters',
     
 ]
 
