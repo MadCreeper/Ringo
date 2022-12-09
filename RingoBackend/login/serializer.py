@@ -11,6 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
+## 以下供API调试使用
+
 class HelperSerializer(serializers.ModelSerializer):
     veriCode = serializers.CharField()
     
