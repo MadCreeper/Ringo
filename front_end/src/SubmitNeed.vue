@@ -114,7 +114,7 @@ export default {
                 "address" : form.region,
                 "goods_brief" : form.desc,
             }
-            console.log(needInfo)
+            // console.log(needInfo)
             addNeeds(needInfo);
             console.log(form);
             // setTimeout(() => {
