@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'login',
     'django_filters',
+    'chat',
+    'channels',
     
 ]
 
@@ -84,7 +86,17 @@ CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'RingoBackend.urls'
 
 WSGI_APPLICATION = 'RingoBackend.wsgi.application'
+ASGI_APPLICATION = "chat_backend.asgi.application"
 
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database

@@ -2,6 +2,7 @@
 from django.db.models import Q
 from goods.models import Goods, GoodsCategory
 from rest_framework import serializers
+from drf_writable_nested import WritableNestedModelSerializer
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -11,7 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 
-class GoodsSerializer(serializers.ModelSerializer):
+class GoodsSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     category = CategorySerializer()
     class Meta:
         model = Goods

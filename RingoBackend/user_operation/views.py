@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from goods.serializers import GoodsSerializer
+from rest_framework_jwt.authentication import jwt_decode_handler
 
 from rest_framework.authentication import SessionAuthentication
 
@@ -36,8 +37,9 @@ class UserOfferingViewset(viewsets.ModelViewSet):
    # def get_queryset(self):
    #    return Goods.objects.filter(user=self.request.user, property_type=1)
     def get_queryset(self):
-       return Goods.objects.filter(property_type=1, user=str(self.request.user))
-
+       token = self.request.META['HTTP_AUTHORIZATION'][5:]
+       jwtuser = jwt_decode_handler(token)
+       return Goods.objects.filter(property_type=1, user=jwtuser["username"])
 
 class UserNeedsViewset(viewsets.ModelViewSet):
     """
@@ -59,5 +61,9 @@ class UserNeedsViewset(viewsets.ModelViewSet):
 
    #  def get_queryset(self):
    #      return Goods.objects.filter(user=self.request.user, property_type=0)
+    # def get_queryset(self):
+    #    return Goods.objects.filter(property_type=0, user=str(self.request.user)
     def get_queryset(self):
-       return Goods.objects.filter(property_type=0, user=str(self.request.user))
+       token = self.request.META['HTTP_AUTHORIZATION'][5:]
+       jwtuser = jwt_decode_handler(token)
+       return Goods.objects.filter(property_type=0, user=jwtuser["username"])
