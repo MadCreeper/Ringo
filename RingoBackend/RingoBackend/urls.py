@@ -24,6 +24,8 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 from rest_framework_jwt.views import obtain_jwt_token
+from django.conf.urls.static import static
+import RingoBackend.settings as settings
 
 
 router = DefaultRouter()
@@ -44,4 +46,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
     # path('apis/jwt-token-auth/', obtain_jwt_token),
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

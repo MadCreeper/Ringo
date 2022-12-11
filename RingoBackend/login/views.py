@@ -99,23 +99,22 @@ class UserPasswordChangeView(APIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
     def post(self, request, format = None):
-        jwtToken = request.META['HTTP_AUTHORIZATION'][5:]
-        token_user = jwt_decode_handler(jwtToken)
-        curr_user = User.objects.get(id = token_user['user_id'])
-        serializer = UserSerializer(curr_user)
+        curr_user = request.user
+        # serializer = UserSerializer(curr_user)
         data = {
-            'original_password':request.data.get('original_password'),
-            'new_password':request.data.get('new_password')
+            'password':request.data.get('password'),
+            'newPassword1':request.data.get('newPassword1'),
+            'newPassword2':request.data.get('newPassword2')
         }
-        if authenticate(username = curr_user.username, password = data.get('original_password')) is not None:
-            if data.get('new_password'):
-                curr_user.set_password(data.get('new_password'))
+        if authenticate(username = curr_user.username, password = data.get('password')) is not None:
+            if data.get('newPassword1'):
+                curr_user.set_password(data.get('newPassword1'))
                 curr_user.save()
-                return Response(data = {**serializer.data, ERROR_CODE:NO_ERR,})
+                return Response(data = {ERROR_CODE:NO_ERR,})
             else:
-                return Response(data = {**serializer.data, ERROR_CODE: EMPTY_DATA})
+                return Response(data = {ERROR_CODE: EMPTY_DATA})
         else:
-            return Response(data = {**serializer.data, ERROR_CODE: ERR_PWDCHANGE_WRONGPWD})
+            return Response(data = {ERROR_CODE: ERR_PWDCHANGE_WRONGPWD})
         
 
 
