@@ -99,9 +99,7 @@ class UserPasswordChangeView(APIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
     def post(self, request, format = None):
-        jwtToken = request.META['HTTP_AUTHORIZATION'][5:]
-        token_user = jwt_decode_handler(jwtToken)
-        curr_user = User.objects.get(id = token_user['user_id'])
+        curr_user = request.user 
         serializer = UserSerializer(curr_user)
         data = {
             'original_password':request.data.get('original_password'),
