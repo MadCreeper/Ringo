@@ -106,17 +106,18 @@ export default {
             // this.$emit('submit', this.form);
 
             let needInfo = {
-                "category" : this.typesData[form.type[0]],
+                "category" : (this.typesData[form.type[0]]),
                 "property_type" : 1,
                 "emergency" : form.priority,
-                "expected_end_time" : form.date[1],
+                // "expected_end_time" : form.date[1].toDateString(),
                 "name" : form.name,
                 "address" : form.region,
                 "goods_brief" : form.desc,
             }
-            // console.log(needInfo)
+            console.log("submitted info:")
+            console.log(needInfo)
             addNeeds(needInfo);
-            console.log(form);
+            // console.log(form);
             // setTimeout(() => {
             //     this.$router.push('/')
             // }, 10000)
