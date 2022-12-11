@@ -14,6 +14,7 @@ import Offer from './OfferingPage.vue'
 import detailPage from './DetailPage.vue'
 import register from  './RegisterPage.vue'
 import changecode from './ChangeCodePage.vue'
+import resetcode from './ResetCode.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -27,6 +28,7 @@ const routes = [
     { path: '/details', component : detailPage},
     { path: '/register', component : register},
     { path: '/changecode', component : changecode},
+    { path: '/resetcode',component:resetcode},
 ]
 const router = createRouter({
     history: createWebHashHistory(),

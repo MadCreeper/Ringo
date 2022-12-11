@@ -41,6 +41,7 @@
           <div class="grid-content ep-bg-purple" />
         </el-col>
         <el-col :span="22">
+        <el-button type="primary" @click="resetcode">重置密码</el-button>
           <el-form :model="form" label-width="120px">
             <el-form-item label="Activity name">
               <el-input v-model="form.name" />
@@ -114,6 +115,11 @@ export default {
     return {
       message: '/info'
     }
+  },
+  methods:{
+  resetcode(){
+  this.$router.push('/resetcode')
+  }
   }
 }
 // import {

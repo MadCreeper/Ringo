@@ -7,16 +7,15 @@
     <div class="box">
     <div class="left"></div>
     <div class="right">
-        <h4>注册</h4>
+        <h4>重置密码</h4>
         <form action="" method="post" class="word">
-            <input v-model="this.sendform.email" class="acc" name="password" type="text" placeholder="请输入邮箱">
-            <input v-model="this.sendform.username" class="acc" name="user" type="text" placeholder="请输入用户名">
-            <input v-model="this.sendform.veriCode" v-if="check" class="acc" name="password" type="text" placeholder="请输入验证码">
-            <input v-model="this.sendform.password" v-if="check" class="acc" name="password" type="password" placeholder="请输入密码">
+            <input v-model="this.sendform.password" class="acc" name="user" type="text" placeholder="请输入密码">
+            <input v-model="this.sendform.newPassword1" class="acc" name="user" type="password" placeholder="请输入新密码">
+            <input v-model="this.sendform.newPassword2" class="acc" name="user" type="password" placeholder="请再次输入新密码">
             <input class="submit" type="button" :value=this.flag @click="this.onSubmit(this.sendform)">
         </form>
         <div class="fn">
-        <a @click="login">返回登陆</a>
+        <a @click="back">返回个人页面</a>
     </div>
     </div>
     </div>
@@ -24,17 +23,11 @@
       <el-footer id="FooterBack" height="200px"> <foo :ButtonLeft="ButtonLeft" :ButtonRight="ButtonRight" ></foo></el-footer>
     </el-container>
 </template>
+
 <script>
-// const reciveform = reactive({
-//     errcode:0,
-//     username:"",
-//     password:"",
-//     email:"",
-//     veriCode:""
-// })
 import { reactive } from 'vue'
 
-import {register } from '../api/api.js'
+import {resetcode} from '../api/api.js'
 
 export default {
     data() {
@@ -42,14 +35,12 @@ export default {
             flag:"提交",
             check:false,
             sendform :reactive({
-                username:"",
                 password:"",
-                email:"",
-                veriCode:""
+                newPassword1:"",
+                newPassword2:"",
         }),
-        recvform :reactive({
+        reciveform :reactive({
                 errorCode:-1,
-                username:"",
                 password:"",
                 email:"",
                 veriCode:""
@@ -57,53 +48,44 @@ export default {
         }
     },
     methods:{
-        login(){
-        this.$router.push('/login')
+
+        back(){
+        this.$router.push('/info')
         },
+        
         onSubmit(params){
-            register(params).then(response => {
-            if (this.check==true){
-            console.log(response.data)
+            resetcode(params).then(response => {
+            console.log(this.check)
             this.reciveform=response.data
-            if (this.reciveform.errorCode==1001){
-                alert("用户名已经存在,请重新输入用户名")
-                this.$router.go(0)
-            } 
-            else if(this.reciveform.errorCode==101){
-                alert("请输入正确格式的邮箱")
+            console.log(response.data)
+            console.log(this.reciveform.errorCode)
+            if (this.newPassword1!==this.newPassword2){
+                alert("两次输入的密码不一致，请重试")
+            }
+            else if(this.reciveform.errorCode==102){
+                alert("您输入的密码为空，请重新输入")
                 this.$router.go(0)
             }
-            else if(this.reciveform.errorCode==1002){
-                alert("该邮箱已经被注册,请重新输入邮箱")
-                this.$router.go(0)
-            }
-            else if(this.reciveform.errorCode==1004){
-                alert("您输入的时间间隔过短,请等待一段时间后重新输入")
-                this.$router.go(0)
-            }
-            else if(this.reciveform.errorCode==1003){
-                alert("您输入了错误的验证码,请重试")
+            else if(this.reciveform.errorCode==2004){
+                alert("您输入的密码不正确，请重新输入")
                 this.$router.go(0)
             }
             else if (this.reciveform.errorCode==0){
-                    alert("注册成功")
-                    this.$router.push('/login')
+                    alert("重置成功")
+                    this.$router.push('/info')
             }
+        }).catch(
+        err => {
+          console.log(err)
+          this.$router.push('/login')
         }
-        })
-        if (this.check==false){
-        this.check=true
-        this.flag="注册"
+      )
         }
-        
-
-}
-        
     }
 }
 
-</script>
 
+</script>
 
 <style scoped>
 #headerBack{

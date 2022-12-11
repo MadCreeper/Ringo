@@ -32,8 +32,11 @@ export const login = params => {
 
 export const register = params => { return axios.post(`${local_host}/apis/login/register`,params) }
 
-//修改密码
+//修改密码（忘记密码）
 export const changecode = params => { return axios.post(`${local_host}/apis/login/forget_password`,params) }
+
+// 重设密码
+export const resetcode = params => { return axios.post(`${local_host}/apis/login/reset_password`,params) }
 
 //短信
 export const getMessage = params => { return axios.post(`${local_host}/code/`, params) }
