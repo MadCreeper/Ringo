@@ -8,17 +8,21 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from goods.serializers import GoodsSerializer
 from rest_framework_jwt.authentication import jwt_decode_handler
-
+from rest_framework import status
 from user_operation.serializers import PersonalProfileSerializer, PersonalProfile
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from django.http import QueryDict
 from rest_framework.authentication import SessionAuthentication
+
+
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
     def enforce_csrf(self, request):
         return 
+
+
 
 class UserOfferingViewset(viewsets.ModelViewSet):
     """
@@ -32,14 +36,39 @@ class UserOfferingViewset(viewsets.ModelViewSet):
     delete:
         删除提供物品
     """
+
+
    #  authentication_classes = (CsrfExemptSessionAuthentication, )
     queryset=Goods.objects.all()
     permission_classes = (IsAuthenticated, )
    #  authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = GoodsSerializer
-
+    
    # def get_queryset(self):
    #    return Goods.objects.filter(user=self.request.user, property_type=1)
+    def create(self, request, *args, **kwargs):
+        token = request.META['HTTP_AUTHORIZATION'][5:]
+        jwtuser = jwt_decode_handler(token)
+        data = request.data.copy()
+        data['user']=jwtuser["username"]
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        token = request.META['HTTP_AUTHORIZATION'][5:]
+        jwtuser = jwt_decode_handler(token)
+        data = request.data.copy()
+        data['user']=jwtuser["username"]
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
     def get_queryset(self):
        token = self.request.META['HTTP_AUTHORIZATION'][5:]
        jwtuser = jwt_decode_handler(token)
@@ -62,15 +91,41 @@ class UserNeedsViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
    #  authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = GoodsSerializer
+    def create(self, request, *args, **kwargs):
+        token = request.META['HTTP_AUTHORIZATION'][5:]
+ 
+        # token = request.META.get('HTTP_AUTHORIZATION', '').replace('Bearer', '').strip()
+        jwtuser = jwt_decode_handler(token)
+        data = request.data.copy()
+        data['user']=jwtuser["username"]
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        token = request.META['HTTP_AUTHORIZATION'][5:]
+
+        # token = request.META.get('HTTP_AUTHORIZATION', '').replace('Bearer', '').strip()
+        jwtuser = jwt_decode_handler(token)
+        data = request.data.copy()
+        data['user']=jwtuser["username"]
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
    #  def get_queryset(self):
    #      return Goods.objects.filter(user=self.request.user, property_type=0)
     # def get_queryset(self):
     #    return Goods.objects.filter(property_type=0, user=str(self.request.user)
     def get_queryset(self):
-
        token = self.request.META['HTTP_AUTHORIZATION'][5:]
        jwtuser = jwt_decode_handler(token)
+       print(token)
        return Goods.objects.filter(property_type=0, user=jwtuser["username"])
 
 

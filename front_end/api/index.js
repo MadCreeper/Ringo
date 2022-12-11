@@ -6,10 +6,10 @@ axios.interceptors.request.use(
   let url = config.url;
   console.log(url)
   if (localStorage.token) { //判断token是否存在
-    config.headers.Authorization ="JWT "+localStorage.token;  //将token设置成请求头
+    config.headers.Authorization ="JWT  "+localStorage.token;  //将token设置成请求头
   }
   else{
-    config.headers.Authorization ="JWT "+"sdadasd";
+    config.headers.Authorization ="JWT  "+"sdadasd";
   }
   return config
 }, error => {

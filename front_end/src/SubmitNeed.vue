@@ -107,7 +107,7 @@ export default {
 
             let needInfo = {
                 "category" : (this.typesData[form.type[0]]),
-                "property_type" : 1,
+                "property_type" : 0,
                 "emergency" : form.priority,
                 // "expected_end_time" : form.date[1].toDateString(),
                 "name" : form.name,

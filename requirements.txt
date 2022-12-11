@@ -27,3 +27,11 @@ django-simple-captcha==0.5.12
 djangorestframework==3.11.1
 djangorestframework-jwt==1.11.0
 
+{
+    "category":{"id":1,"name":"可乐","code":"1","desc":"1","category_type":1,"add_time":"2022-12-11T23:09:26Z","parent_category":null},
+    "property_type":1,
+    "emergency":2,
+    "name":"大可乐",
+    "address":"shanghai",
+    "goods_brief":"无"
+    }
