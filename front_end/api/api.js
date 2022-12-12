@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 let local_host = 'http://127.0.0.1:8000'
-let user_id = 0
 //获取物品类别信息
 export const queryCategorygoods = () => { return axios.get(`${local_host}/apis/indexgoods/`) }
 
@@ -42,10 +41,11 @@ export const resetcode = params => { return axios.post(`${local_host}/apis/login
 export const getMessage = params => { return axios.post(`${local_host}/code/`, params) }
 
 //获取用户信息
-export const getUserDetail = () => { return axios.get(`${local_host}/users/`) }
+export const getUserDetail = () => { return axios.get(`${local_host}/apis/user_profile`) }
+
 
 //修改信息
-export const updateUserInfo = params => { return axios.patch(`${local_host}/users/${user_id}`, params) }
+export const updateUserInfo = params => { return axios.post(`${local_host}/apis/user_profile`, params) }
 
 //添加需求
 export const addNeeds = params => {return axios.post(`${local_host}/apis/need/`, params)}
@@ -60,13 +60,15 @@ export const updateNeeds  = (addressId, params) => {return axios.patch(`${local_
 export const getNeeds  = () => {return axios.get(`${local_host}/apis/need/`)}
 
 //添加提供
-export const addOffering = params => {return axios.post(`${local_host}/offerings/`, params)}
+export const addOffering = params => {return axios.post(`${local_host}/apis/offering/`, params)}
 
 //删除需求
-export const delOffering = addressId => {return axios.delete(`${local_host}/offerings/`+addressId+'/')}
+export const delOffering = addressId => {return axios.delete(`${local_host}/apis/offering/`+addressId+'/')}
 
 //修改需求
-export const updateOffering = (addressId, params) => {return axios.patch(`${local_host}/Offerings/`+addressId+'/', params)}
+export const updateOffering = (addressId, params) => {return axios.patch(`${local_host}/apis/offering/`+addressId+'/', params)}
 
 //获取需求
-export const getOffering = () => {return axios.get(`${local_host}/offerings/`)}
+export const getOffering = () => {return axios.get(`${local_host}/apis/offering/`)}
+
+export const getOfferingDetail = itemId => {return axios.get(`${local_host}/apis/offering/${itemId}`+'/')}

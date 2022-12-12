@@ -11,38 +11,16 @@
           <div class="grid-content ep-bg-purple" />
         </el-col>
       </el-row>
-      
       <el-row>
         <el-col :span="5" :offset="2">
-           <div class="demo-basic--circle">
-    <div class="block">
-        <el-avatar class="avater" :size="AvaterSize" :src=this.info.avatar @click="redirect"></el-avatar>
-    </div>
-    <div>
-    </div>
-    </div>
+          <AvaterUsr :AvaterSize="AvaterSize"></AvaterUsr>
           <div class="grid-content ep-bg-purple-light" />
         </el-col>
-        <el-col :span="16"></el-col>
-        <el-col :span="2"></el-col>
-        <el-col :span="2">
-        <span class="text-large font-600 mr-3">用户:{{ this.info.owner}}</span>
+        <el-col :span="14">
+          <InputForm></InputForm>
           <div class="grid-content ep-bg-purple" />
         </el-col>
-        <el-col :span="4"></el-col>
-       <el-col :span="13">
-        <span class="text-large font-600 mr-3">昵称:{{ this.info.nickname}}</span>
-        </el-col>
-        <el-col :span="4"></el-col>
-       <el-col :span="14">
-       <span class="text-large font-600 mr-3">个性签名:{{ this.info.signature }}</span>
-        </el-col>
-        <el-col :span="4"></el-col>
-        <el-col :span="4"></el-col>
-        <el-col :span="14">
-       <span class="text-large font-600 mr-3">地址:{{ this.info.address }}</span>
-        </el-col>
-        <el-col :span="14">
+        <el-col :span="2">
           <div class="grid-content ep-bg-purple" />
         </el-col>
       </el-row>
@@ -51,25 +29,34 @@
           <div class="grid-content ep-bg-purple" />
         </el-col>
         <el-col :span="8">
+          <Uploader></Uploader>
           <div class="grid-content ep-bg-purple-light" />
         </el-col>
         <el-col :span="10">
           <div class="grid-content ep-bg-purple" />
         </el-col>
       </el-row>
-      
       <el-row>
         <el-col :span="2">
           <div class="grid-content ep-bg-purple" />
         </el-col>
         <el-col :span="22">
         <el-button type="primary" @click="resetcode">重置密码</el-button>
-        </el-col>
-        <el-col :span="2">
-          <div class="grid-content ep-bg-purple" />
-        </el-col>
-        <el-col :span="22">
-        <el-button type="primary" @click="changeinfo">修改个人信息</el-button>
+          <el-form :model="this.form" label-width="120px">
+            <el-form-item label="昵称">
+              <el-input v-model=this.form.nickname />
+            </el-form-item>
+            <el-form-item label="个性签名">
+                <el-input v-model=this.form.signature />
+            </el-form-item>
+            <el-form-item label="地址">
+            <el-input v-model=this.form.address />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit(this.form)">Create</el-button>
+              <el-button>Cancel</el-button>
+            </el-form-item>
+          </el-form>
         </el-col>
       </el-row>
 
@@ -80,19 +67,15 @@
 
 </template>
 <script>
-import {getUserDetail} from '../api/api.js'
-import { reactive } from 'vue'
 export default {
+  components: { AvaterUsr, InputForm, Uploader },
   data() {
     return {
       AvaterSize: 80,
-      info:reactive({
-                owner:"",
-                nickname:"",
-                avater:"",
-                address:"",
-                signature:""
-        }),
+    form : reactive({
+    nickname: '',
+    signature:'',
+})
     }
   },
   provide() {
@@ -100,41 +83,38 @@ export default {
       message: '/info'
     }
   },
-    mounted: function (){
-    this.loadinfo()
-  },
   methods:{
     goBack(){
-        this.$router.push('/')
+        this.$router.push('/info')
     },
   resetcode(){
   this.$router.push('/resetcode')
   },
-  changeinfo(){
-  this.$router.push('/changeinfo')
-  },
-  loadinfo() {
-      getUserDetail().then(response => {
-        this.info = response.data;
-        console.log("needs:")
-        console.log(this.info);
-      })
-      .catch(
+          onSubmit(params){
+            console.log(params)
+            updateUserInfo(params).then(response => {
+               console.log(response)
+               this.$router.push('/info')
+        }).catch(
         err => {
           console.log(err)
           this.$router.push('/login')
         }
       )
-    },
-  },
-  
+        }
+  }
 }
 // import {
 //   Back,
 // } from '@element-plus/icons-vue'
+import {updateUserInfo} from '../api/api.js'
+import AvaterUsr from './components/AvaterUser.vue'
+import InputForm from './components/InputForm.vue'
+import Uploader from './components/UploadImg.vue'
 import beautifulchat from './BeautifulChat.vue'
 </script>
 <script setup>
+import { reactive } from 'vue'
 // do not use same name with ref
 </script>
 

@@ -1,4 +1,3 @@
-<!-- This is for ManagePage -->
 <template>
   <div class="common-layout">
     <el-container>
@@ -55,7 +54,10 @@
                 </el-icon> {{ "地址: " + need.address }}
               </div>
               <div class="submit-time">
-                {{ need.add_time }}
+                {{ formatDateTime(need.add_time) }}
+                <div v-if="need.expected_end_time">
+                  {{ formatDateTime(need.expected_end_time)}}
+                </div>
               </div>
             </el-card>
           </el-space>
@@ -67,6 +69,7 @@
     </el-container>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 const fill = ref(true)
@@ -79,6 +82,7 @@ import foo from './components/FooterGrid.vue'
 import Navigator from './components//NavigationBar.vue'
 import { getGoods } from '../api/api';
 import { emergency_levels } from './dataTypes'
+import { formatDateTime } from './utils'
 
 
 
@@ -119,12 +123,14 @@ export default {
       })
       console.log("test details")
     },
+    formatDateTime,
   },
   provide() {
     return {
       message: '/info',
       messageFooLeft: '/request',
-      messageFooRight: '/offer'
+      messageFooRight: '/offer',
+      messageFooMid: '/request',
     }
   }
 }
@@ -206,7 +212,7 @@ export default {
 }
 
 #FooterBack {
-  background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat;
+  /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
   background-size: cover;
 }
 </style>

@@ -1,13 +1,10 @@
 <template>
     <el-container>
-        <el-page-header @back="goBack">
-            <template #content>
-                <span class="text-large font-600 mr-3"> 提交需求 </span>
-            </template>
+        <el-page-header @back="goBack" content="提供物品">
         </el-page-header>
         <el-main>
             <el-form :model="form" label-width="120px">
-                <el-form-item label="需求物品名称">
+                <el-form-item label="提供物品">
                     <el-input v-model="form.name" />
                 </el-form-item>
                 <el-form-item label="位置">
@@ -16,19 +13,18 @@
                         <el-option label="北京" value="beijing" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="需求日期段">
+                <el-form-item label="提供日期段">
                     <el-col :span="11">
                         <el-date-picker v-model="form.date" type="daterange" range-separator="To"
                             start-placeholder="Start date" end-placeholder="End date" size="small"
                             style="width: 200%" />
                     </el-col>
                 </el-form-item>
-                <el-form-item label="紧急程度（1-5）">
-                    <el-slider v-model="form.priority" :step="1" :min="1" :max="5" :show-tooltip="false" :marks="marks"
-                        show-stops />
-                </el-form-item>
                 <el-form-item label="物品类型">
-                    <el-cascader-panel :options="this.categories" v-model="form.type"/>
+                    <el-cascader-panel :options="this.categories" v-model="form.type" />
+                </el-form-item>
+                <el-form-item label="图片url">
+                    <el-input v-model="form.imageurl" type="textarea" />
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="form.desc" type="textarea" />
@@ -53,6 +49,7 @@
 <script>
 
 import { reactive } from 'vue'
+import { addOffering, getCategory } from '../api/api'
 let form = reactive({
     name: '',
     region: '',
@@ -60,8 +57,10 @@ let form = reactive({
     priority: '',
     type: [],
     desc: '',
+    imageurl: '',
 })
 
+const OFFERING = 1
 // const marks = {
 //     1: '不急',
 //     2: '普通',
@@ -69,8 +68,6 @@ let form = reactive({
 //     4: '非常紧急',
 //     5: '十万火急'
 // }
-
-import { addNeeds, getCategory } from '../api/api'
 export default {
     data() {
         return {
@@ -81,14 +78,12 @@ export default {
         }
     },
     created: async function () {
-        console.log("hello submitneed");
+        console.log("hello submitOffering");
 
+        // get category data
         let res = await getCategory({ "page": 1 });
         console.log(res.data)
-        
         this.typesData = res.data.results;
-
-
         console.log(this.typesData)
         for (let i = 0; i < this.typesData.length; i++) {
             this.categories.push({ 'value': i, 'label': this.typesData[i].name })
@@ -103,18 +98,18 @@ export default {
             this.show = true;
             // this.$emit('submit', this.form);
 
-            let needInfo = {
+            let offerInfo = {
                 "category" : (this.typesData[form.type[0]]),
-                "property_type" : 0,
-                "emergency" : form.priority,
-                "expected_end_time" : form.date[1],
+                "property_type" : OFFERING, // 1 = offering
+                // "expected_end_time" : form.date[1].toDateString(),
                 "name" : form.name,
                 "address" : form.region,
                 "goods_brief" : form.desc,
+                "goods_desc" : form.imageurl
             }
-            console.log("submitted info:")
-            console.log(needInfo)
-            addNeeds(needInfo);
+            console.log("submitted offering info:")
+            console.log(offerInfo)
+            addOffering(offerInfo);
             // console.log(form);
             // setTimeout(() => {
             //     this.$router.push('/')
@@ -123,17 +118,10 @@ export default {
         goBack (){
             history.back();
         },
-
     }
 }
 
 
-</script>
-<script setup>
-// do not use same name with ref
-const goBack = () => {
-    history.back();
-}
 </script>
 
 <style scoped>

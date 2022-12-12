@@ -8,8 +8,12 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from goods.serializers import GoodsSerializer
 from rest_framework_jwt.authentication import jwt_decode_handler
+
 from rest_framework import status
-from user_operation.serializers import PersonalProfileSerializer, PersonalProfile
+
+
+from user_operation.serializers import PersonalProfileSerializer
+from user_operation.models import PersonalProfile
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import QueryDict
@@ -130,11 +134,38 @@ class UserNeedsViewset(viewsets.ModelViewSet):
 
 
 
-class PersonalProfile(APIView):
+class PersonalProfileView(APIView):
     serializer_class = PersonalProfileSerializer
     permission_classes = (IsAuthenticated, )
     def get(self, request):
         curr_user = request.user
-        if not PersonalProfile.objects.filter(user = curr_user):
-            pass
+        created = False
+        if not PersonalProfile.objects.filter(owner = curr_user):
+            created = True
+            serializer = PersonalProfileSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(owner = curr_user)
+            else:
+                return Response(data = {'errorCode': 'Unexpected error.'})
+        profileObj = PersonalProfile.objects.get(owner = curr_user)
+        serializer = PersonalProfileSerializer(profileObj)
+        return Response(data={**serializer.data, 'created' :created})
+    
+    def post(self, request):
+        curr_user = request.user
+        created = False
+        if not PersonalProfile.objects.filter(owner = curr_user):
+            created = True
+            serializer = PersonalProfileSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(owner = curr_user)
+            else:
+                return Response(data = {'errorCode': 'Unexpected error.'})
+        profileObj = PersonalProfile.objects.get(owner = curr_user)
+        serializer = PersonalProfileSerializer(profileObj, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data = serializer.data)
 
+        else:
+            return Response(data=serializer.errors)
