@@ -26,6 +26,7 @@ from django.views.generic import TemplateView
 from rest_framework_jwt.views import obtain_jwt_token
 from django.conf.urls.static import static
 import RingoBackend.settings as settings
+import user_operation.views as opView
 
 
 router = DefaultRouter()
@@ -45,5 +46,6 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='RingoApis')),
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
+    path('apis/user_profile', opView.PersonalProfileView.as_view())
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
