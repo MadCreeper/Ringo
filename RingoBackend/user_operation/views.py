@@ -165,4 +165,7 @@ class PersonalProfileView(APIView):
         serializer = PersonalProfileSerializer(profileObj, data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response(data = serializer.data)
+            return Response(data = serializer.data)
+
+        else:
+            return Response(data=serializer.errors)
