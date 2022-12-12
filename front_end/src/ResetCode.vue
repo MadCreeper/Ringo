@@ -54,15 +54,17 @@ export default {
         },
         
         onSubmit(params){
+            if (this.sendform.newPassword1!==this.sendform.newPassword2){
+                alert("两次输入的密码不一致，请重试")
+                this.$router.go(0)
+            }
+            else{
             resetcode(params).then(response => {
             console.log(this.check)
             this.reciveform=response.data
             console.log(response.data)
             console.log(this.reciveform.errorCode)
-            if (this.newPassword1!==this.newPassword2){
-                alert("两次输入的密码不一致，请重试")
-            }
-            else if(this.reciveform.errorCode==102){
+            if(this.reciveform.errorCode==102){
                 alert("您输入的密码为空，请重新输入")
                 this.$router.go(0)
             }
@@ -81,6 +83,7 @@ export default {
         }
       )
         }
+    }
     }
 }
 

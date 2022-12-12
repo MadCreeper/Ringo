@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import datetime
+import datetime, os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +27,8 @@ SECRET_KEY = '$iivtbhg(t3)(%r&6*x5d&^etfnzv^3_1w70sj_w_l5*bkhf-6'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+MEDIA_URL = '/media_url/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Application definition
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'chat',
     'channels',
-    
+
 ]
 
 MIDDLEWARE = [

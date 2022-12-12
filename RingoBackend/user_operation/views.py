@@ -9,6 +9,10 @@ from rest_framework.authentication import SessionAuthentication
 from goods.serializers import GoodsSerializer
 from rest_framework_jwt.authentication import jwt_decode_handler
 
+from user_operation.serializers import PersonalProfileSerializer, PersonalProfile
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from rest_framework.authentication import SessionAuthentication
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -64,6 +68,18 @@ class UserNeedsViewset(viewsets.ModelViewSet):
     # def get_queryset(self):
     #    return Goods.objects.filter(property_type=0, user=str(self.request.user)
     def get_queryset(self):
+
        token = self.request.META['HTTP_AUTHORIZATION'][5:]
        jwtuser = jwt_decode_handler(token)
        return Goods.objects.filter(property_type=0, user=jwtuser["username"])
+
+
+
+class PersonalProfile(APIView):
+    serializer_class = PersonalProfileSerializer
+    permission_classes = (IsAuthenticated, )
+    def get(self, request):
+        curr_user = request.user
+        if not PersonalProfile.objects.filter(user = curr_user):
+            pass
+

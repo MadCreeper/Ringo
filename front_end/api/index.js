@@ -5,7 +5,10 @@ axios.interceptors.request.use(
   config => {
   let url = config.url;
   console.log(url)
-  if (localStorage.token) { //判断token是否存在
+  if (url==="http://127.0.0.1:8000/apis/login/register"){
+    return config
+  }
+  else if (localStorage.token) { //判断token是否存在
     config.headers.Authorization ="JWT "+localStorage.token;  //将token设置成请求头
   }
   else{
