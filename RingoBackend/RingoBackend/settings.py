@@ -34,6 +34,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Application definition
 
 INSTALLED_APPS = [
+    # 'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
     'django_filters',
     'chat',
     'channels',
-
+    
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,7 @@ ROOT_URLCONF = 'RingoBackend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +89,7 @@ CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'RingoBackend.urls'
 
 WSGI_APPLICATION = 'RingoBackend.wsgi.application'
-ASGI_APPLICATION = "chat_backend.asgi.application"
+# ASGI_APPLICATION = "RingoBackend.asgi.application"
 
 
 CHANNEL_LAYERS = {

@@ -65,7 +65,7 @@ class Goods(models.Model):
 
 
     property_type = models.IntegerField(choices=PROPERTY_TYPE, verbose_name="物品属性", help_text="物品是需求条目还是提供条目(1:需求 2:提供)")
-    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="物品类目")
+    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="物品类目",db_constraint=False)
     # category = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="种类", help_text="物品种类")
     emergency = models.IntegerField(choices=EMERGENCY_TYPE, verbose_name="紧急度", default=1,help_text="紧急度(only 需求)")
     expected_end_time = models.DateTimeField(verbose_name="结束时间", default=datetime.now, help_text="预期结束时间点(only 需求)")

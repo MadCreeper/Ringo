@@ -12,7 +12,7 @@ axios.interceptors.request.use(
     config.headers.Authorization ="JWT "+localStorage.token;  //将token设置成请求头
   }
   else{
-    config.headers.Authorization ="JWT "+"sdadasd";
+    config.headers.Authorization ="JWT  "+"sdadasd";
   }
   return config
 }, error => {
