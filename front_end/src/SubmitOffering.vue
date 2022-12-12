@@ -1,9 +1,6 @@
 <template>
     <el-container>
-        <el-page-header @back="goBack">
-            <template #content>
-                <span class="text-large font-600 mr-3"> 提交需求 </span>
-            </template>
+        <el-page-header @back="goBack" content="提供物品">
         </el-page-header>
         <el-main>
             <el-form :model="form" label-width="120px">
@@ -28,7 +25,7 @@
                         show-stops />
                 </el-form-item>
                 <el-form-item label="物品类型">
-                    <el-cascader-panel :options="this.categories" v-model="form.type"/>
+                    <el-cascader-panel :options="this.categories" v-model="form.type" />
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="form.desc" type="textarea" />
@@ -69,9 +66,6 @@ let form = reactive({
 //     4: '非常紧急',
 //     5: '十万火急'
 // }
-// const goBack = () => {
-//     history.back();
-// }
 import { addNeeds, getCategory } from '../api/api'
 export default {
     data() {
@@ -79,7 +73,7 @@ export default {
             show: false,
             form: form,
             categories: [],
-            typesData : [],
+            typesData: [],
         }
     },
     created: async function () {
@@ -87,7 +81,7 @@ export default {
 
         let res = await getCategory({ "page": 1 });
         console.log(res.data)
-        
+
         this.typesData = res.data.results;
 
 
@@ -106,13 +100,14 @@ export default {
             // this.$emit('submit', this.form);
 
             let needInfo = {
-                "category" : (this.typesData[form.type[0]]),
-                "property_type" : 0,
-                "emergency" : form.priority,
+                "category": (this.typesData[form.type[0]]),
+                "property_type": 0,
+                "emergency": form.priority,
                 // "expected_end_time" : form.date[1].toDateString(),
-                "name" : form.name,
-                "address" : form.region,
-                "goods_brief" : form.desc,
+                "name": form.name,
+                "address": form.region,
+                "goods_brief": form.desc,
+                "user": "admin"
             }
             console.log("submitted info:")
             console.log(needInfo)
@@ -126,7 +121,6 @@ export default {
             console.log("back")
             history.back();
         }
-
     }
 }
 

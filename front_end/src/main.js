@@ -11,6 +11,7 @@ import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
+import submitOffering from './SubmitOffering.vue'
 import detailPage from './DetailPage.vue'
 import register from  './RegisterPage.vue'
 import changecode from './ChangeCodePage.vue'
@@ -21,6 +22,7 @@ const routes = [
     { path: '/chattest', component: chat},
     { path: '/chat2', component: chat2},
     { path: '/request', component: submitNeed},
+    { path: '/addoffer', component: submitOffering},
     { path: '/test', component: mytest},
     { path: '/offer',component: Offer},
     { path: '/login',component:Login},

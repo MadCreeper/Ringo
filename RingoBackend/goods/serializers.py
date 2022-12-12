@@ -25,4 +25,3 @@ class GoodsSerializer(WritableNestedModelSerializer, serializers.ModelSerializer
 
 
 
-
