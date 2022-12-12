@@ -104,6 +104,9 @@ export default {
     this.loadinfo()
   },
   methods:{
+    goBack(){
+        this.$router.push('/')
+    },
   resetcode(){
   this.$router.push('/resetcode')
   },
@@ -133,9 +136,6 @@ import beautifulchat from './BeautifulChat.vue'
 </script>
 <script setup>
 // do not use same name with ref
-const goBack = () => {
-    history.back();
-}
 </script>
 
 <style scoped>
