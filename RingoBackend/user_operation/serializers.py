@@ -10,5 +10,3 @@ class PersonalProfileSerializer(serializers.ModelSerializer):
         model = PersonalProfile
         fields = ['owner', 'nickname', 'avatar', 'address', 'signature']
     
-    def perform_create(self, serializer):
-        serializer.save(owner = self.request.user)
