@@ -50,7 +50,7 @@
                 <el-input v-model=this.form.signature />
             </el-form-item>
             <el-form-item label="地址">
-            <el-input v-model=this.form.email />
+            <el-input v-model=this.form.address />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit(this.form)">Create</el-button>
@@ -75,8 +75,6 @@ export default {
     form : reactive({
     nickname: '',
     signature:'',
-    email: '',
-    avatar:'',
 })
     }
   },
