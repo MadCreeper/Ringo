@@ -42,55 +42,18 @@
         </el-col>
         <el-col :span="22">
         <el-button type="primary" @click="resetcode">重置密码</el-button>
-          <el-form :model="form" label-width="120px">
-            <el-form-item label="Activity name">
-              <el-input v-model="form.name" />
+          <el-form :model="this.form" label-width="120px">
+            <el-form-item label="昵称">
+              <el-input v-model=this.form.nickname />
             </el-form-item>
-            <el-form-item label="Activity zone">
-              <el-select v-model="form.region" placeholder="please select your zone">
-                <el-option label="Zone one" value="shanghai" />
-                <el-option label="Zone two" value="beijing" />
-              </el-select>
+            <el-form-item label="个性签名">
+                <el-input v-model=this.form.signature />
             </el-form-item>
-            <el-form-item label="Activity time">
-              <el-col :span="11">
-                <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%" />
-              </el-col>
-              <el-col :span="2" class="text-center">
-                <span class="text-gray-500">-</span>
-              </el-col>
-              <el-col :span="11">
-                <el-time-picker v-model="form.date2" placeholder="Pick a time" style="width: 100%" />
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Setting 1 ">
-              <el-switch v-model="form.delivery" />
-            </el-form-item>
-            <el-form-item label="Setting 2">
-              <el-switch v-model="form.delivery2" />
-            </el-form-item>
-            <el-form-item label="Setting 3">
-              <el-switch v-model="form.delivery3" />
-            </el-form-item>
-            <el-form-item label="Activity type">
-              <el-checkbox-group v-model="form.type">
-                <el-checkbox label="Online activities" name="type" />
-                <el-checkbox label="Promotion activities" name="type" />
-                <el-checkbox label="Offline activities" name="type" />
-                <el-checkbox label="Simple brand exposure" name="type" />
-              </el-checkbox-group>
-            </el-form-item>
-            <el-form-item label="Resources">
-              <el-radio-group v-model="form.resource">
-                <el-radio label="Sponsor" />
-                <el-radio label="Venue" />
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="Activity form">
-              <el-input v-model="form.desc" type="textarea" />
+            <el-form-item label="地址">
+            <el-input v-model=this.form.email />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">Create</el-button>
+              <el-button type="primary" @click="onSubmit(this.form)">Create</el-button>
               <el-button>Cancel</el-button>
             </el-form-item>
           </el-form>
@@ -109,6 +72,12 @@ export default {
   data() {
     return {
       AvaterSize: 80,
+    form : reactive({
+    nickname: '',
+    signature:'',
+    email: '',
+    avatar:'',
+})
     }
   },
   provide() {
@@ -119,12 +88,25 @@ export default {
   methods:{
   resetcode(){
   this.$router.push('/resetcode')
-  }
+  },
+          onSubmit(params){
+            console.log(params)
+            updateUserInfo(params).then(response => {
+               console.log(response)
+               this.$router.push('/info')
+        }).catch(
+        err => {
+          console.log(err)
+          this.$router.push('/login')
+        }
+      )
+        }
   }
 }
 // import {
 //   Back,
 // } from '@element-plus/icons-vue'
+import {updateUserInfo} from '../api/api.js'
 import AvaterUsr from './components/AvaterUser.vue'
 import InputForm from './components/InputForm.vue'
 import Uploader from './components/UploadImg.vue'
@@ -133,21 +115,6 @@ import beautifulchat from './BeautifulChat.vue'
 <script setup>
 import { reactive } from 'vue'
 // do not use same name with ref
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  delivery2: false,
-  delivery3: false,
-  type: [],
-  resource: '',
-  desc: '',
-})
-const onSubmit = () => {
-  console.log('submit!')
-}
 const goBack = () => {
     history.back();
 }

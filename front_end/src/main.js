@@ -15,6 +15,7 @@ import detailPage from './DetailPage.vue'
 import register from  './RegisterPage.vue'
 import changecode from './ChangeCodePage.vue'
 import resetcode from './ResetCode.vue'
+import changeinfo from './ChangeInfo.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -29,6 +30,7 @@ const routes = [
     { path: '/register', component : register},
     { path: '/changecode', component : changecode},
     { path: '/resetcode',component:resetcode},
+    { path: '/changeinfo',component:changeinfo},
 ]
 const router = createRouter({
     history: createWebHashHistory(),

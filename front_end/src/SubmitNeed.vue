@@ -128,6 +128,12 @@ export default {
 
 
 </script>
+<script setup>
+// do not use same name with ref
+const goBack = () => {
+    history.back();
+}
+</script>
 
 <style scoped>
 .el-row {
