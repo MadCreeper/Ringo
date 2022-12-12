@@ -5,7 +5,7 @@ axios.interceptors.request.use(
   config => {
   let url = config.url;
   console.log(url)
-  if (url==="http://127.0.0.1:8000/apis/login/register"){
+  if (url==="http://127.0.0.1:8000/apis/login/register" || url==="http://127.0.0.1:8000/apis/login/forget_password" ){
     return config
   }
   else if (localStorage.token) { //判断token是否存在
