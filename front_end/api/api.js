@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 let local_host = 'http://127.0.0.1:8000'
-let user_id = 0
 //获取物品类别信息
 export const queryCategorygoods = () => { return axios.get(`${local_host}/apis/indexgoods/`) }
 
@@ -42,10 +41,11 @@ export const resetcode = params => { return axios.post(`${local_host}/apis/login
 export const getMessage = params => { return axios.post(`${local_host}/code/`, params) }
 
 //获取用户信息
-export const getUserDetail = () => { return axios.get(`${local_host}/users/`) }
+export const getUserDetail = () => { return axios.get(`${local_host}/apis/user_profile`) }
+
 
 //修改信息
-export const updateUserInfo = params => { return axios.patch(`${local_host}/users/${user_id}`, params) }
+export const updateUserInfo = params => { return axios.patch(`${local_host}/apis/user_profile`, params) }
 
 //添加需求
 export const addNeeds = params => {return axios.post(`${local_host}/apis/need/`, params)}
