@@ -11,7 +11,9 @@ import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
 import Offer from './OfferingPage.vue'
+import submitOffer from './SubmitOffering.vue'
 import detailPage from './DetailPage.vue'
+import offerDetailPage from './OfferDetailPage.vue'
 import register from  './RegisterPage.vue'
 import changecode from './ChangeCodePage.vue'
 import resetcode from './ResetCode.vue'
@@ -24,9 +26,11 @@ const routes = [
     { path: '/request', component: submitNeed},
     { path: '/test', component: mytest},
     { path: '/offer',component: Offer},
+    { path: '/submitoffer', component: submitOffer },
     { path: '/login',component:Login},
     { path: '/Manage',component:manage},
     { path: '/details', component : detailPage},
+    { path: '/offerdetails', component: offerDetailPage},
     { path: '/register', component : register},
     { path: '/changecode', component : changecode},
     { path: '/resetcode',component:resetcode},
