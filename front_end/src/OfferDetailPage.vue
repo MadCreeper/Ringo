@@ -6,48 +6,48 @@
 
             </el-header>
             <el-main id="MainBack">
-                <div class="need-title">
+                <div class="item-title">
                     <div>
-                        {{ item_type[this.need.property_type] + ": " + this.need.name }}
+                        {{ item_type[this.item.property_type] + ": " + this.item.name }}
                     </div>
-                    <div class="tags" v-if="this.need.category">
-                        <el-tag class="ml-2" type="success">{{ this.need.category.name }}</el-tag>
-                        <el-tag class="ml-2" type="danger">{{ emergency_levels[need.emergency] }}</el-tag>
+                    <div class="tags" v-if="this.item.category">
+                        <el-tag class="ml-2" type="success">{{ this.item.category.name }}</el-tag>
                     </div>
                 </div>
                 <div class="body">
 
-                
-                <div class="user-display">
-                    <div>
-                        <AvaterUsr></AvaterUsr>
+
+                    <div class="user-display">
+                        <div>
+                            <AvaterUsr></AvaterUsr>
+                        </div>
+                        <div>
+                            {{ this.item.user }}
+                        </div>
                     </div>
+
+                    <div v-if="this.item.goods_brief">
+                        {{ this.item.goods_brief }}
+                    </div>
+
+                    <div v-if="this.item.goods_desc">
+                        <!-- {{offering.goods_desc}} -->
+                        <img :src="`${this.item.goods_desc}`" class="img-display" />
+                    </div>
+
+
+
+
                     <div>
-                        {{ this.need.user }}
+                        <el-icon>
+                            <House />
+                        </el-icon> {{ "地址: " + item.address }}
+                    </div>
+
+                    <div class="item-time" v-if="this.item.add_time && this.item.expected_end_time">
+                        {{ formatDateTime(this.item.add_time) }} ~ {{ formatDateTime(this.item.expected_end_time) }}
                     </div>
                 </div>
-
-                <div v-if="this.need.goods_brief">
-                    {{this.need.goods_brief}}
-                </div>
-                
-                <div v-if="this.need.goods_desc">
-                    {{ this.need.goods_desc }}
-                </div>
-
-
-                
-
-                <div>
-                    <el-icon>
-                        <House />
-                    </el-icon> {{ "地址: " + need.address }}
-                </div>
-
-                <div class="need-time" v-if="this.need.add_time && this.need.expected_end_time">
-                    {{formatDateTime(this.need.add_time)}} ~ {{formatDateTime(this.need.expected_end_time)}}
-                </div>
-            </div>
             </el-main>
             <el-footer id="FooterBack">
                 Looking at good ID: {{ this.$route.query.id }} <br>
@@ -60,7 +60,7 @@
 /* eslint-disable */
 import { onMounted } from 'vue'
 
-import { getGoodsDetail } from '../api/api';
+import { getOfferingDetail } from '../api/api';
 import { emergency_levels, item_type } from './dataTypes'
 import { formatDateTime } from './utils'
 import AvaterUsr from './components/AvaterUser.vue'
@@ -71,8 +71,8 @@ export default {
             itemId: -1,
             ButtonLeft: "求助",
             ButtonRight: "我的提供",
-            need: {},
-            need_test: {
+            item: {},
+            item_test: {
                 name: '矿泉水喝完了',
                 tags: ['饮用品', '水', '较紧急'],
                 desc: "饮水机坏了，被封着快没水了。",
@@ -83,11 +83,11 @@ export default {
         }
     },
     methods: {
-        getGoodById(goodId) {
-            getGoodsDetail(goodId).then(response => {
+        getItemById(item_id) {
+            getOfferingDetail(item_id).then(response => {
                 console.log(response.data)
-                this.need = response.data
-                console.log(this.need.category.name)
+                this.item = response.data
+                console.log(this.item.category.name)
             })
         },
         formatDateTime,
@@ -95,7 +95,7 @@ export default {
     created() {
         onMounted(() => {
             console.log("detail page")
-            this.getGoodById(this.$route.query.id)
+            this.getItemById(this.$route.query.id)
             console.log(emergency_levels)
             // console.log(this.$route.query.id)
         })
@@ -120,7 +120,7 @@ export default {
     text-indent: 2ch;
 }
 
-.need-title {
+.item-title {
     /* align-self: flex-end; */
     font-size: xx-large;
     /* background-color: lightgrey; */
@@ -128,7 +128,7 @@ export default {
     flex-direction: row;
 }
 
-.need-title .tags {
+.item-title .tags {
     display: flex;
     margin-left: auto;
     align-items: center;
@@ -143,11 +143,16 @@ export default {
     font-size: large;
 }
 
-.need-time {
-  text-align: right;
-  font-size: smaller;
-  color: dimgray;
+.item-time {
+    text-align: right;
+    font-size: smaller;
+    color: dimgray;
 }
+.img-display {
+  width: 80%;
+  height: 80%;
+}
+
 #headerBack {
     display: flex;
     margin-bottom: 20px;
@@ -161,7 +166,7 @@ export default {
 }
 
 #FooterBack {
-    background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat;
+    /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
     background-size: cover;
 }
 </style>

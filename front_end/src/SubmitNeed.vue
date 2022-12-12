@@ -69,9 +69,7 @@ let form = reactive({
 //     4: '非常紧急',
 //     5: '十万火急'
 // }
-// const goBack = () => {
-//     history.back();
-// }
+
 import { addNeeds, getCategory } from '../api/api'
 export default {
     data() {
@@ -109,7 +107,7 @@ export default {
                 "category" : (this.typesData[form.type[0]]),
                 "property_type" : 0,
                 "emergency" : form.priority,
-                // "expected_end_time" : form.date[1].toDateString(),
+                "expected_end_time" : form.date[1],
                 "name" : form.name,
                 "address" : form.region,
                 "goods_brief" : form.desc,
@@ -121,6 +119,9 @@ export default {
             // setTimeout(() => {
             //     this.$router.push('/')
             // }, 10000)
+        },
+        goBack (){
+            history.back();
         },
 
     }

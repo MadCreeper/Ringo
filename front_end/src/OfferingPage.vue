@@ -6,9 +6,9 @@
       </el-header>
       <el-main id="MainBack">
         <div>
-          <div style="margin-bottom: 15px">Switch:
+          <!-- <div style="margin-bottom: 15px">Switch:
             <el-switch v-model="fill" />
-          </div>
+          </div> -->
           <el-space :fill="fill" wrap>
             <el-card @click="gotoDetails(offering.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
               v-for="offering in offerings" :key="offering">
@@ -22,7 +22,6 @@
 
                   <div class="tags">
                     <el-tag class="ml-2" type="success" v-if="offering.category">{{ offering.category.name }}</el-tag>
-                    <el-tag class="ml-2" type="danger">{{ emergency_levels[offering.emergency] }}</el-tag>
                   </div>
 
                   <div class="line-break"></div>
@@ -36,7 +35,7 @@
 
                 </div>
                 <div class="username-display">
-                  用户：{{ offering.user }}
+                  <!-- 用户：{{ offering.user }} -->
                 </div>
               </template>
               <!-- user name -->
@@ -45,7 +44,7 @@
               </div>
 
               <!-- 简介 -->
-              <div v-snip:js="3">
+              <div v-snip:js="5">
                 {{ offering.goods_brief }}
               </div>
               <div>
@@ -53,9 +52,16 @@
                   <House />
                 </el-icon> {{ "地址: " + offering.address }}
               </div>
-              <div class="submit-time">
-                {{ offering.add_time }}
+              <div v-if="offering.goods_desc">
+                <!-- {{offering.goods_desc}} -->
+                <img :src="`${offering.goods_desc}`" class="img-display" />
               </div>
+
+              <div class="submit-time">
+                {{ formatDateTime(offering.add_time) }}
+              </div>
+
+
             </el-card>
           </el-space>
         </div>
@@ -72,6 +78,7 @@
 import Navigator from './components/NavigationBar.vue'
 import foo from './components/FooterGrid.vue'
 import { getOffering } from '../api/api';
+import { formatDateTime } from './utils'
 export default {
   data() {
     return {
@@ -90,7 +97,7 @@ export default {
       getOffering().then(response => {
         this.offerings = response.data.results;
         console.log("offerings:")
-        console.log(this.offerings);
+        console.log(this.offerings)
       })
         .catch(
           err => {
@@ -101,22 +108,24 @@ export default {
     },
     gotoDetails(item_id) {
       this.$router.push({
-        path: '/details',
+        path: '/offerdetails',
         query: {
           id: item_id
         }
       })
       console.log("test details")
     },
+    formatDateTime,
   },
   provide() {
     return {
       message: '/info',
       messageFooLeft: '/',
       messageFooRight: '/Manage',
-      messageFooMid: '/addoffer'
+      messageFooMid: '/submitoffer'
     }
-  }
+  },
+  
 }
 </script>
 <style scoped>
@@ -173,6 +182,12 @@ export default {
   font-size: smaller;
   color: dimgray;
 }
+
+.img-display {
+  width: 80%;
+  height: 80%;
+}
+
 #headerBack {
   margin-bottom: 20px;
   background: #fff url("https://uploadfile.bizhizu.cn/up/cc/d0/87/ccd08766b03deca06263f0d8e0013dec.jpg") no-repeat;
@@ -183,7 +198,7 @@ export default {
   background-size: cover;
 }
 #FooterBack {
-  background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat;
+  /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
   background-size: cover;
 }
 </style>

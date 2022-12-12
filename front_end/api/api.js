@@ -70,3 +70,5 @@ export const updateOffering = (addressId, params) => {return axios.patch(`${loca
 
 //获取需求
 export const getOffering = () => {return axios.get(`${local_host}/apis/offering/`)}
+
+export const getOfferingDetail = itemId => {return axios.get(`${local_host}/apis/offering/${itemId}`+'/')}
