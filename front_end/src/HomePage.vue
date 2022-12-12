@@ -124,7 +124,8 @@ export default {
     return {
       message: '/info',
       messageFooLeft: '/request',
-      messageFooRight: '/offer'
+      messageFooRight: '/offer',
+      messageFooMid: '/request',
     }
   }
 }
