@@ -45,7 +45,7 @@ export const getUserDetail = () => { return axios.get(`${local_host}/apis/user_p
 
 
 //修改信息
-export const updateUserInfo = params => { return axios.patch(`${local_host}/apis/user_profile`, params) }
+export const updateUserInfo = params => { return axios.post(`${local_host}/apis/user_profile`, params) }
 
 //添加需求
 export const addNeeds = params => {return axios.post(`${local_host}/apis/need/`, params)}
