@@ -71,6 +71,12 @@
         <el-col :span="22">
         <el-button type="primary" @click="changeinfo">修改个人信息</el-button>
         </el-col>
+         <el-col :span="2">
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+        <el-col :span="22">
+        <el-button type="primary" @click="quit">退出登陆</el-button>
+        </el-col>
       </el-row>
 
       <beautifulchat>
@@ -109,6 +115,10 @@ export default {
     },
   resetcode(){
   this.$router.push('/resetcode')
+  },
+  quit(){
+  this.$router.push('/login')
+  window.localStorage.removeItem("token")
   },
   changeinfo(){
   this.$router.push('/changeinfo')
