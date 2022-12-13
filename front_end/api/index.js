@@ -1,5 +1,6 @@
 import axios from 'axios'
 axios.defaults.timeout = 50000
+const JWT_PREFIX = "JWT  "
 
 axios.interceptors.request.use(
   config => {
@@ -9,10 +10,10 @@ axios.interceptors.request.use(
     return config
   }
   else if (localStorage.token) { //判断token是否存在
-    config.headers.Authorization ="JWT "+localStorage.token;  //将token设置成请求头
+    config.headers.Authorization = JWT_PREFIX + localStorage.token;  //将token设置成请求头
   }
   else{
-    config.headers.Authorization ="JWT  "+"sdadasd";
+    config.headers.Authorization = JWT_PREFIX +"sdadasd";
   }
   return config
 }, error => {
