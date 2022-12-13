@@ -1,0 +1,37 @@
+asgiref==3.2.10
+asn1crypto==1.4.0
+backports.csv==1.0.7
+bleach==3.2.1
+certifi==2020.6.20
+cffi==1.14.3
+chardet==3.0.4
+colorama==0.4.3
+coreapi==2.3.3
+coreschema==0.0.4
+cryptography==3.1
+defusedxml==0.6.0
+#demjson==2.2.4
+diff-match-patch==20200713
+Django==3.1.1
+django-cors-headers==3.5.0
+django-crispy-forms==1.9.2
+django-filter==2.3.0
+django-formtools==2.2
+django-guardian==2.3.0
+django-import-export==2.3.0
+django-qiniu-storage==2.3.1
+django-ranged-response==0.2.0
+django-redis==4.12.1
+django-reversion==3.0.8
+django-simple-captcha==0.5.12
+djangorestframework==3.11.1
+djangorestframework-jwt==1.11.0
+
+{
+    "category":{"id":1,"name":"可乐","code":"1","desc":"1","category_type":1,"add_time":"2022-12-11T23:09:26Z","parent_category":null},
+    "property_type":1,
+    "emergency":2,
+    "name":"大可乐",
+    "address":"shanghai",
+    "goods_brief":"无"
+    }
