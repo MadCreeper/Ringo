@@ -44,7 +44,7 @@ class GoodsCategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, vie
     queryset = GoodsCategory.objects.all()
     serializer_class = CategorySerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('category_type',)
+    filter_fields = ('category_type','parent_category')
 
 class GoodsListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
