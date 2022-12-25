@@ -13,13 +13,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from goods.filters import GoodsFilter
-from goods.serializers import GoodsSerializer, CategorySerializer
+from goods.serializers import GoodsSerializer, CategorySerializer, NeedsHaystackSerializer
 from .models import Goods, GoodsCategory
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_haystack.viewsets import HaystackViewSet
 
 # 商品列表分页类
 
@@ -32,6 +33,9 @@ class GoodsPagination(PageNumberPagination):
     page_query_param = "page"
     max_page_size = 100
 
+class NeedsSearchView(HaystackViewSet):
+    index_models = [Goods]
+    serializer_class = NeedsHaystackSerializer
 
 class GoodsCategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """

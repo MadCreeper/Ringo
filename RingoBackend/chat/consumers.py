@@ -40,8 +40,6 @@ class ChatConsumer(WebsocketConsumer):
          from_user = text_data_json['from_user']
          to_user =  text_data_json['to_user'] 
          room = text_data_json['room'] 
-         print(text_data_json)
-         datetime_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
          self.save_msg(from_user,to_user, room, message)
          # 发送消息到频道组，频道组调用chat_message方法
          async_to_sync(self.channel_layer.group_send)(

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from goods.views import GoodsListViewSet, GoodsCategoryViewset
+from goods.views import GoodsListViewSet, GoodsCategoryViewset, NeedsSearchView
 from user_operation.views import  UserOfferingViewset, UserNeedsViewset
 from chat.views import MessageHistoryViewSet
 from rest_framework.routers import DefaultRouter
@@ -43,6 +43,8 @@ router.register(r'apis/category', GoodsCategoryViewset, basename="category")
 router.register(r'apis/need', UserNeedsViewset, basename="need")
 
 router.register(r'apis/history', MessageHistoryViewSet, basename="history")
+
+router.register(r"apis/search", NeedsSearchView, basename='needs-search')
 
 urlpatterns = [
     re_path('^', include(router.urls)),
