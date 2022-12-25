@@ -34,7 +34,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Application definition
 
 INSTALLED_APPS = [
-    # 'daphne',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -89,7 +89,7 @@ CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'RingoBackend.urls'
 
 WSGI_APPLICATION = 'RingoBackend.wsgi.application'
-# ASGI_APPLICATION = "RingoBackend.asgi.application"
+ASGI_APPLICATION = "RingoBackend.asgi.application"
 
 
 CHANNEL_LAYERS = {

@@ -6,6 +6,12 @@
      <title>Chat Room</title>
  </head>
  <body>
+    <div id="chat-record">
+        {% for m in msgs %}
+            <span>{{m.content}}</span><br>
+            <span>{{m.from_user}}</span><br>
+        {% endfor %}
+    </div>
      <textarea id="chat-log" cols="100" rows="20"></textarea><br>
      <input id="chat-message-input" type="text" size="100"><br>
      <input id="chat-message-submit" type="button" value="Send">
@@ -56,7 +62,11 @@
               
               //注意这里:先把文本数据转成json格式,然后调用send方法发送。
               chatSocket.send(JSON.stringify({
-                  'message': message
+                  'message': message,
+                  'from_user':'peanut',
+                  'to_user':'132ash',
+                  'room':roomName,
+                  'time':0
               }));
               messageInputDom.value = '';
           };

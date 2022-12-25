@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from goods.views import GoodsListViewSet, GoodsCategoryViewset
 from user_operation.views import  UserOfferingViewset, UserNeedsViewset
+from chat.views import MessageHistoryViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from rest_framework.documentation import include_docs_urls
@@ -41,11 +42,14 @@ router.register(r'apis/category', GoodsCategoryViewset, basename="category")
 
 router.register(r'apis/need', UserNeedsViewset, basename="need")
 
+router.register(r'apis/history', MessageHistoryViewSet, basename="history")
+
 urlpatterns = [
     re_path('^', include(router.urls)),
     path('docs/', include_docs_urls(title='RingoApis')),
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
+    path('chat/', include('chat.urls')),
     path('apis/user_profile', opView.PersonalProfileView.as_view())
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
