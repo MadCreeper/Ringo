@@ -6,7 +6,6 @@ import home from './HomePage.vue'
 import Info from './PersonalInfo.vue'
 import Login from './LoginPage.vue'
 import manage from './ManagePage.vue'
-import chat from './PrivateChat.vue'
 import chat2 from './BeautifulChat.vue'
 import submitNeed from './SubmitNeed.vue'
 import mytest from './MyTest.vue'
@@ -21,8 +20,6 @@ import changeinfo from './ChangeInfo.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
-    { path: '/chattest', component: chat},
-    { path: '/chat2', component: chat2},
     { path: '/request', component: submitNeed},
     { path: '/test', component: mytest},
     { path: '/offer',component: Offer},
