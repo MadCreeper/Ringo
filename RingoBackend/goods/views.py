@@ -41,7 +41,7 @@ class GoodsCategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, vie
     retrieve:
         获取商品分类详情
     """
-    queryset = GoodsCategory.objects.all()
+    queryset = GoodsCategory.objects.all().order_by('id')
     serializer_class = CategorySerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('category_type','parent_category')
@@ -52,7 +52,7 @@ class GoodsListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewset
     """
     serializer_class = GoodsSerializer
     pagination_class = GoodsPagination
-    queryset = Goods.objects.filter(property_type=0)
+    queryset = Goods.objects.filter(property_type=0).order_by('goods_sn')
 
 
     # 设置三大常用过滤器之DjangoFilterBackend, SearchFilter
