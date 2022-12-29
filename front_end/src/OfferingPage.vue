@@ -2,7 +2,16 @@
   <div class="common-layout">
     <el-container>
       <el-header id="headerBack" height="200px">
-        <Navigator :msg="redirect" />
+        <div class="header-bottom force-bottom">
+          <el-row :gutter="20" type="flex">
+            <el-col :span="1" :offset="21" type="flex">
+              <div class="x-right">
+              <AvaterUsr></AvaterUsr>
+            </div>
+            </el-col>
+
+          </el-row>
+        </div>
       </el-header>
       <el-main id="MainBack">
         <div>
@@ -75,20 +84,22 @@
 
 <script>
 // import car from './components/MsgCard.vue'
-import Navigator from './components/NavigationBar.vue'
+// import Navigator from './components/NavigationBar.vue'
 import foo from './components/FooterGrid.vue'
 import { getOffering } from '../api/api';
 import { formatDateTime } from './utils'
+import AvaterUsr from './components/AvaterUser.vue'
+
 export default {
   data() {
     return {
-      offerings : [],
+      offerings: [],
       url: ["https://th.bing.com/th/id/R.d6d3aae7006611f68786a47e377c39ea?rik=7IrzMCwE5z2KgQ&riu=http%3a%2f%2fpic.ntimg.cn%2f20131028%2f13984383_171843651115_2.jpg&ehk=4SCA2042hzkkZofnLUSML2WgVzwz9RMXyKkXwc2zHG0%3d&risl=&pid=ImgRaw&r=0", "https://th.bing.com/th/id/R.0dd6c1000fa35050a64655170c58f883?rik=mK5hurvwok%2bA8g&pid=ImgRaw&r=0"],
       ButtonLeft: "HomePage",
       ButtonRight: "管理"
     }
   },
-  components: { Navigator, foo },
+  components: { foo, AvaterUsr },
   mounted: function () {
     this.loadOfferings()
   },
@@ -121,51 +132,64 @@ export default {
     return {
       message: '/info',
       messageFooLeft: '/',
-      messageFooRight: '/Manage',
+      messageFooRight: '/offer',
       messageFooMid: '/submitoffer'
     }
   },
-  
+
 }
 </script>
 <style scoped>
-.el-container {
-  height: 95vh;
+.el-header {
+  display: flex;
+  flex-direction: column;
 }
+
+.el-container {
+  height: 100vh;
+}
+
 .box-card {
   width: 80vw;
   text-overflow: ellipsis;
 }
+
 .box-card-fold {
   width: 40vw;
   height: fit-content;
   text-overflow: ellipsis;
 }
+
 .card-header {
   display: flex;
   flex-direction: row;
 }
+
 .card-header .name {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
 .card-header .tags {
   display: flex;
   margin-left: auto;
   align-items: center;
   gap: 10px;
 }
+
 .card-header-fold {
   display: flex;
   flex-direction: column;
 }
+
 .card-header-fold .name {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
 .card-header-fold .tags {
   width: 100%;
   display: flex;
@@ -173,10 +197,12 @@ export default {
   align-items: flex-start;
   gap: 5px;
 }
+
 .username-display {
   font-size: small;
   color: dimgray;
 }
+
 .submit-time {
   text-align: right;
   font-size: smaller;
@@ -189,16 +215,24 @@ export default {
 }
 
 #headerBack {
-  margin-bottom: 20px;
-  background: #fff url("https://uploadfile.bizhizu.cn/up/cc/d0/87/ccd08766b03deca06263f0d8e0013dec.jpg") no-repeat;
+  margin-bottom: 5px;
+  background: #a1d9ea url("https://i.328888.xyz/2022/12/29/UPVpL.png") center center no-repeat;
+  background-position: center;
   background-size: cover;
+  background-size: auto 100%;
 }
+
 #MainBack {
   background: linear-gradient(0deg, rgb(213, 255, 216) 0%, rgb(240, 240, 240) 100%);
   background-size: cover;
 }
+
 #FooterBack {
   /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
   background-size: cover;
 }
 </style>
+
+
+
+<style src="./css/header.css"  lang="css" scoped />

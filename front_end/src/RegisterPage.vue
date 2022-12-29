@@ -1,8 +1,8 @@
 <template>
 <el-container>
-      <el-header id="headerBack" height="200px" >
+      <!-- <el-header id="headerBack" height="200px" >
       <Navigator :msg="redirect"/>
-      </el-header>
+      </el-header> -->
       <el-main id="MainBack" height="200px">
     <div class="box">
     <div class="left"></div>
@@ -21,7 +21,7 @@
     </div>
     </div>
       </el-main>
-      <el-footer id="FooterBack" height="200px"> <foo :ButtonLeft="ButtonLeft" :ButtonRight="ButtonRight" ></foo></el-footer>
+      <!-- <el-footer id="FooterBack" height="200px"> <foo :ButtonLeft="ButtonLeft" :ButtonRight="ButtonRight" ></foo></el-footer> -->
     </el-container>
 </template>
 <script>
