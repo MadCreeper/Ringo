@@ -2,13 +2,48 @@
   <div class="common-layout">
     <el-container>
       <el-header id="headerBack" height="200px">
-        <Navigator :msg="redirect" />
+        <div >
+          <div v-if="titleImgUrl">
+                <!-- {{offering.goods_desc}} -->
+                
+              <img :src="`${titleImgUrl}`" width="100" />
+              Our logo / app name text here 
+          </div>
+        </div>
+        <div class="header-searchbar">
+          <el-input v-model="search_text" placeholder="请输入搜索内容" class="input">
+            <template #append>
+              <el-button :icon="Search" @click="getBySearch(search_text)" />
+            </template>
+          </el-input>
+        </div>
+        <div class="header-bottom">
+          <el-row :gutter="20" type="flex">
+            <el-col :span="8">
+              <el-select v-model="sort_method" class="m-2" placeholder="默认排序" size="small"
+                @change="getSorted(sort_method)">
+                <el-option v-for="item in sort_options" :key="item.value" :label="item.label" :value="item.value" />
+              </el-select>
+            </el-col>
+            <el-col :span="3">
+              <el-switch v-model="fill" class="ml-2" inline-prompt
+                style="--el-switch-on-color: #13ce66; --el-switch-off-color: #339933" active-text="展开"
+                inactive-text="折叠" />
+            </el-col>
+            <el-col :span="1" :offset="10" type="flex">
+              <div class="x-right">
+              <AvaterUsr></AvaterUsr>
+            </div>
+            </el-col>
+
+          </el-row>
+        </div>
+
       </el-header>
+
       <el-main id="MainBack">
         <div>
-          <div style="margin-bottom: 15px">Switch:
-            <el-switch v-model="fill" />
-          </div>
+
           <el-space :fill="fill" wrap>
             <el-card @click="gotoDetails(need.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
               v-for="need in needs" :key="need">
@@ -56,7 +91,7 @@
               <div class="submit-time">
                 {{ formatDateTime(need.add_time) }}
                 <div v-if="need.expected_end_time">
-                  {{ formatDateTime(need.expected_end_time)}}
+                  {{ formatDateTime(need.expected_end_time) }}
                 </div>
               </div>
             </el-card>
@@ -74,20 +109,21 @@
 import { ref, onMounted } from 'vue'
 const fill = ref(true)
 onMounted(() => {
-    console.log("hello mainpage")
+  console.log("hello mainpage")
 })
 </script>
 <script>
 import foo from './components/FooterGrid.vue'
-import Navigator from './components//NavigationBar.vue'
+// import Navigator from './components//NavigationBar.vue'
 import { getGoods } from '../api/api';
-import { emergency_levels } from './dataTypes'
+import { emergency_levels, sort_options } from './dataTypes'
 import { formatDateTime } from './utils'
-
-
+import AvaterUsr from './components/AvaterUser.vue'
+import { Search } from '@element-plus/icons-vue'
+import {titleImgUrl} from './resources'
 
 export default {
-  components: { foo, Navigator },
+  components: { foo, AvaterUsr },
   data() {
     return {
       ButtonLeft: "求助",
@@ -95,24 +131,27 @@ export default {
       needs: [
       ],
       test_tags: ["tag1", "tag2", "tag3"],
+      sort_options,
+      sort_method: "默认排序",
+      search_text: ""
     }
   },
-  mounted: function (){
+  mounted: function () {
     this.loadNeeds()
   },
   methods: {
-    loadNeeds() {
-      getGoods().then(response => {
+    loadNeeds(params) {
+      getGoods(params).then(response => {
         this.needs = response.data.results;
         console.log("needs:")
         console.log(this.needs);
       })
-      .catch(
-        err => {
-          console.log(err)
-          this.$router.push('/login')
-        }
-      )
+        .catch(
+          err => {
+            console.log(err)
+            this.$router.push('/login')
+          }
+        )
     },
     gotoDetails(need_id) {
       this.$router.push({
@@ -123,12 +162,25 @@ export default {
       })
       console.log("test details")
     },
+    getSorted(sort_method) {
+      console.log("sort method:" + sort_method)
+      this.loadNeeds({
+        "search": this.search_text,
+        "ordering": sort_method
+      })
+    },
+    getBySearch(search_text) {
+      this.loadNeeds({
+        "search": search_text,
+        "ordering": this.sort_method
+      })
+    },
     formatDateTime,
   },
   provide() {
     return {
       message: '/info',
-      messageFooLeft: '/request',
+      messageFooLeft: '/',
       messageFooRight: '/offer',
       messageFooMid: '/request',
     }
@@ -136,8 +188,13 @@ export default {
 }
 </script>
 <style scoped>
+.el-header {
+  display: flex;
+  flex-direction: column;
+}
+
 .el-container {
-  height: 95vh;
+  height: 100vh;
 }
 
 .box-card {
@@ -200,19 +257,32 @@ export default {
   color: dimgray;
 }
 
+
+
+
+
 #headerBack {
-  margin-bottom: 20px;
-  background: #fff url("https://uploadfile.bizhizu.cn/up/cc/d0/87/ccd08766b03deca06263f0d8e0013dec.jpg") no-repeat;
+  margin-bottom: 5px;
+  background: #a1d9ea url("https://i.328888.xyz/2022/12/29/UPVpL.png") center center no-repeat;
+  background-position: center;
   background-size: cover;
+  background-size: auto 100%;
 }
 
 #MainBack {
-  background: linear-gradient(0deg, rgb(213, 255, 216) 0%, rgb(240, 240, 240) 100%);
+  background: rgb(229, 250, 231);
   background-size: cover;
 }
 
 #FooterBack {
   /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
+  background: rgb(229, 250, 231);
   background-size: cover;
 }
 </style>
+
+
+
+
+
+<style src="./css/header.css"  lang="css" scoped />

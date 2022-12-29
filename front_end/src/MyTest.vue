@@ -7,14 +7,22 @@
   {{need.title}}
   {{need.author}}
 </el-card>
-
+<el-switch
+    v-model="value6"
+    class="ml-2"
+    width="60"
+    inline-prompt
+    active-text="超出省略"
+    inactive-text="超出省略"
+  />
 </template>
 
 <script setup>
 </script>
 <script>
 import { getNeeds } from '../api/index';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+const value6 = ref(true);
 export default {
   setup () {
      onMounted(() => {
