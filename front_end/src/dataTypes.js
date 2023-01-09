@@ -21,6 +21,16 @@ export const item_type = {
 };
 
 
+export const sort_options = [
+  {'value': '-emergency',
+   'label': "按紧急度排序"
+  },
+  {'value': 'add_time',
+   'label': "按时间排序"
+  },
+]
+
+
 export const requests_test = [
     {
       name: '矿泉水喝完了',
