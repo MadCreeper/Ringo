@@ -13,16 +13,15 @@ from django.core.asgi import get_asgi_application
 from django.urls import path
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-from chat.consumers import ChatConsumer, PushConsumer
+import chat.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RingoBackend.settings')
 
 application = ProtocolTypeRouter({
   "http": get_asgi_application(),
   "websocket": AuthMiddlewareStack(
-    URLRouter([
-        path("ws/<str:room_name>/",ChatConsumer.as_asgi()),
-        path("ws/<str:user>/",PushConsumer.as_asgi()),
-      ])
+    URLRouter(
+       chat.routing.websocket_urlpatterns
+    )
   )
 })

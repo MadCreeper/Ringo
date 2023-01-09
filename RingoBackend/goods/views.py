@@ -6,20 +6,20 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.authentication import TokenAuthentication
 
-from rest_framework import status
-from rest_framework.generics import ListAPIView
+
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from rest_framework.views import APIView
+
 
 from goods.filters import GoodsFilter
-from goods.serializers import GoodsSerializer, CategorySerializer
+from goods.serializers import GoodsSerializer, CategorySerializer, NeedsHaystackSerializer
 from .models import Goods, GoodsCategory
 from rest_framework import mixins
-from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_haystack.viewsets import HaystackViewSet
+from haystack.views import SearchView
+from django.http import JsonResponse  
 
 # 商品列表分页类
 
@@ -32,6 +32,45 @@ class GoodsPagination(PageNumberPagination):
     page_query_param = "page"
     max_page_size = 100
 
+class NeedsSearchView(HaystackViewSet):
+    index_models = [Goods]
+    serializer_class = NeedsHaystackSerializer
+# from haystack.views import SearchView
+
+
+class MySearchView(SearchView):
+    '''重写SearchView类'''
+    # 指明每页显示 3个
+    results_per_page = 5
+
+    # 重写 父类  create_response == >JsonResponse
+    def create_response(self):
+
+        # 搜索引擎 给我的数据
+        context = self.get_context()
+        print(context)
+
+        page = context.get('page')
+        object_list = page.object_list
+        data_list = []
+        all_pages = context['page'].paginator.num_pages
+        for good in object_list:
+            serializer = GoodsSerializer(good.object)
+            data_list.append(serializer.data)
+        print(page.number)
+        # 因为前端向后端要前一页和后一页的地址，所以手动传给前端
+        text = context.get('query')
+        if int(page.number) < int(all_pages):
+            # next = f'http://127.0.0.1:8000/article/-1/channel/?page={str(int(page.number) + 1)}'
+            next = f'http://127.0.0.1:8000/apis/search/?q={text}&page={str(int(page.number) + 1)}'
+        else:
+            next = None
+        if int(page.number) > 1:
+            previous = f'http://127.0.0.1:8000/apis/search/?q={text}&page={str(int(page.number) - 1)}'
+        else:
+            previous = None
+        # return JsonResponse(data_list, safe=False)
+        return JsonResponse({'count': len(context), 'next': next, 'previous': previous, 'results': data_list})
 
 class GoodsCategoryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """

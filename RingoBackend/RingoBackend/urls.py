@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from goods.views import GoodsListViewSet, GoodsCategoryViewset
-from user_operation.views import  UserOfferingViewset, UserNeedsViewset
+from goods.views import GoodsListViewSet, GoodsCategoryViewset, MySearchView
+from user_operation.views import  UserOfferingViewset, UserNeedsViewset, UserNeedsViewset
+from chat.views import MessageHistoryViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from rest_framework.documentation import include_docs_urls
@@ -27,6 +28,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from django.conf.urls.static import static
 import RingoBackend.settings as settings
 import user_operation.views as opView
+from haystack.views import SearchView
 
 
 router = DefaultRouter()
@@ -41,11 +43,18 @@ router.register(r'apis/category', GoodsCategoryViewset, basename="category")
 
 router.register(r'apis/need', UserNeedsViewset, basename="need")
 
+router.register(r'apis/history', MessageHistoryViewSet, basename="history")
+
+# router.register(r"apis/search", NeedsSearchView, basename='needs-search')
+# router.register(r"apis/search", SearchView, basename='needs-search')
+
 urlpatterns = [
     re_path('^', include(router.urls)),
     path('docs/', include_docs_urls(title='RingoApis')),
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
-    path('apis/user_profile', opView.PersonalProfileView.as_view())
+    path('chat/', include('chat.urls')),
+    path('apis/user_profile', opView.PersonalProfileView.as_view()),
+    path("apis/search/", MySearchView())
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
