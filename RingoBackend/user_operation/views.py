@@ -129,7 +129,6 @@ class UserNeedsViewset(viewsets.ModelViewSet):
     def get_queryset(self):
        token = self.request.META['HTTP_AUTHORIZATION'][5:]
        jwtuser = jwt_decode_handler(token)
-       print(token)
        return Goods.objects.filter(property_type=0, user=jwtuser["username"])
 
 

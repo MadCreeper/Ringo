@@ -2,6 +2,7 @@ from django.test import TestCase
 from goods.models import Goods, GoodsCategory
 from django.contrib.auth.models import User
 import datetime
+import json
 
 # Create your tests here.
 class GoodsModelTest(TestCase):
@@ -143,3 +144,32 @@ class NeedsViewsetTest(TestCase):
       res = self.client.get('/apis/goods/?top_category=%d'%topid)
       res_data = res.json()
       self.assertEqual(res_data.get('count'), 2)
+
+class NeedsSearchTest(TestCase):
+   def setUp(self):
+        user = User.objects.create(username = 'user1', password = '123')
+
+        topCategory = GoodsCategory.objects.create(name="topCategory", category_type = 1)
+
+        secondCategory = GoodsCategory.objects.create(name="secondCategory", category_type = 2, parent_category=topCategory)
+
+
+        category = GoodsCategory.objects.create(name="药品", category_type = 3,parent_category=secondCategory)
+ 
+        need1 = Goods.objects.create(property_type=0,category=category,emergency=5,user=user,name='莲花清瘟胶囊',address='addr',goods_brief="清热解毒", goods_desc = "清热解毒的莲花清瘟胶囊")
+        need2 = Goods.objects.create(property_type=0,category=category,emergency=3,user=user,name='布洛芬缓释',address='addr',goods_brief="布洛芬缓释胶囊")
+        need3 = Goods.objects.create(property_type=0,category=category,emergency=3,user=user,name='维C银翘',address='addr',goods_desc="维C银翘胶囊")
+
+   def test_search(self):
+      res = self.client.get('/apis/search/?q=胶囊&page=1')
+      res_data = res.json()
+      names = ['莲花清瘟胶囊', '布洛芬缓释', '维C银翘']
+      goods = [Goods.objects.get(name=i) for i in names]
+      goods_sn_set = set([i.goods_sn for i in goods])  
+      goods_sn_set_search = set()    
+      for good in res_data.get("results"):
+           goods_sn_set_search.add(good.get("goods_sn"))
+      self.assertEqual(goods_sn_set_search, goods_sn_set)
+      
+           
+        

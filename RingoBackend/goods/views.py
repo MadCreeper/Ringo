@@ -48,7 +48,6 @@ class MySearchView(SearchView):
 
         # 搜索引擎 给我的数据
         context = self.get_context()
-        print(context)
 
         page = context.get('page')
         object_list = page.object_list
@@ -57,7 +56,6 @@ class MySearchView(SearchView):
         for good in object_list:
             serializer = GoodsSerializer(good.object)
             data_list.append(serializer.data)
-        print(page.number)
         # 因为前端向后端要前一页和后一页的地址，所以手动传给前端
         text = context.get('query')
         if int(page.number) < int(all_pages):

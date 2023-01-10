@@ -5,6 +5,7 @@ from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.models import User
 from chat.models import Message
 import datetime
+
  
 
 
@@ -22,7 +23,7 @@ class ChatConsumer(WebsocketConsumer):
              self.room_group_name,
              self.channel_name
          )
- 
+      
          # 接受所有websocket请求
          self.accept()
  
@@ -32,6 +33,7 @@ class ChatConsumer(WebsocketConsumer):
              self.room_group_name,
              self.channel_name
          )
+     
  
      # 从websocket接收到消息时执行函数
      def receive(self, text_data):
@@ -48,15 +50,18 @@ class ChatConsumer(WebsocketConsumer):
                  'type': 'chat_message',
                  'message': message,
                  'from_user':from_user,
-                 'to_user':to_user
+                 'to_user':to_user,
+                 'room':room
              }
          )
+    
  
      # 从频道组接收到消息后执行方法
      def chat_message(self, event):
          message = event['message']
          from_user = event['from_user']
          to_user =  event['to_user']     
+         room =  event['room']  
          datetime_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
  
          # 通过websocket发送消息到客户端
@@ -65,5 +70,6 @@ class ChatConsumer(WebsocketConsumer):
              'message': message,
              'from_user': from_user,
              'to_user':to_user,
-             'time':datetime_str
+             'time':datetime_str,
+             'room':room
          }))
