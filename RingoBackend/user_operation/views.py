@@ -151,6 +151,7 @@ class PersonalProfileView(APIView):
         return Response(data={**serializer.data, 'created' :created})
     
     def post(self, request):
+        print(request.data)
         curr_user = request.user
         created = False
         if not PersonalProfile.objects.filter(owner = curr_user):

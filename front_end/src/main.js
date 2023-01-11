@@ -16,7 +16,7 @@ import register from  './RegisterPage.vue'
 import changecode from './ChangeCodePage.vue'
 import resetcode from './ResetCode.vue'
 import changeinfo from './ChangeInfo.vue'
-
+import chat2 from './PrivateChat.vue'
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },

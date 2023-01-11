@@ -6,8 +6,7 @@
           <div v-if="titleImgUrl">
                 <!-- {{offering.goods_desc}} -->
                 
-              <img src="src/assets/L.png" width="100" />
-              Our logo / app name text here 
+              <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
           </div>
         </div>
         <div class="header-searchbar">
@@ -25,14 +24,16 @@
                 <el-option v-for="item in sort_options" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="12">
               <el-switch v-model="fill" class="ml-2" inline-prompt
                 style="--el-switch-on-color: #13ce66; --el-switch-off-color: #339933" active-text="展开"
-                inactive-text="折叠" />
+                inactive-text="折叠" /> 两种展示模式，请依据喜好使用
             </el-col>
-            <el-col :span="1" :offset="10" type="flex">
+            <el-col :span="3"  type="flex" id="avatar">
               <div class="x-right">
-              <AvaterUsr></AvaterUsr>
+              <div class="block">
+        <el-avatar class="avater" size=80 :src=this.info.avatar @click="redirect"></el-avatar>
+        </div>
             </div>
             </el-col>
 
@@ -116,14 +117,14 @@ onMounted(() => {
 import foo from './components/FooterGrid.vue'
 // import Navigator from './components//NavigationBar.vue'
 import { getGoods } from '../api/api';
+import {getUserDetail} from '../api/api.js'
 import { emergency_levels, sort_options } from './dataTypes'
 import { formatDateTime } from './utils'
-import AvaterUsr from './components/AvaterUser.vue'
 import { Search } from '@element-plus/icons-vue'
 import {titleImgUrl} from './resources'
-
+import { reactive } from 'vue'
 export default {
-  components: { foo, AvaterUsr },
+  components: { foo },
   data() {
     return {
       ButtonLeft: "求助",
@@ -133,13 +134,24 @@ export default {
       test_tags: ["tag1", "tag2", "tag3"],
       sort_options,
       sort_method: "默认排序",
-      search_text: ""
+      search_text: "",
+      info:reactive({
+                owner:"",
+                nickname:"",
+                avater:"",
+                address:"",
+                signature:""
+        }),
     }
   },
   mounted: function () {
-    this.loadNeeds()
+    this.loadNeeds();
+    this.loadinfo();
   },
   methods: {
+    redirect(){
+      this.$router.push('/info')
+    },
     loadNeeds(params) {
       getGoods(params).then(response => {
         this.needs = response.data.results;
@@ -169,6 +181,20 @@ export default {
         "ordering": sort_method
       })
     },
+      loadinfo() {
+      getUserDetail().then(response => {
+        this.info = response.data;
+        this.info.avatar="http://127.0.0.1:8000"+response.data.avatar;
+        console.log("info:")
+        console.log(this.info.avatar)
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.$router.push('/login')
+        }
+      )
+    },
     getBySearch(search_text) {
       this.loadNeeds({
         "search": search_text,
@@ -176,6 +202,7 @@ export default {
       })
     },
     formatDateTime,
+
   },
   provide() {
     return {

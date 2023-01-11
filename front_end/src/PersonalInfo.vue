@@ -126,8 +126,9 @@ export default {
   loadinfo() {
       getUserDetail().then(response => {
         this.info = response.data;
-        console.log("needs:")
-        console.log(this.info);
+        this.info.avatar="http://127.0.0.1:8000"+response.data.avatar;
+        console.log("info:")
+        console.log(this.info.avatar)
       })
       .catch(
         err => {

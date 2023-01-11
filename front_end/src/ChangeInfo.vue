@@ -11,38 +11,17 @@
           <div class="grid-content ep-bg-purple" />
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="5" :offset="2">
-          <AvaterUsr :AvaterSize="AvaterSize"></AvaterUsr>
-          <div class="grid-content ep-bg-purple-light" />
-        </el-col>
-        <el-col :span="14">
-          <InputForm></InputForm>
-          <div class="grid-content ep-bg-purple" />
-        </el-col>
-        <el-col :span="2">
-          <div class="grid-content ep-bg-purple" />
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="2">
-          <div class="grid-content ep-bg-purple" />
-        </el-col>
-        <el-col :span="8">
-          <Uploader></Uploader>
-          <div class="grid-content ep-bg-purple-light" />
-        </el-col>
-        <el-col :span="10">
-          <div class="grid-content ep-bg-purple" />
-        </el-col>
-      </el-row>
-      <el-row>
+      <el-row >
         <el-col :span="2">
           <div class="grid-content ep-bg-purple" />
         </el-col>
         <el-col :span="22">
-        <el-button type="primary" @click="resetcode">重置密码</el-button>
-          <el-form :model="this.form" label-width="120px">
+          <el-form :model="this.form" label-width="100px" id="selectForm">
+            <el-form-item label="头像">
+            <a href="javascript:;" class="file">选择文件
+               <input type="file"  @change="onchangemd" />
+            </a>
+              </el-form-item>
             <el-form-item label="昵称">
               <el-input v-model=this.form.nickname />
             </el-form-item>
@@ -53,13 +32,18 @@
             <el-input v-model=this.form.address />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit(this.form)">Create</el-button>
+              <el-button type="primary" @click="onSubmit(this.form,this.formData)">Create</el-button>
               <el-button>Cancel</el-button>
             </el-form-item>
           </el-form>
         </el-col>
+      <el-col :span="11">
+          <div class="grid-content ep-bg-purple" />
+        </el-col>
+        <el-col :span="12">
+        <el-button type="primary" @click="resetcode">重置密码</el-button>
+        </el-col>
       </el-row>
-      
 
       <beautifulchat>
       </beautifulchat>
@@ -68,12 +52,15 @@
 
 </template>
 <script>
+
 export default {
-  components: { AvaterUsr, InputForm, Uploader },
   data() {
     return {
+      formData:new FormData(),
       AvaterSize: 80,
     form : reactive({
+    address:'',
+    avatar:'',
     nickname: '',
     signature:'',
 })
@@ -85,15 +72,27 @@ export default {
     }
   },
   methods:{
+    onchangemd(e){
+		console.log(e.target.files)//选中文件信息
+		Array.from(e.target.files).map(item => {
+         console.log(item)
+         this.form.avatar=item
+       })
+    
+	},
     goBack(){
         this.$router.push('/info')
     },
   resetcode(){
   this.$router.push('/resetcode')
   },
-          onSubmit(params){
-            console.log(params)
-            updateUserInfo(params).then(response => {
+          onSubmit(params,formData){
+            formData.append("address",params.address)
+            formData.append("avatar",params.avatar)
+            formData.append("nickname",params.nickname)
+            formData.append("signature",params.signature)
+            console.log(formData.get("avatar"))
+            updateUserInfo(formData).then(response => {
                console.log(response)
                this.$router.push('/info')
         }).catch(
@@ -109,9 +108,6 @@ export default {
 //   Back,
 // } from '@element-plus/icons-vue'
 import {updateUserInfo} from '../api/api.js'
-import AvaterUsr from './components/AvaterUser.vue'
-import InputForm from './components/InputForm.vue'
-import Uploader from './components/UploadImg.vue'
 import beautifulchat from './BeautifulChat.vue'
 </script>
 <script setup>
@@ -120,6 +116,19 @@ import { reactive } from 'vue'
 </script>
 
 <style scoped>
+@keyframes bganimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
 #Head{
   border: 1px solid;
 }
@@ -138,5 +147,72 @@ import { reactive } from 'vue'
 .grid-content {
   border-radius: 4px;
   min-height: 20px;
+}
+.el-form {
+    height: 40vh;
+    width: 100%;
+    overflow: hidden;
+    background-image:  lightblue;
+    background-size: 100%;
+    font-family: "montserrat";
+    animation: bganimation 15s infinite;
+}
+.el-container{
+  height: 100vh;
+  background-image: linear-gradient(125deg,lightblue, white );
+}
+.el-form h1 {
+    margin-top: 0;
+    font-weight: 200;
+}
+.el-form-item {
+    border: 3px solid #aaa;
+    margin: 8px 0;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 30px;
+}
+.el-form-item el-input{
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    margin-top: 6px;
+    font-size: 18px;
+    color: #fff;
+}
+.el-form-item label{
+    font-size: 100px;
+}
+
+#selectForm >>> .el-form-item__label {
+  font-size: 18px;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
 }
 </style>
