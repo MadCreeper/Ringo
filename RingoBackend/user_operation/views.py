@@ -161,9 +161,9 @@ class PersonalProfileView(APIView):
             else:
                 return Response(data = {'errorCode': 'Unexpected error.', **serializer.errors})
         profileObj = PersonalProfile.objects.get(owner = curr_user)
-        serializer = PersonalProfileSerializer(profileObj, data=request.data)
+        serializer = PersonalProfileSerializer(profileObj, data=request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(data = {**serializer.data, 'test':'saved'})
         else:
-            return Response(data=serializer.errors)
+            return Response(data={'err':serializer.errors})
