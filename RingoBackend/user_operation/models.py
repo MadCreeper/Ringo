@@ -4,9 +4,14 @@ from RingoBackend.settings import MEDIA_ROOT
 import os
 from time import strftime
 # Create your models here.
+import random
+source = "0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP"
+
+def generateCode():
+    return ''.join([random.choice(source) for i in range(10)])
 
 def upload_path(instance, filename):
-    return '/'.join(['avatar', instance.owner.username, strftime('%Y/%m/%d'), filename])
+    return '/'.join(['avatar', instance.owner.username, strftime('%Y/%m/%d'), generateCode()+filename[-4:]])
 
 class PersonalProfile(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
