@@ -59,6 +59,7 @@
           </el-form>
         </el-col>
       </el-row>
+      
 
       <beautifulchat>
       </beautifulchat>

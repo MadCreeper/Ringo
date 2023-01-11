@@ -6,7 +6,7 @@
           <div v-if="titleImgUrl">
                 <!-- {{offering.goods_desc}} -->
                 
-              <img :src="`${titleImgUrl}`" width="100" />
+              <img src="src/assets/L.png" width="100" />
               Our logo / app name text here 
           </div>
         </div>

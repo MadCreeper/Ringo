@@ -17,6 +17,7 @@ import register from  './RegisterPage.vue'
 import changecode from './ChangeCodePage.vue'
 import resetcode from './ResetCode.vue'
 import changeinfo from './ChangeInfo.vue'
+
 const routes = [
     { path: '/', component: home },
     { path: '/info', component: Info },
@@ -32,6 +33,7 @@ const routes = [
     { path: '/changecode', component : changecode},
     { path: '/resetcode',component:resetcode},
     { path: '/changeinfo',component:changeinfo},
+    { path: '/chat2',component:chat2},
 ]
 const router = createRouter({
     history: createWebHashHistory(),
