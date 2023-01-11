@@ -5,9 +5,7 @@ omit =
    manage.py 
    RingoBackend\asgi.py
    RingoBackend\wsgi.py
-   chat\views.py
    chat\consumers.py
-   chat\routing.py
 
 [report]
 show_missing = True
