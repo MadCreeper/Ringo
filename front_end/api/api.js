@@ -83,4 +83,4 @@ export const addUnreadMsg = params => {return axios.post(`${local_host}/chat/add
 export const getChatUsers = () => {return axios.get(`${local_host}/apis/group_user/`)}
 
 //获取当前聊天组的历史聊天记录， 需要认证
-export const getChatHistory = room_name => {return axios.get(`${local_host}/apis/history/?room=${room_name}` + '/')}
+export const getChatHistory = room_name => {return axios.get(`${local_host}/apis/history/?room=${room_name}`)}
