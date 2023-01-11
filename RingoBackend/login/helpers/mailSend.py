@@ -15,13 +15,18 @@ mail_sender = "lingo_sjtu@qq.com"
 mail_token = "muwnanuvchkpdfcd"
 
 
-def sendMail(reveiver, validation):
+def sendMail(receiver, validation, username):
     mimeMulti = MIMEMultipart('related')
-    mimeMulti["From"] = f"sender_name<{mail_sender}>"
-    mimeMulti["To"] = f"receiver_1_name<{reveiver}>"
+    mimeMulti["From"] = f"SJTU Ringo 交大林擒<{mail_sender}>"
+    mimeMulti["To"] = f"{username}<{receiver}>"
     subjectContent = "SJTU Lingo —— 交大林檎验证码"
     mimeMulti["Subject"] = Header(subjectContent, 'utf-8')
-    bodyContent = f"您好，这里是交大林檎\n您收到的验证码为：{validation}\n请在注册页面输入验证码，完成账号的注册"
+    bodyContent = f"{username}先生/小姐，您好。\n这里是交大林檎线上互助平台。\n\n请对您的账户{receiver}使用如下验证码\n验证码：{validation}\n\n若验证码的申请非您本人操作，可忽略这篇邮件，其他人可能错误地键入了您的电子邮箱地址。"
+    with open('RingoBackend\login\helpers\Lingo_wide.png', mode = 'rb') as fp:
+        picture = MIMEImage(fp.read())
+        picture['Content-Type'] = 'application/octet-stream'
+        picture['Content-Disposition'] = 'attachment;filename="Lingo_wide.png"'
+
     messageText = MIMEText(bodyContent, "plain", "utf-8")
     mimeMulti.attach(messageText)
 
@@ -29,5 +34,5 @@ def sendMail(reveiver, validation):
     stp.connect(mail_host, 25)
     stp.set_debuglevel(1)
     stp.login(mail_sender, mail_token)
-    stp.sendmail(mail_sender, reveiver, mimeMulti.as_string())
+    stp.sendmail(mail_sender, receiver, mimeMulti.as_string())
     stp.quit()

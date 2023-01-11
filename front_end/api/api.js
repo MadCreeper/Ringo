@@ -72,3 +72,15 @@ export const updateOffering = (addressId, params) => {return axios.patch(`${loca
 export const getOffering = () => {return axios.get(`${local_host}/apis/offering/`)}
 
 export const getOfferingDetail = itemId => {return axios.get(`${local_host}/apis/offering/${itemId}`+'/')}
+
+//建立连接/断开连接时清空未读消息,需要认证
+export const resetUnreadMsg = params => {return axios.post(`${local_host}/chat/reset_msg`, params)}
+
+//发送消息时将对方的未读消息加一，需要认证
+export const addUnreadMsg = params => {return axios.post(`${local_host}/chat/add_msg`, params)}
+
+//获取当前用户的所有聊天对象， 需要认证
+export const getChatUsers = () => {return axios.get(`${local_host}/apis/group_user/`)}
+
+//获取当前聊天组的历史聊天记录， 需要认证
+export const getChatHistory = room_name => {return axios.get(`${local_host}/apis/history/${room_name}` + '/')}

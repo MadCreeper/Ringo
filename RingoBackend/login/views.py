@@ -73,7 +73,7 @@ class UserRegisterView(APIView):
                     return Response(data={ERROR_CODE: ERR_PWDCHANGE_VERIFY_TOO_FREQUENT, **dataDict})
             veriCode = codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
-            mailSend.sendMail(reveiver=email, validation=veriCode)
+            mailSend.sendMail(receiver=email, validation=veriCode,username=username)
             return Response(data = {ERROR_CODE: MAIL_SEND_SUCCESS, **dataDict})
         else:
             veriCode = dataDict.get('veriCode')
@@ -149,7 +149,8 @@ class UserPasswordForgottenView(APIView):
                     return Response(data={ERROR_CODE:ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT, **dataDict})
             veriCode = codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
-            mailSend.sendMail(reveiver=email, validation=veriCode)
+            curr_user = User.objects.get(email = email)
+            mailSend.sendMail(receiver=email, validation=veriCode, username = curr_user.username)
             return Response(data = {ERROR_CODE:MAIL_SEND_SUCCESS, **dataDict})
         else:
             veriCodeStored = veriCodeHash.get(email)
