@@ -31,10 +31,6 @@ class MessageHistoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     filter_backends = (DjangoFilterBackend,)
     serializer_class = MessageHistorySerializer
     filter_fields = ('room',)
-    def get_queryset(self):
-       token = self.request.META['HTTP_AUTHORIZATION'][5:]
-       jwtuser = jwt_decode_handler(token)
-       return Message.objects.filter(cur_user=jwtuser["username"])
 
 class ChatGroupsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
