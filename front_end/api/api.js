@@ -84,3 +84,5 @@ export const getChatUsers = () => {return axios.get(`${local_host}/apis/group_us
 
 //获取当前聊天组的历史聊天记录， 需要认证
 export const getChatHistory = room_name => {return axios.get(`${local_host}/apis/history/?room=${room_name}`)}
+
+export const getByUrl = url => {return axios.get(url)}

@@ -17,37 +17,45 @@
                 </div>
                 <div class="body">
 
-                
-                <div class="user-display">
-                    <div>
-                        <AvaterUsr></AvaterUsr>
+
+                    <div class="user-display">
+                        <div>
+                            <AvaterUsr></AvaterUsr>
+                        </div>
+                        <div>
+                            {{ this.need.user }}
+                        </div>
+                        <div>
+                            <el-button type="primary" circle @click="startChat()">
+                                <el-icon>
+                                    <ChatLineSquare />
+                                </el-icon>
+                            </el-button>
+
+                        </div>
                     </div>
+
+                    <div v-if="this.need.goods_brief">
+                        {{ this.need.goods_brief }}
+                    </div>
+
+                    <div v-if="this.need.goods_desc">
+                        {{ this.need.goods_desc }}
+                    </div>
+
+
+
+
                     <div>
-                        {{ this.need.user }}
+                        <el-icon>
+                            <House />
+                        </el-icon> {{ "地址: " + need.address }}
+                    </div>
+
+                    <div class="need-time" v-if="this.need.add_time && this.need.expected_end_time">
+                        {{ formatDateTime(this.need.add_time) }} ~ {{ formatDateTime(this.need.expected_end_time) }}
                     </div>
                 </div>
-
-                <div v-if="this.need.goods_brief">
-                    {{this.need.goods_brief}}
-                </div>
-                
-                <div v-if="this.need.goods_desc">
-                    {{ this.need.goods_desc }}
-                </div>
-
-
-                
-
-                <div>
-                    <el-icon>
-                        <House />
-                    </el-icon> {{ "地址: " + need.address }}
-                </div>
-
-                <div class="need-time" v-if="this.need.add_time && this.need.expected_end_time">
-                    {{formatDateTime(this.need.add_time)}} ~ {{formatDateTime(this.need.expected_end_time)}}
-                </div>
-            </div>
             </el-main>
             <el-footer id="FooterBack">
                 Looking at good ID: {{ this.$route.query.id }} <br>
@@ -57,10 +65,11 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import { onMounted } from 'vue'
 
 import { getGoodsDetail } from '../api/api';
+import { getUserDetail } from '../api/api'
 import { emergency_levels, item_type } from './dataTypes'
 import { formatDateTime } from './utils'
 import AvaterUsr from './components/AvaterUser.vue'
@@ -72,6 +81,7 @@ export default {
             ButtonLeft: "求助",
             ButtonRight: "我的提供",
             need: {},
+            curUserId: "",
             need_test: {
                 name: '矿泉水喝完了',
                 tags: ['饮用品', '水', '较紧急'],
@@ -89,6 +99,40 @@ export default {
                 this.need = response.data
                 console.log(this.need.category.name)
             })
+        },
+        getUserPair() {
+            return getUserDetail().then(response => {
+                console.log(response.data)
+                console.log(response.data.owner)
+                const curUserId = response.data.owner;
+                // console.log('From:' + curUserId)
+                // console.log("Target:" + this.need.user)
+                if (curUserId < this.need.user) {
+                    return [curUserId, this.need.user, 0];
+                }
+                else {
+                    return [this.need.user, curUserId, 1];
+                }
+            })
+                .catch(
+                    err => {
+                        console.log(err)
+                        this.$router.push('/login')
+                    }
+                )
+        },
+        async startChat() {
+            const userids = await this.getUserPair()
+            const j = userids[2]
+            this.$router.push({
+                path: '/chat',
+                query: {
+                    roomid: userids[0] + '_' + userids[1],
+                    from : userids[j],
+                    to : userids[1-j]
+                }
+            })
+            console.log("test chat")
         },
         formatDateTime,
     },
@@ -144,10 +188,11 @@ export default {
 }
 
 .need-time {
-  text-align: right;
-  font-size: smaller;
-  color: dimgray;
+    text-align: right;
+    font-size: smaller;
+    color: dimgray;
 }
+
 #headerBack {
     display: flex;
     margin-bottom: 20px;
