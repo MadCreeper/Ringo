@@ -26,6 +26,7 @@ class MessageHistoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     retrieve:
         获取商品分类详情
     """
+    print("getting history.")
     queryset = Message.objects.all().order_by('create_time')
     filter_backends = (DjangoFilterBackend,)
     serializer_class = MessageHistorySerializer

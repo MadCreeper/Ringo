@@ -4,7 +4,7 @@ channels                  4.0.0
 channels-redis            4.0.0                    
 
 daphne                    4.0.0 
-
+uvicorn                   0.20.0
 django-redis              4.12.1 
 
 搜索安装Memurai(作为Redis的Windows替代品，数据通道和缓存) 

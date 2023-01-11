@@ -129,7 +129,6 @@ class UserNeedsViewset(viewsets.ModelViewSet):
     def get_queryset(self):
        token = self.request.META['HTTP_AUTHORIZATION'][5:]
        jwtuser = jwt_decode_handler(token)
-       print(token)
        return Goods.objects.filter(property_type=0, user=jwtuser["username"])
 
 
@@ -162,9 +161,9 @@ class PersonalProfileView(APIView):
             else:
                 return Response(data = {'errorCode': 'Unexpected error.', **serializer.errors})
         profileObj = PersonalProfile.objects.get(owner = curr_user)
-        serializer = PersonalProfileSerializer(profileObj, data=request.data)
+        serializer = PersonalProfileSerializer(profileObj, data=request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(data = {**serializer.data, 'test':'saved'})
         else:
-            return Response(data=serializer.errors)
+            return Response(data={'err':serializer.errors})

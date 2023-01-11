@@ -43,7 +43,7 @@ class UserRegisterView(APIView):
     queryset = User.objects.all()
     # serializer_class = UserSerializer
     serializer_class = HelperSerializer
-
+    ###
     def post(self, request, format = None):
         dataDict = {
             'username' : request.data.get('username'),
@@ -69,7 +69,7 @@ class UserRegisterView(APIView):
                 now = datetime.datetime.now().timestamp()
                 delta = now - timestamp
                 if delta < 60:
-                    # 申请验证码时间过短，不允许
+                    # 申请验证码间隔时间过短，不允许
                     return Response(data={ERROR_CODE: ERR_PWDCHANGE_VERIFY_TOO_FREQUENT, **dataDict})
             veriCode = codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
@@ -119,7 +119,7 @@ class UserPasswordChangeView(APIView):
 
 
 
-class UserPasswordFoggotenView(APIView):
+class UserPasswordForgottenView(APIView):
     # 测试用代码
     serializer_class = HelperSerializer
 
