@@ -259,7 +259,7 @@ export default {
 }
 
 .box-card-fold {
-  width: 30vw;
+  width: 38vw;
   height: fit-content;
   text-overflow: ellipsis;
 }
