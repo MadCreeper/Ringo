@@ -5,6 +5,7 @@ from django.test import TestCase
 from goods.models import Goods, GoodsCategory
 from django.contrib.auth.models import User
 from login.serializer import UserSerializer
+from django.urls import reverse
 from django.test import Client
 from django.forms.models import model_to_dict
 import datetime
@@ -144,3 +145,37 @@ class UserOfferingTest(TestCase):
       res = self.client.post(f'/apis/offering/', HTTP_AUTHORIZATION = 'JWT  ' + token, data=data_need1, content_type ='application/json')
       res_data = res.json()
       self.assertEqual(res_data['name'], data_need1['name'])
+
+
+
+class PersonalProfileTest(TestCase):
+   def setUp(self) -> None:
+      super().setUp()
+      self.user1 = User.objects.create_user(username='测试用户1', email='cs1@111.com', password='88888888')
+      self.user2= User.objects.create_user(username='测试用户2', email='cs2@111.com', password='88888888')
+      self.user1.save()
+      self.user2.save()
+      self.jwt1 = 'JWT  ' + self.client.post(reverse('login'), {'username':'测试用户1', 'password':'88888888'}).data['token']
+      self.jwt2 = 'JWT  ' + self.client.post(reverse('login'), {'username':'测试用户2', 'password':'88888888'}).data['token']
+   
+   def test_initialize_by_get(self):
+      resp = self.client.get(reverse('personal_profile'), HTTP_AUTHORIZATION = self.jwt1)
+      self.assertEqual(resp.status_code, 200)
+      self.assertEqual(resp.data['nickname'], '请输入昵称')
+      self.assertEqual(resp.data['address'], "请输入地址")
+   
+   def test_initialize_by_post(self):
+      resp = self.client.post(reverse('personal_profile'), HTTP_AUTHORIZATION = self.jwt1, data = {})
+      self.assertEqual(resp.status_code, 200)
+
+   def test_update_1(self):
+      resp = self.client.post(reverse('personal_profile'), HTTP_AUTHORIZATION = self.jwt1, data = {'nickname':'狗子'})
+      self.assertEqual(resp.status_code, 200)
+      self.assertEqual(resp.data['nickname'], '狗子')
+   
+   def test_update_2(self):
+      resp = self.client.post(reverse('personal_profile'), HTTP_AUTHORIZATION = self.jwt2, data = {'nickname':'狗子', 'address':'德国 不莱梅', 'signature':'お姉ちゃん達は気を付けて。次はわたしの番よ。'})
+      self.assertEqual(resp.status_code, 200)
+      self.assertEqual(resp.data['nickname'], '狗子')
+      self.assertEqual(resp.data['address'], '德国 不莱梅')
+      self.assertEqual(resp.data['signature'], 'お姉ちゃん達は気を付けて。次はわたしの番よ。')

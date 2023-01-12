@@ -1,6 +1,5 @@
 import smtplib
 import email
-
 from email.mime.text import MIMEText
 # 负责构造图片
 from email.mime.image import MIMEImage

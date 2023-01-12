@@ -56,9 +56,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
     path('chat/', include('chat.urls')),
-    path('apis/user_profile', opView.PersonalProfileView.as_view()),
+
     path("apis/search/", MySearchView()),
     path("apis/user_photo/", userPhotoView.as_view()),
     # path('silk/', include('silk.urls', namespace='silk'))
+
+    path('apis/user_profile/', opView.PersonalProfileView.as_view(), name='personal_profile'),
+    path("apis/search/", MySearchView())
+
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
