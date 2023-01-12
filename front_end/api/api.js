@@ -86,3 +86,6 @@ export const getChatUsers = () => {return axios.get(`${local_host}/apis/group_us
 export const getChatHistory = room_name => {return axios.get(`${local_host}/apis/history/?room=${room_name}`)}
 
 export const getByUrl = url => {return axios.get(url)}
+
+//获取某用户的头像
+export const getUserPhoto = username => {return axios.get(`${local_host}/apis/user_photo/?username=${username}`)}
