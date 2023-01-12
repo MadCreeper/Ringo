@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import QueryDict
 from rest_framework.authentication import SessionAuthentication
+from login.models import User
 
 
 
@@ -168,3 +169,16 @@ class PersonalProfileView(APIView):
             return Response(data = {**serializer.data, 'test':'saved'})
         else:
             return Response(data={'err':serializer.errors})
+
+class userPhotoView(APIView):
+    '''
+    建立或断开连接时，将自己的未读消息清空
+    '''
+    permission_classes = (IsAuthenticated, )
+    def get(self, request, format = None):
+        username = request.GET["username"]
+        cur_user = User.objects.get(username = username)
+        profileObj = PersonalProfile.objects.get(owner = cur_user)
+        serializer = PersonalProfileSerializer(profileObj)
+        mData = {'avatar':serializer.data['avatar']}
+        return Response(data = mData, status = status.HTTP_200_OK)

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from goods.views import GoodsListViewSet, GoodsCategoryViewset, MySearchView
-from user_operation.views import  UserOfferingViewset, UserNeedsViewset, UserNeedsViewset
+from user_operation.views import  UserOfferingViewset, UserNeedsViewset, UserNeedsViewset,  userPhotoView
 from chat.views import MessageHistoryViewSet, ChatGroupsViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
@@ -29,6 +29,7 @@ from django.conf.urls.static import static
 import RingoBackend.settings as settings
 import user_operation.views as opView
 from haystack.views import SearchView
+# import silk
 
 
 router = DefaultRouter()
@@ -55,7 +56,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
     path('chat/', include('chat.urls')),
-    path('apis/user_profile/', opView.PersonalProfileView.as_view()),
+
+    path("apis/search/", MySearchView()),
+    path("apis/user_photo/", userPhotoView.as_view()),
+    # path('silk/', include('silk.urls', namespace='silk'))
+
+    path('apis/user_profile/', opView.PersonalProfileView.as_view(), name='personal_profile'),
     path("apis/search/", MySearchView())
+
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

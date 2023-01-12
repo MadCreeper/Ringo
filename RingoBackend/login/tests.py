@@ -4,7 +4,7 @@ from login.models import User
 from django.urls import reverse
 import login.views as lview
 import logging
-from django.contrib.auth.hashers import make_password
+
 
 
 logging.basicConfig(level=logging.DEBUG #设置日志输出格式
