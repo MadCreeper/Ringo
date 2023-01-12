@@ -23,7 +23,6 @@ coverage==7.0.1
 cryptography==38.0.4
 daphne==4.0.0
 defusedxml==0.6.0
-demjson==2.2.4
 diff-match-patch==20200713
 django==3.2
 django-cors-headers==3.5.0
@@ -56,15 +55,10 @@ itypes==1.2.0
 jdcal==1.4.1
 jieba==0.42.1
 jinja2==2.11.2
-keyring==21.4.0
 # libffi==3.4.2
 # libsqlite==3.40.0
 # libzlib==1.2.13
-markdown==3.2.2
-markuppy==1.14
-markupsafe==1.1.1
-msgpack==1.0.4
-mysqlclient==2.0.1
+msgpack==1.0.4s
 naked==0.1.31
 # nodejs==18.12.1
 oauthlib==3.1.0
