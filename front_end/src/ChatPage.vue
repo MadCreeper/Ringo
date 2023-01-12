@@ -1,7 +1,7 @@
 <template>
 
-    {{ this.roomid }}
-    <el-button type="primary" @click="sendWebsocketMsg('hello')">Primary</el-button>
+    <!-- {{ this.roomid }}
+    <el-button type="primary" @click="sendWebsocketMsg('hello')">Primary</el-button> -->
     <div>
         <beautiful-chat :participants="participants" :titleImageUrl="titleImageUrl" :onMessageWasSent="onMessageWasSent"
             :messageList="messageList" :newMessagesCount="newMessagesCount" :isOpen="isChatOpen" :close="closeChat"
@@ -14,7 +14,7 @@
 <script>
 
 
-import { getChatHistory, getByUrl } from '../api/api'
+import { getChatHistory, getByUrl, resetUnreadMsg, addUnreadMsg} from '../api/api'
 
 
 
@@ -36,7 +36,7 @@ export default {
 
             ], // the list of the messages to show, can be paginated and adjusted dynamically
             newMessagesCount: 0,
-            isChatOpen: false, // to determine whether the chat window should be open or closed
+            isChatOpen: true, // to determine whether the chat window should be open or closed
             showTypingIndicator: '', // when set to a value matching the participant.id it shows the typing indicator for the specific user
             colors: {
                 header: {
@@ -76,8 +76,8 @@ export default {
         console.log(this.roomid)
         console.log(this.from, this.to)
         this.participants.push({
-            id : this.to,
-            name : this.to,
+            id: this.to,
+            name: this.to,
             imageUrl: 'https://avatars.githubusercontent.com/u/33979935?&v=4'
         })
         // load history messages
@@ -92,13 +92,15 @@ export default {
         var ref = this
         this.chatSocket = new WebSocket(websocketUrl);
         this.chatSocket.onopen = function () {
+            resetUnreadMsg({chat_user : ref.to})
             console.log("连接成功啦...")
         }
 
         // createSocket(websocketUrl)
         // websocket连接断开时触发此方法
         this.chatSocket.onclose = function () {
-            console.error('Chat socket closed unexpectedly');
+            resetUnreadMsg({chat_user : ref.to})
+            console.log('Chat socket closed.');
         };
         this.chatSocket.onmessage = function (e) {
 
@@ -110,9 +112,12 @@ export default {
                 ref.onMessageWasSent({ author: to, type: 'text', data: { text: recv_data.message } })
             }
         };
+
     },
     beforeUnmount() {
-
+        this.chatSocket.close();
+        this.chatSocket = null; // to prevent memory leacking
+        console.log("Closing connection to WebSocket Server")
     },
     methods: {
         sendWebsocketMsg(message, from, to) {
@@ -170,6 +175,7 @@ export default {
                 console.log(this.from)
                 console.log(this.to)
                 this.sendWebsocketMsg(message.data.text, this.from, this.to)
+                addUnreadMsg({chat_user : this.to})
             }
             this.messageList = [...this.messageList, message]
         },
@@ -180,7 +186,8 @@ export default {
         },
         closeChat() {
             // called when the user clicks on the botton to close the chat
-            this.isChatOpen = false
+            // this.isChatOpen = false
+            this.$router.back()
         },
         handleScrollToTop() {
             // called when the user scrolls message list to top

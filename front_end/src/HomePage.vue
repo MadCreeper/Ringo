@@ -6,7 +6,7 @@
           <div v-if="titleImgUrl">
                 <!-- {{offering.goods_desc}} -->
                 
-              <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
+              <img src="http://127.0.0.1:8000/media_url/ringo_new.png" width="90" />
           </div>
         </div>
         <div class="header-searchbar">
@@ -27,7 +27,7 @@
             <el-col :span="13">
               <el-switch v-model="fill" class="ml-2" inline-prompt
                 style="--el-switch-on-color: #13ce66; --el-switch-off-color: #339933" active-text="展开"
-                inactive-text="折叠" /> 两种展示模式，请依据喜好使用
+                inactive-text="折叠" /> <span style="font-size:small">切换展示模式</span>
             </el-col>
             <el-col :span="3"  type="flex" id="avatar">
               <div class="x-right">

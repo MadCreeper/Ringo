@@ -78,7 +78,7 @@ export default {
          console.log(item)
          this.form.avatar=item
        })
-    
+       ElMessage("头像上传成功！")
 	},
     goBack(){
         this.$router.push('/info')
@@ -109,6 +109,7 @@ export default {
 // } from '@element-plus/icons-vue'
 import {updateUserInfo} from '../api/api.js'
 import beautifulchat from './BeautifulChat.vue'
+import { ElMessage } from 'element-plus'
 </script>
 <script setup>
 import { reactive } from 'vue'

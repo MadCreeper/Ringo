@@ -57,7 +57,7 @@
 <script>
 
 import { onMounted } from 'vue'
-
+import { ElMessage } from 'element-plus'
 import { getGoodsDetail } from '../api/api';
 import { getUserDetail } from '../api/api'
 import { emergency_levels, item_type } from './dataTypes'
@@ -124,6 +124,10 @@ export default {
         },
         async startChat() {
             const userids = await this.getUserPair()
+            if (userids[0] == userids[1]){
+                ElMessage("不可与自己发起聊天")
+                return;
+            }
             const j = userids[2]
             this.$router.push({
                 path: '/chat',
