@@ -11,9 +11,9 @@
         <el-col :span=16>
         </el-col>
         <el-col :span=2>
-       <div class="container">
+       <!-- <div class="container">
         <div class="sunny"></div>
-        </div>
+        </div> -->
         </el-col>
         </el-row>
         <div class="header-bottom force-bottom">
@@ -29,7 +29,7 @@
       </el-header>
       <el-main id="MainBack">
         <div>
-          <el-space :fill="fill" wrap :size=60>
+          <el-space :fill="fill" wrap :size=30>
             <el-card @click="gotoDetails(offering.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
               v-for="offering in offerings" :key="offering">
               <template #header>
@@ -75,7 +75,7 @@
               <div class="image" v-if="offering.goods_desc">
                 <!-- {{offering.goods_desc}} -->
                 <!-- <img :src="`${offering.goods_desc}`" class="img-display" /> -->
-                <img src="https://th.bing.com/th/id/OIP.4JFkvRdf4hqfBMwSarhqSgHaE8?pid=ImgDet&rs=1" class="img-display" />
+                <!-- <img src="https://th.bing.com/th/id/OIP.4JFkvRdf4hqfBMwSarhqSgHaE8?pid=ImgDet&rs=1" class="img-display" /> -->
               </div>
 
               <div class="submit-time">
@@ -195,7 +195,7 @@ export default {
 }
 
 .box-card-fold {
-  width: 40vw;
+  width: 35vw;
   height: fit-content;
   text-overflow: ellipsis;
 }
@@ -272,13 +272,13 @@ export default {
   background-size: cover;
 }
 .el-card ::v-deep .el-card__header {
-  padding: 2px 10px;
-  background-color: lightgreen;
+  padding: 10px 10px;
+  background-color: rgb(189, 246, 200);
 }
 
 .el-card ::v-deep .el-card__body {
-  padding: 0px;
-  background-color: Pink;
+  padding: 10px;
+  background-color: white;
 
 }
 

@@ -10,11 +10,14 @@
                 <el-form-item label="需求物品名称">
                     <el-input v-model="form.name" />
                 </el-form-item>
-                <el-form-item label="位置">
+                <!-- <el-form-item label="位置">
                     <el-select v-model="form.region" placeholder="please select your zone">
                         <el-option label="上海" value="shanghai" />
                         <el-option label="北京" value="beijing" />
                     </el-select>
+                </el-form-item> -->
+                <el-form-item label="位置">
+                    <elui-china-area-dht @change="this.locationChoose"></elui-china-area-dht>
                 </el-form-item>
                 <el-form-item label="需求日期段">
                     <el-col :span="11">
@@ -69,9 +72,13 @@ let form = reactive({
 //     4: '非常紧急',
 //     5: '十万火急'
 // }
-
 import { addNeeds, getCategory } from '../api/api'
+import { EluiChinaAreaDht } from 'elui-china-area-dht'
+const chinaData = new EluiChinaAreaDht.ChinaArea().chinaAreaflat
 export default {
+    components: {
+        EluiChinaAreaDht,
+    },
     data() {
         return {
             show: false,
@@ -141,7 +148,13 @@ export default {
         goBack() {
             history.back();
         },
-
+        locationChoose : function (e) {
+            const one = chinaData[e[0]]
+            const two = chinaData[e[1]]
+            const three = chinaData[e[2]]
+            console.log(one, two, three)
+            this.form.region = one.label + '-' + two.label + '-' + three.label;
+        }
     }
 }
 
@@ -179,7 +192,7 @@ const goBack = () => {
 }
 
 .el-form {
-    height: 70vh;
+    height: 90vh;
     width: 100%;
     overflow: hidden;
     background-image: lightblue;
@@ -190,7 +203,7 @@ const goBack = () => {
 
 .el-container {
     height: 100vh;
-    background-image: linear-gradient(125deg, lightblue, white);
+    background-image: linear-gradient(125deg, rgb(213, 241, 251), white);
 }
 
 .el-form h1 {

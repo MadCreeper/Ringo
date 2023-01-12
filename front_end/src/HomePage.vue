@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header id="headerBack" height="200px">
+      <el-header id="headerBack" height="220px">
         <el-row>
         <el-col :span=6>
           <div v-if="titleImgUrl">
@@ -10,11 +10,11 @@
         </el-col>
         <el-col :span=16>
         </el-col>
-        <el-col :span=2>
+        <!-- <el-col :span=2>
        <div class="container">
         <div class="sunny"></div>
         </div>
-        </el-col>
+        </el-col> -->
         </el-row>
         <div class="header-searchbar">
           <el-input v-model="search_text" placeholder="请输入搜索内容" class="input">
@@ -31,7 +31,7 @@
                 <el-option v-for="item in sort_options" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-col>
-            <el-col :span="13">
+            <el-col :span="12">
               <el-switch v-model="fill" class="ml-2" inline-prompt
                 style="--el-switch-on-color: #13ce66; --el-switch-off-color: #339933" active-text="展开"
                 inactive-text="折叠" /> <span style="font-size:small">切换展示模式</span>
@@ -259,7 +259,7 @@ export default {
 }
 
 .box-card-fold {
-  width: 40vw;
+  width: 30vw;
   height: fit-content;
   text-overflow: ellipsis;
 }
@@ -283,13 +283,13 @@ export default {
 }
 
 .el-card ::v-deep .el-card__header {
-  padding: 2px 10px;
-  background-color: lightgreen;
+  padding: 10px 10px;
+  background-color: rgb(189, 246, 200);
 }
 
 .el-card ::v-deep .el-card__body {
-  padding: 0px;
-  background-color: Pink;
+  padding: 10px;
+  background-color: white;
 
 }
 
