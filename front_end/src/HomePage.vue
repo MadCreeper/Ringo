@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header id="headerBack" height="220px">
+      <el-header id="headerBack" height="230px">
         <el-row>
         <el-col :span=6>
           <div v-if="titleImgUrl">
@@ -31,10 +31,15 @@
                 <el-option v-for="item in sort_options" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-switch v-model="fill" class="ml-2" inline-prompt
                 style="--el-switch-on-color: #13ce66; --el-switch-off-color: #339933" active-text="展开"
-                inactive-text="折叠" /> <span style="font-size:small">切换展示模式</span>
+                inactive-text="折叠" /> <div style="font-size:small">切换展示模式</div>
+            </el-col>
+            <el-col :span="6">
+              <el-switch v-model="showSelf" @change="this.loadNeeds()" class="ml-2" inline-prompt
+                style="--el-switch-on-color: #FB7558; --el-switch-off-color: #339933" active-text="自己"
+                inactive-text="全部" /> <div style="font-size:small">切换只看自己</div>
             </el-col>
             <el-col :span="3" type="flex" id="avatar">
               <div class="x-right">
@@ -115,6 +120,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 const fill = ref(true)
+const showSelf = ref(false)
 onMounted(() => {
   console.log("hello mainpage")
 })
@@ -123,7 +129,7 @@ onMounted(() => {
 import foo from './components/FooterGrid.vue'
 // import Navigator from './components//NavigationBar.vue'
 import { getGoods, getRecommendation } from '../api/api';
-import { getUserDetail } from '../api/api'
+import { getUserDetail, getNeeds} from '../api/api'
 import { emergency_levels, sort_options } from './dataTypes'
 import { formatDateTime } from './utils'
 import { Search } from '@element-plus/icons-vue'
@@ -166,6 +172,21 @@ export default {
       this.$router.push('/info')
     },
     loadNeeds(params) {
+      if(this.showSelf) {
+        getNeeds().then(response => {
+          this.needs = response.data.results;
+          console.log("needs:")
+          console.log(this.needs);
+          
+        })
+          .catch(
+            err => {
+              console.log(err)
+              this.$router.push('/login')
+            }
+          )
+        return;
+      }
       if (params && params.ordering == "best_match") {
         getRecommendation().then(response => {
           this.needs = response.data.results;

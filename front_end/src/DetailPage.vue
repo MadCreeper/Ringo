@@ -41,10 +41,17 @@
                             {{ formatDateTime(this.need.add_time) }} ~ {{ formatDateTime(this.need.expected_end_time) }}
                         </p>
 
-                        <button class="action message1" type="primary" circle @click="startChat()">私聊<el-icon>
+                        <button v-if="this.owner_username!=this.username" class="action message1" type="primary" circle @click="startChat()">私聊<el-icon>
                                     <ChatLineSquare />
                                 </el-icon></button>
-                        <button class="action message" type="primary" circle @click="goback()">返回</button>
+                        
+                        
+                        <button v-if="this.owner_username==this.username" class="action message" type="primary"  circle @click="deletesn(this.$route.query.id)">删除</button>
+                        
+                        
+                        
+                        
+                        <button class="action" type="primary" circle @click="goback()">返回</button>
                     </div>
 
                     <beautifulchat>
@@ -58,7 +65,7 @@
 
 import { onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getGoodsDetail } from '../api/api';
+import { delNeeds, getGoodsDetail } from '../api/api';
 import { getUserDetail } from '../api/api'
 import { emergency_levels, item_type } from './dataTypes'
 import { formatDateTime } from './utils'
@@ -72,6 +79,7 @@ export default {
             need: {},
             curUserId: "",
             username:"",
+            owner_username:"",
             useravatar:"",
             need_test: {
                 name: '矿泉水喝完了',
@@ -85,10 +93,12 @@ export default {
     },
     methods: {
         getGoodById(goodId) {
-            getGoodsDetail(goodId).then(response => {
+            getGoodsDetail(goodId).then(async response => {
                 console.log(response.data)
                 this.need = response.data
-                this.username=response.data.user
+                this.username = response.data.user
+                const userids = await this.getUserPair()
+                this.owner_username = userids[userids[2]]
                 console.log(this.need.category.name)
                 getUserPhoto(response.data.user).then(response =>{
                 console.log("useravatar:")
@@ -98,7 +108,7 @@ export default {
             })
             })
         },
-        getUserPair() {
+        async getUserPair() {
             return getUserDetail().then(response => {
                 console.log(response.data)
                 console.log(response.data.owner)
@@ -121,6 +131,16 @@ export default {
         },
         goback(){
             this.$router.push('/')
+        },
+        deletesn(item_id){
+            console.log(item_id)
+            delNeeds(item_id).then(response =>{
+                console.log(response.data)
+                this.$router.back()
+            }).catch(err => {
+                console.error(err)
+                this.$router.back()
+            })
         },
         async startChat() {
             const userids = await this.getUserPair()

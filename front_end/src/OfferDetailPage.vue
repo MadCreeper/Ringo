@@ -36,7 +36,7 @@
     {{ formatDateTime(this.item.add_time) }} ~ {{ formatDateTime(this.item.expected_end_time) }}
 </p>
    <button class="action message" type="primary" circle @click="deletesn(this.$route.query.id)">删除</button>
-<button class="action message1" type="primary" circle @click="goback()">返回</button>
+<button class="action" type="primary" circle @click="goback()">返回</button>
  </div>
  </body>
 </template>
