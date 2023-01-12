@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div>
       <beautiful-chat
         :participants="participants"
