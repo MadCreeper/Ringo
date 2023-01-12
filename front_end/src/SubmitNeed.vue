@@ -37,7 +37,7 @@
                     <el-input v-model="form.desc" type="textarea" />
                 </el-form-item>
                 <el-form-item>
-                    <el-alert v-if="show" title="success alert" type="success" effect="dark" />
+                    <el-alert v-if="show" title="提交成功" type="success" effect="dark" />
                     <el-button type="primary" @click="submit">提交</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
@@ -140,10 +140,10 @@ export default {
             console.log("submitted info:")
             console.log(needInfo)
             addNeeds(needInfo);
-            // console.log(form);
-            // setTimeout(() => {
-            //     this.$router.push('/')
-            // }, 10000)
+            console.log(form);
+            setTimeout(() => {
+                history.back();
+            }, 3000)
         },
         goBack() {
             history.back();
