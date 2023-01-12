@@ -32,8 +32,8 @@
             <el-input v-model=this.form.address />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit(this.form,this.formData)">Create</el-button>
-              <el-button>Cancel</el-button>
+              <el-button type="primary" @click="onSubmit(this.form,this.formData)">确定</el-button>
+              <el-button>取消</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -41,12 +41,10 @@
           <div class="grid-content ep-bg-purple" />
         </el-col>
         <el-col :span="12">
-        <el-button type="primary" @click="resetcode">重置密码</el-button>
+        <!-- <el-button type="primary" @click="resetcode">重置密码</el-button> -->
         </el-col>
       </el-row>
 
-      <beautifulchat>
-      </beautifulchat>
     </el-main>
   </el-container>
 
@@ -108,7 +106,6 @@ export default {
 //   Back,
 // } from '@element-plus/icons-vue'
 import {updateUserInfo} from '../api/api.js'
-import beautifulchat from './BeautifulChat.vue'
 import { ElMessage } from 'element-plus'
 </script>
 <script setup>
@@ -150,7 +147,7 @@ import { reactive } from 'vue'
   min-height: 20px;
 }
 .el-form {
-    height: 40vh;
+    height: 70vh;
     width: 100%;
     overflow: hidden;
     background-image:  lightblue;
