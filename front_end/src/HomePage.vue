@@ -24,7 +24,7 @@
                 <el-option v-for="item in sort_options" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="13">
               <el-switch v-model="fill" class="ml-2" inline-prompt
                 style="--el-switch-on-color: #13ce66; --el-switch-off-color: #339933" active-text="展开"
                 inactive-text="折叠" /> 两种展示模式，请依据喜好使用

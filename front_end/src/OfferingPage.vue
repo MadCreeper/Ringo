@@ -2,11 +2,14 @@
   <div class="common-layout">
     <el-container>
       <el-header id="headerBack" height="200px">
+        <div >
+          <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
+        </div>
         <div class="header-bottom force-bottom">
           <el-row :gutter="20" type="flex">
             <el-col :span="1" :offset="21" type="flex">
               <div class="x-right">
-              <AvaterUsr></AvaterUsr>
+              <el-avatar class="avater" size=80 :src=this.info.avatar @click="redirect"></el-avatar>
             </div>
             </el-col>
 
@@ -15,9 +18,6 @@
       </el-header>
       <el-main id="MainBack">
         <div>
-          <!-- <div style="margin-bottom: 15px">Switch:
-            <el-switch v-model="fill" />
-          </div> -->
           <el-space :fill="fill" wrap>
             <el-card @click="gotoDetails(offering.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
               v-for="offering in offerings" :key="offering">
@@ -88,22 +88,33 @@
 import foo from './components/FooterGrid.vue'
 import { getOffering } from '../api/api';
 import { formatDateTime } from './utils'
-import AvaterUsr from './components/AvaterUser.vue'
-
+import {getUserDetail} from '../api/api.js'
+import { reactive } from 'vue'
 export default {
   data() {
     return {
       offerings: [],
       url: ["https://th.bing.com/th/id/R.d6d3aae7006611f68786a47e377c39ea?rik=7IrzMCwE5z2KgQ&riu=http%3a%2f%2fpic.ntimg.cn%2f20131028%2f13984383_171843651115_2.jpg&ehk=4SCA2042hzkkZofnLUSML2WgVzwz9RMXyKkXwc2zHG0%3d&risl=&pid=ImgRaw&r=0", "https://th.bing.com/th/id/R.0dd6c1000fa35050a64655170c58f883?rik=mK5hurvwok%2bA8g&pid=ImgRaw&r=0"],
       ButtonLeft: "HomePage",
-      ButtonRight: "管理"
+      ButtonRight: "管理",
+      info:reactive({
+                owner:"",
+                nickname:"",
+                avater:"",
+                address:"",
+                signature:""
+        }),
     }
   },
-  components: { foo, AvaterUsr },
+  components: { foo },
   mounted: function () {
-    this.loadOfferings()
+    this.loadOfferings();
+    this.loadinfo();
   },
   methods: {
+    redirect(){
+      this.$router.push('/info')
+    },
     loadOfferings() {
       getOffering().then(response => {
         this.offerings = response.data.results;
@@ -116,6 +127,20 @@ export default {
             this.$router.push('/login')
           }
         )
+    },
+    loadinfo() {
+      getUserDetail().then(response => {
+        this.info = response.data;
+        this.info.avatar="http://127.0.0.1:8000"+response.data.avatar;
+        console.log("info:")
+        console.log(this.info.avatar)
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.$router.push('/login')
+        }
+      )
     },
     gotoDetails(item_id) {
       this.$router.push({

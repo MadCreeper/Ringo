@@ -160,11 +160,13 @@ body {
     top          : 0;
     left         : 50%;
     transform    : translate(-50%, -50%);
+    text-align:center;
 }
 
 .img-container img {
     width    : 100%;
     max-width: 100%;
+    height   :100%;
     transform: scale(1.1);
 }
 

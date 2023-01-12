@@ -1,8 +1,6 @@
 <template>
     <div class="common-layout">
         <el-container>
-            <el-header id="headerBack" height="200px">
-            </el-header>
             <body>
                 <div class="profile-container">
                         <!-- <div class="img-container">
@@ -46,8 +44,6 @@
                     <beautifulchat>
                     </beautifulchat>
                 </body>
-            <el-footer id="FooterBack">
-            </el-footer>
         </el-container>
     </div>
 </template>
