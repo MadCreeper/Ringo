@@ -109,6 +109,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'TEST':{
+            'NAME':'django_db_test.sqlite3' # 用于单元测试的数据库
+        }
     }
 }
 
