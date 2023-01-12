@@ -113,7 +113,7 @@ export default {
     background-size: cover;
 }
 #MainBack{
-   background:linear-gradient(120deg, yellow 0%, silver 100%);
+   background-image: linear-gradient(125deg,lightblue, white );
    background-size: cover;
 }
 #FooterBack{
@@ -202,7 +202,7 @@ export default {
     width: 60%;
     height: 5rem;
     color: black;
-    background-image: linear-gradient(120deg, yellow 0%, Gold 100%);
+    background-image: linear-gradient(125deg,lightblue, white );
     font-size: 1.4rem;
     border: none;
     border-radius: 0.5rem;
