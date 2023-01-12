@@ -28,6 +28,9 @@ export const sort_options = [
   {'value': 'add_time',
    'label': "按时间排序"
   },
+  { 'value' : 'best_match',
+    'label' : "按匹配度排序"  
+  },
 ]
 
 

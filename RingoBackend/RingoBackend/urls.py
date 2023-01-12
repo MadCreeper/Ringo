@@ -62,7 +62,9 @@ urlpatterns = [
     # path('silk/', include('silk.urls', namespace='silk'))
 
     path('apis/user_profile/', opView.PersonalProfileView.as_view(), name='personal_profile'),
-    path("apis/search/", MySearchView())
+    path("apis/search/", MySearchView()),
+    path("apis/recommend/", opView.RecommendationView.as_view()),
+    path("apis/recommend/<int:page>", opView.RecommendationView.as_view())
 
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

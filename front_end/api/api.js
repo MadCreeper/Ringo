@@ -89,3 +89,5 @@ export const getByUrl = url => {return axios.get(url)}
 
 //获取某用户的头像
 export const getUserPhoto = username => {return axios.get(`${local_host}/apis/user_photo/?username=${username}`)}
+
+export const getRecommendation = () => { return axios.get(`${local_host}/apis/recommend/`) }

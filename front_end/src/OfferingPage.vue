@@ -4,10 +4,8 @@
       <el-header id="headerBack" height="200px">
        <el-row>
         <el-col :span=6>
-        <div >
           <div>   
-              <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
-          </div>
+          <img src="http://127.0.0.1:8000/media_url/ringo_new.png" width="90" />
         </div>
         </el-col>
         <el-col :span=16>

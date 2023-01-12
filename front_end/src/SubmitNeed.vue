@@ -28,7 +28,7 @@
                         show-stops />
                 </el-form-item>
                 <el-form-item label="物品类型">
-                    <el-cascader-panel :options="this.categories" v-model="form.type"/>
+                    <el-cascader-panel :options="this.categories" v-model="form.type" />
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="form.desc" type="textarea" />
@@ -77,7 +77,7 @@ export default {
             show: false,
             form: form,
             categories: [],
-            typesData : [],
+            typesData: [],
         }
     },
     created: async function () {
@@ -85,13 +85,31 @@ export default {
 
         let res = await getCategory({ "page": 1 });
         console.log(res.data)
-        
+
         this.typesData = res.data.results;
 
 
-        console.log(this.typesData)
+        console.log("categories", this.typesData)
         for (let i = 0; i < this.typesData.length; i++) {
-            this.categories.push({ 'value': i, 'label': this.typesData[i].name })
+            
+            if (this.typesData[i].category_type == 1) {
+                this.categories.push({ 'value': i, 'label': this.typesData[i].name, children:[] })
+            }
+        }
+
+        for (let i = 0; i < this.typesData.length; i++) {
+            if (this.typesData[i].category_type == 2) {
+                
+                for (let j = 0; j < this.typesData.length; j++) { // find parent category
+                    if (this.typesData[j].category_type == 1 && this.typesData[i].parent_category == this.typesData[j].code) {
+                        for(let k = 0; k < this.categories.length; k++){
+                            if(this.categories[k].label == this.typesData[j].name){
+                                this.categories[k].children.push({ 'value': i, 'label': this.typesData[i].name, children:[] })
+                            }
+                        }
+                    }
+                }
+            }
         }
         console.log("categories:");
         console.log(this.categories);
@@ -104,13 +122,13 @@ export default {
             // this.$emit('submit', this.form);
 
             let needInfo = {
-                "category" : (this.typesData[form.type[0]]),
-                "property_type" : 0,
-                "emergency" : form.priority,
-                "expected_end_time" : form.date[1],
-                "name" : form.name,
-                "address" : form.region,
-                "goods_brief" : form.desc,
+                "category": (1 in form.type ? this.typesData[form.type[1]] : this.typesData[form.type[0]]),
+                "property_type": 0,
+                "emergency": form.priority,
+                "expected_end_time": form.date[1],
+                "name": form.name,
+                "address": form.region,
+                "goods_brief": form.desc,
             }
             console.log("submitted info:")
             console.log(needInfo)
@@ -120,7 +138,7 @@ export default {
             //     this.$router.push('/')
             // }, 10000)
         },
-        goBack (){
+        goBack() {
             history.back();
         },
 
@@ -159,23 +177,27 @@ const goBack = () => {
     border-radius: 4px;
     min-height: 36px;
 }
+
 .el-form {
     height: 70vh;
     width: 100%;
     overflow: hidden;
-    background-image:  lightblue;
+    background-image: lightblue;
     background-size: 100%;
     font-family: "montserrat";
     animation: bganimation 15s infinite;
 }
-.el-container{
-  height: 100vh;
-  background-image: linear-gradient(125deg,lightblue, white );
+
+.el-container {
+    height: 100vh;
+    background-image: linear-gradient(125deg, lightblue, white);
 }
+
 .el-form h1 {
     margin-top: 0;
     font-weight: 200;
 }
+
 .el-form-item {
     border: 2px solid #aaa;
     margin: 8px 0;
@@ -184,7 +206,8 @@ const goBack = () => {
     color: #fff;
     font-size: 30px;
 }
-.el-form-item el-input{
+
+.el-form-item el-input {
     width: 100%;
     background: none;
     border: none;
@@ -193,13 +216,15 @@ const goBack = () => {
     font-size: 18px;
     color: #fff;
 }
-.el-form-item label{
+
+.el-form-item label {
     font-size: 100px;
 }
 
-#selectForm >>> .el-form-item__label {
-  font-size: 18px;
+#selectForm>>>.el-form-item__label {
+    font-size: 18px;
 }
+
 .file {
     position: relative;
     display: inline-block;
@@ -213,6 +238,7 @@ const goBack = () => {
     text-indent: 0;
     line-height: 20px;
 }
+
 .file input {
     position: absolute;
     font-size: 100px;
@@ -220,6 +246,7 @@ const goBack = () => {
     top: 0;
     opacity: 0;
 }
+
 .file:hover {
     background: #AADFFD;
     border-color: #78C3F3;
