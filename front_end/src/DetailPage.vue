@@ -3,10 +3,16 @@
         <el-container>
             <body>
                 <div class="profile-container">
-                        <!-- <div class="img-container">
-                            <img :src=this.info.avatar @click="redirect" alt="profile image">
-                        </div> -->
-                        <p class="info full-name">{{ item_type[this.need.property_type] + ": " + this.need.name }}</p>
+                        <div class="img-container">
+                            <img :src=this.useravatar @click="redirect" alt="profile image">
+                        </div>
+                        <p class="info full-name">{{this.username}}</p>
+
+                        <p class="info role">
+                            <i class="fas fa-star"></i>
+                        {{ item_type[this.need.property_type] + ": " + this.need.name }}
+                        </p>
+                        
                         <p class="info role">
                             <i class="fas fa-star" v-if="this.need.category">
                         <el-tag class="ml-2" type="success">{{ this.need.category.name }}</el-tag>
@@ -56,6 +62,7 @@ import { getGoodsDetail } from '../api/api';
 import { getUserDetail } from '../api/api'
 import { emergency_levels, item_type } from './dataTypes'
 import { formatDateTime } from './utils'
+import {getUserPhoto} from '../api/api.js'
 export default {
     data() {
         return {
@@ -64,6 +71,8 @@ export default {
             ButtonRight: "我的提供",
             need: {},
             curUserId: "",
+            username:"",
+            useravatar:"",
             need_test: {
                 name: '矿泉水喝完了',
                 tags: ['饮用品', '水', '较紧急'],
@@ -79,7 +88,14 @@ export default {
             getGoodsDetail(goodId).then(response => {
                 console.log(response.data)
                 this.need = response.data
+                this.username=response.data.user
                 console.log(this.need.category.name)
+                getUserPhoto(response.data.user).then(response =>{
+                console.log("useravatar:")
+                console.log(response.data)
+                this.useravatar="http://127.0.0.1:8000"+response.data.avatar;
+                console.log(this.useravatar)
+            })
             })
         },
         getUserPair() {
@@ -126,6 +142,7 @@ export default {
             console.log("detail page")
             this.getGoodById(this.$route.query.id)
             console.log(emergency_levels)
+            console.log(this.username)
             // console.log(this.$route.query.id)
         })
     },
@@ -239,6 +256,7 @@ body {
 .img-container img {
     width    : 100%;
     max-width: 100%;
+    height   :100%;
     transform: scale(1.1);
 }
 
