@@ -29,6 +29,7 @@ from django.conf.urls.static import static
 import RingoBackend.settings as settings
 import user_operation.views as opView
 from haystack.views import SearchView
+import silk
 
 
 router = DefaultRouter()
@@ -55,7 +56,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/login/', include('login.urls')),
     path('chat/', include('chat.urls')),
-    path('apis/user_profile/', opView.PersonalProfileView.as_view()),
-    path("apis/search/", MySearchView())
+    path('apis/user_profile', opView.PersonalProfileView.as_view()),
+    path("apis/search/", MySearchView()),
+    path('silk/', include('silk.urls', namespace='silk'))
     # path('apis/jwt-token-auth/', obtain_jwt_token),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

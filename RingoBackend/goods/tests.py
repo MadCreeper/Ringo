@@ -107,7 +107,8 @@ class NeedsViewsetTest(TestCase):
 
 
    def test_list(self):
-      res = self.client.get('/apis/goods/')
+      for i in range(100):
+        res = self.client.get('/apis/goods/')
       status_code = res.status_code
       res_data = res.json()
       self.assertEqual(status_code, 200)
