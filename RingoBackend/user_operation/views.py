@@ -11,7 +11,6 @@ from rest_framework_jwt.authentication import jwt_decode_handler
 
 from rest_framework import status
 
-
 from user_operation.serializers import PersonalProfileSerializer
 from user_operation.models import PersonalProfile
 from rest_framework.response import Response
@@ -19,15 +18,15 @@ from rest_framework.views import APIView
 from django.http import QueryDict
 from rest_framework.authentication import SessionAuthentication
 from login.models import User
+import datetime
 
+from user_operation.helpers.item_sorter import *
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
     def enforce_csrf(self, request):
         return 
-
-
 
 class UserOfferingViewset(viewsets.ModelViewSet):
     """
@@ -132,8 +131,6 @@ class UserNeedsViewset(viewsets.ModelViewSet):
        jwtuser = jwt_decode_handler(token)
        return Goods.objects.filter(property_type=0, user=jwtuser["username"])
 
-
-
 class PersonalProfileView(APIView):
     serializer_class = PersonalProfileSerializer
     permission_classes = (IsAuthenticated, )
@@ -182,3 +179,54 @@ class userPhotoView(APIView):
         serializer = PersonalProfileSerializer(profileObj)
         mData = {'avatar':serializer.data['avatar']}
         return Response(data = mData, status = status.HTTP_200_OK)
+
+
+class RecommendationView(APIView):
+    '''
+    推荐模块的对应API
+    '''
+    permission_classes = (IsAuthenticated, )
+    serializer_class = GoodsSerializer
+    result_cache = {}
+    PAGE_SIZE = 10
+
+    def create_response(self, id_list, page):
+        respData = {'previous':'', 'next':'', 'errorCode':'', 'results':[]}
+        if (page-1) * self.PAGE_SIZE > len(id_list):
+            respData['errorCode'] = 'Page too large, 当前页面没有可以展示的信息。'
+            return Response(data=respData)
+        curr_slice = id_list[(page-1)*self.PAGE_SIZE:page*self.PAGE_SIZE]
+        
+        curr_data = [GoodsSerializer(Goods.objects.get(pk = i)).data for i in curr_slice]
+        respData['results'] = curr_data
+        if page != 1:
+            respData['previous'] = f'/apis/recommend/{page-1}'
+        if (page) * self.PAGE_SIZE < len(id_list):
+            respData['next'] = f'/apis/recommend/{page+1}'
+        return Response(data=respData)
+        
+
+    def get(self, request, page = 1):
+        curr_user = request.user
+        user_offerings = fetch_all_offers(user=curr_user)
+        all_needs = fetch_all_needs()
+        if not user_offerings:
+            # 当前用户没有提供的信息
+            id_list = [i.pk for i in all_needs][:200]
+            return self.create_response(id_list, page)
+
+        id_list = None
+        if curr_user.id not in self.result_cache or \
+            datetime.datetime.now().timestamp() - self.result_cache[curr_user.id][0] > 3600:
+            curr_tag = get_string_tag(user_offerings)
+            sort_by_similarity(all_needs, curr_tag)
+            id_list = [i.pk for i in all_needs]
+            if len(id_list) > 200: 
+                id_list = id_list[:200]
+            self.result_cache[curr_user.id] = (datetime.datetime.now().timestamp(), id_list)
+        else:
+            id_list = self.result_cache[curr_user.id][1]
+        
+        return self.create_response(id_list, page)
+
+

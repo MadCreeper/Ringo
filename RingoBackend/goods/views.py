@@ -13,7 +13,7 @@ from rest_framework.pagination import PageNumberPagination
 from goods.filters import GoodsFilter
 from goods.serializers import GoodsSerializer, CategorySerializer, NeedsHaystackSerializer
 from .models import Goods, GoodsCategory
-from rest_framework import mixins
+from rest_framework import mixins, generics
 from rest_framework import viewsets
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
