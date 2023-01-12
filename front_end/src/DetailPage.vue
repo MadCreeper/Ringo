@@ -2,62 +2,7 @@
     <div class="common-layout">
         <el-container>
             <el-header id="headerBack" height="200px">
-
-
             </el-header>
-            <!-- <el-main id="MainBack">
-                <div class="need-title">
-                    <div>
-                        {{ item_type[this.need.property_type] + ": " + this.need.name }}
-                    </div>
-                    <div class="tags" v-if="this.need.category">
-                        <el-tag class="ml-2" type="success">{{ this.need.category.name }}</el-tag>
-                        <el-tag class="ml-2" type="danger">{{ emergency_levels[need.emergency] }}</el-tag>
-                    </div>
-                </div>
-                <div class="body">
-
-
-                    <div class="user-display">
-                        <div>
-                            <AvaterUsr></AvaterUsr>
-                        </div>
-                        <div>
-                            {{ this.need.user }}
-                        </div>
-                        <div>
-                            <el-button type="primary" circle @click="startChat()">
-                                <el-icon>
-                                    <ChatLineSquare />
-                                </el-icon>
-                            </el-button>
-
-                        </div>
-                    </div>
-
-                    <div v-if="this.need.goods_brief">
-                        {{ this.need.goods_brief }}
-                    </div>
-
-                    <div v-if="this.need.goods_desc">
-                        {{ this.need.goods_desc }}
-                    </div>
-
-
-
-
-                    <div>
-                        <el-icon>
-                            <House />
-                        </el-icon> {{ "地址: " + need.address }}
-                    </div>
-
-                    <div class="need-time" v-if="this.need.add_time && this.need.expected_end_time">
-                        {{ formatDateTime(this.need.add_time) }} ~ {{ formatDateTime(this.need.expected_end_time) }}
-                    </div>
-                </div>
-            
-            </el-main> -->
             <body>
                 <div class="profile-container">
                         <!-- <div class="img-container">
