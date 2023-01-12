@@ -10,11 +10,11 @@
         </el-col>
         <el-col :span=16>
         </el-col>
-        <!-- <el-col :span=2>
+        <el-col :span=2>
        <div class="container">
         <div class="sunny"></div>
         </div>
-        </el-col> -->
+        </el-col>
         </el-row>
         <div class="header-searchbar">
           <el-input v-model="search_text" placeholder="请输入搜索内容" class="input">
@@ -391,8 +391,8 @@ export default {
     height: 70px;
 }
 .sunny{
-    width: 20px;
-    height: 140px;
+    width: 10px;
+    height: 70px;
     position: absolute;
     background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
     animation: sunny 15s linear infinite;
@@ -408,21 +408,22 @@ export default {
 }
 .sunny::before{
     content: '';
-    width: 20px;
-    height: 140px;
+    width: 10px;
+    height: 70px;
     position: absolute;
     bottom: 0;
     left: 0;
     background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
     transform: rotate(90deg)
 }
+
 .sunny::after{
     content: '';
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     position: absolute;
-    top: 30px;
-    left: -30px;
+    top: 15px;
+    left: -15px;
     background: #ffee44;
     border-radius: 50%;
     box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
