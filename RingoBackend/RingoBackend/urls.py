@@ -63,7 +63,7 @@ urlpatterns = [
 
     path('apis/user_profile/', opView.PersonalProfileView.as_view(), name='personal_profile'),
     path("apis/search/", MySearchView()),
-    path("apis/recommend/", opView.RecommendationView.as_view()),
+    path("apis/recommend/", opView.RecommendationView.as_view(), name = 'recommendation'),
     path("apis/recommend/<int:page>", opView.RecommendationView.as_view())
 
     # path('apis/jwt-token-auth/', obtain_jwt_token),

@@ -9,7 +9,16 @@ from django.urls import reverse
 from django.test import Client
 from django.forms.models import model_to_dict
 import datetime
-import json
+import json, logging
+
+def set_log(msg):
+   logger = logging.getLogger()
+   fh = logging.FileHandler("demo.log",encoding="utf-8",mode="a")
+   formatter = logging.Formatter("%(asctime)s - %(name)s-%(levelname)s %(message)s")
+   fh.setFormatter(formatter)
+   logger.addHandler(fh)
+   logger.setLevel(logging.DEBUG)
+   logger.debug(msg)
 
 
 
@@ -179,3 +188,38 @@ class PersonalProfileTest(TestCase):
       self.assertEqual(resp.data['nickname'], '狗子')
       self.assertEqual(resp.data['address'], '德国 不莱梅')
       self.assertEqual(resp.data['signature'], 'お姉ちゃん達は気を付けて。次はわたしの番よ。')
+
+
+class RecommendationTest(TestCase):
+   def setUp(self) -> None:
+      super().setUp()
+      user1 = User.objects.create_user(username = 'userRec1', password = '123', email='userRec1@user1.com')
+      user1.save()
+      user2 = User.objects.create_user(username = 'userRec2', password = '123', email='userRec2@user2.com')
+      user2.save()
+      category = GoodsCategory.objects.create(name="category1", category_type = 1)
+      category.save()
+      self.describe = ['口罩','眼镜','可乐','矿泉水','牙膏','卫生纸','耳机','充电宝','防毒面具','消毒液']
+      for i in range(len(self.describe)):
+         need = Goods.objects.create(property_type=0,category=category,emergency=3,user=user1,name=self.describe[i],address='addr',goods_brief=self.describe[i] + '描述')
+         need.save()
+      self.offers = ['口罩','消毒酒精']
+      for i in range(len(self.offers)):
+         offer = Goods.objects.create(property_type=1,category=category,emergency=3,user=user2,name=self.offers[i],address='addr',goods_brief=self.offers[i] + '描述')
+         offer.save()
+      self.jwt = 'JWT  '\
+          + self.client.post(reverse('login'), data = {'username':'userRec2', 'password':'123'}).data['token']
+
+   def test_recommendation(self):
+      resp = self.client.get(reverse('recommendation'), HTTP_AUTHORIZATION = self.jwt)
+      self.assertEqual(resp.status_code, 200)
+      ret_data = resp.data['results']
+      ret_key = [i["name"] for i in ret_data]
+      msg = f"供应条目为：{self.offers}， 返回的排序顺序为{ret_key}"
+      set_log(msg)
+      
+
+
+
+
+
