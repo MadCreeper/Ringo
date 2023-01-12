@@ -36,7 +36,6 @@
     {{ formatDateTime(this.item.add_time) }} ~ {{ formatDateTime(this.item.expected_end_time) }}
 </p>
    <button class="action message" type="primary" circle @click="deletesn(this.$route.query.id)">删除</button>
-<button class="action message1" type="primary" circle @click="startChat()">修改</button>
 <button class="action message1" type="primary" circle @click="goback()">返回</button>
  </div>
  </body>
@@ -87,8 +86,9 @@ export default {
         },
         deletesn(item_id){
             console.log(item_id)
-            delOffering(item_id).them(response =>{
+            delOffering(item_id).then(response =>{
                 console.log(response.data)
+                this.$router.push('/offer')
             }).catch(err => {
                 this.$router.push('/offer')
             })
