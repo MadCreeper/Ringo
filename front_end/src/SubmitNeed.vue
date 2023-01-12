@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-page-header @back="goBack">
+        <el-page-header @back="goBack" @title="返回">
             <template #content>
                 <span class="text-large font-600 mr-3"> 提交需求 </span>
             </template>
@@ -177,7 +177,7 @@ const goBack = () => {
     font-weight: 200;
 }
 .el-form-item {
-    border: 3px solid #aaa;
+    border: 2px solid #aaa;
     margin: 8px 0;
     padding: 12px 18px;
     border-radius: 10px;
@@ -225,5 +225,8 @@ const goBack = () => {
     border-color: #78C3F3;
     color: #004974;
     text-decoration: none;
+}
+.el-header{
+    title:'返回';
 }
 </style>

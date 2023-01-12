@@ -2,9 +2,22 @@
   <div class="common-layout">
     <el-container>
       <el-header id="headerBack" height="200px">
+       <el-row>
+        <el-col :span=6>
         <div >
-          <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
+          <div>   
+              <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
+          </div>
         </div>
+        </el-col>
+        <el-col :span=16>
+        </el-col>
+        <el-col :span=2>
+       <div class="container">
+        <div class="sunny"></div>
+        </div>
+        </el-col>
+        </el-row>
         <div class="header-bottom force-bottom">
           <el-row :gutter="20" type="flex">
             <el-col :span="1" :offset="21" type="flex">
@@ -18,7 +31,7 @@
       </el-header>
       <el-main id="MainBack">
         <div>
-          <el-space :fill="fill" wrap>
+          <el-space :fill="fill" wrap :size=60>
             <el-card @click="gotoDetails(offering.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
               v-for="offering in offerings" :key="offering">
               <template #header>
@@ -54,16 +67,17 @@
 
               <!-- 简介 -->
               <div v-snip:js="5">
-                {{ offering.goods_brief }}
+                简介：{{ offering.goods_brief }}
               </div>
               <div>
                 <el-icon>
                   <House />
                 </el-icon> {{ "地址: " + offering.address }}
               </div>
-              <div v-if="offering.goods_desc">
+              <div class="image" v-if="offering.goods_desc">
                 <!-- {{offering.goods_desc}} -->
-                <img :src="`${offering.goods_desc}`" class="img-display" />
+                <!-- <img :src="`${offering.goods_desc}`" class="img-display" /> -->
+                <img src="https://th.bing.com/th/id/OIP.4JFkvRdf4hqfBMwSarhqSgHaE8?pid=ImgDet&rs=1" class="img-display" />
               </div>
 
               <div class="submit-time">
@@ -120,6 +134,9 @@ export default {
         this.offerings = response.data.results;
         console.log("offerings:")
         console.log(this.offerings)
+        // if (this.offering.goods_desc===""){
+        //     this.offering.goods_desc="https://th.bing.com/th/id/OIP.4JFkvRdf4hqfBMwSarhqSgHaE8?pid=ImgDet&rs=1"
+        // }
       })
         .catch(
           err => {
@@ -143,12 +160,12 @@ export default {
       )
     },
     gotoDetails(item_id) {
-      this.$router.push({
+      setTimeout(()=>{this.$router.push({
         path: '/offerdetails',
         query: {
           id: item_id
         }
-      })
+      })},600)
       console.log("test details")
     },
     formatDateTime,
@@ -255,6 +272,154 @@ export default {
 #FooterBack {
   /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
   background-size: cover;
+}
+.el-card ::v-deep .el-card__header {
+  padding: 2px 10px;
+  background-color: lightgreen;
+}
+
+.el-card ::v-deep .el-card__body {
+  padding: 0px;
+  background-color: Pink;
+
+}
+
+.card-header-fold {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header-fold .name {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card-header-fold .tags {
+  width: 100%;
+  display: flex;
+  margin-left: auto;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.username-display {
+  font-size: small;
+  color: dimgray;
+}
+
+.submit-time {
+  text-align: right;
+  font-size: smaller;
+  color: dimgray;
+}
+
+.el-card {
+  position: relative;
+    /*子溢出父元素隐藏 这样hover子元素的时候 不算hover父元素*/
+  overflow: hidden;
+}
+.el-card::after{
+    content: "";
+    position: absolute;
+    /*首先隐藏子元素*/
+    left: -100%;
+    top: 0;
+    /*设置和父元素一样大*/
+    width: 100%;
+    height: 100%;
+    /*添加从左往右的渐变 即模仿光照效果*/
+    background-image: -webkit-linear-gradient(0deg,hsla(0,0%,100%,0),hsla(0,0%,100%,.5),hsla(0,0%,100%,0));
+    background-image: linear-gradient(to right,hsla(0,0%,100%,0),hsla(0,0%,100%,.5),hsla(0,0%,100%,0));
+    /*光照是斜着的更好看*/
+    -o-transform: skewx(-25deg);
+    -moz-transform: skewx(-25deg);
+    -webkit-transform: skewx(-25deg);
+    transform: skewx(-25deg);
+    /*添加动画效果*/
+    transition: all .3s ease;
+    &:active {
+      left: 100%;
+    }
+}
+.el-card:active{
+  -moz-transform: translateY(-6px);
+  -webkit-transform: translateY(-6px);
+  transform: translateY(-6px);
+  /*添加一个淡一点的阴影*/
+  -moz-box-shadow: 0 26px 40px -24px rgba(0,36,100,.5);
+  -webkit-box-shadow: 0 26px 40px -24px rgba(0,36,100,.5);
+  box-shadow: 0 26px 40px -24px rgba(0,36,100,.5);
+}
+.el-card:hover::after {
+    /*鼠标放在父元素上 移动子元素*/
+    left: 100%;
+}
+
+
+#headerBack {
+  margin-bottom: 5px;
+  background: #a1d9ea url("https://i.328888.xyz/2022/12/29/UPVpL.png") center center no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-size: auto 100%;
+}
+
+#MainBack {
+  background: rgb(229, 250, 231);
+  background-size: cover;
+}
+
+#FooterBack {
+  /* background: #fff url("https://th.bing.com/th/id/OIP.Oc9mYdpG25SBa-pRljEXwAHaEK?pid=ImgDet&w=1500&h=844&rs=1") no-repeat; */
+  background: rgb(229, 250, 231);
+  background-size: cover;
+}
+
+.container{
+    width: 70px;
+    height: 70px;
+}
+.sunny{
+    width: 20px;
+    height: 140px;
+    position: absolute;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    animation: sunny 15s linear infinite;
+}
+
+@keyframes sunny {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.sunny::before{
+    content: '';
+    width: 20px;
+    height: 140px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(90deg)
+}
+.sunny::after{
+    content: '';
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 30px;
+    left: -30px;
+    background: #ffee44;
+    border-radius: 50%;
+    box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
+}
+.image{
+  align:auto;
 }
 </style>
 

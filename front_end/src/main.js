@@ -18,21 +18,21 @@ import resetcode from './ResetCode.vue'
 import changeinfo from './ChangeInfo.vue'
 import chat from './ChatPage.vue'
 const routes = [
-    { path: '/', component: home },
-    { path: '/info', component: Info },
-    { path: '/request', component: submitNeed},
-    { path: '/test', component: mytest},
-    { path: '/offer',component: Offer},
-    { path: '/submitoffer', component: submitOffer },
-    { path: '/login',component:Login},
-    { path: '/Manage',component:manage},
-    { path: '/details', component : detailPage},
-    { path: '/offerdetails', component: offerDetailPage},
-    { path: '/register', component : register},
-    { path: '/changecode', component : changecode},
-    { path: '/resetcode',component:resetcode},
-    { path: '/changeinfo',component:changeinfo},
-    { path: '/chat', component:chat}
+    { path: '/', component: home, meta:{index:1} },
+    { path: '/info', component: Info,meta:{index:3} },
+    { path: '/request', component: submitNeed,meta:{index:4}},
+    { path: '/test', component: mytest,meta:{index:5}},
+    { path: '/offer',component: Offer,meta:{index:2} },
+    { path: '/submitoffer', component: submitOffer,meta:{index:7} },
+    { path: '/login',component:Login,meta:{index:8}},
+    { path: '/Manage',component:manage,meta:{index:9}},
+    { path: '/details', component : detailPage,meta:{index:10}},
+    { path: '/offerdetails', component: offerDetailPage,meta:{index:11}},
+    { path: '/register', component : register,meta:{index:12}},
+    { path: '/changecode', component : changecode,meta:{index:13}},
+    { path: '/resetcode',component:resetcode,meta:{index:14}},
+    { path: '/changeinfo',component:changeinfo,meta:{index:15}},
+    { path: '/chat', component:chat,meta:{index:16}}
 ]
 const router = createRouter({
     history: createWebHashHistory(),
@@ -44,13 +44,13 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import App from './App.vue'
 import VueSnip from 'vue-snip'
-
+import locale from 'element-plus/es/locale/lang/zh-cn'
 const app = createApp(App)
 app.use(router)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
-app.use(ElementPlus)
+app.use(ElementPlus,{locale})
 app.use(Chat)
 app.use(VueSnip)
 app.mount('#app')

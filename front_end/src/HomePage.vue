@@ -2,6 +2,8 @@
   <div class="common-layout">
     <el-container>
       <el-header id="headerBack" height="200px">
+        <el-row>
+        <el-col :span=6>
         <div >
           <div v-if="titleImgUrl">
                 <!-- {{offering.goods_desc}} -->
@@ -9,6 +11,15 @@
               <img src="http://127.0.0.1:8000/media_url/L.png" width="100" />
           </div>
         </div>
+        </el-col>
+        <el-col :span=16>
+        </el-col>
+        <el-col :span=2>
+       <div class="container">
+        <div class="sunny"></div>
+        </div>
+        </el-col>
+        </el-row>
         <div class="header-searchbar">
           <el-input v-model="search_text" placeholder="请输入搜索内容" class="input">
             <template #append>
@@ -44,9 +55,8 @@
 
       <el-main id="MainBack">
         <div>
-
-          <el-space :fill="fill" wrap>
-            <el-card @click="gotoDetails(need.goods_sn)" v-bind:class="{ 'box-card': fill, 'box-card-fold': !fill }"
+          <el-space :fill="fill" wrap :size=30>
+            <el-card  @mouseenter="play" @click="gotoDetails(need.goods_sn)" :class="{ 'box-card': fill, 'box-card-fold': !fill }"
               v-for="need in needs" :key="need">
               <template #header>
                 <div v-bind:class="{ 'card-header': fill, 'card-header-fold': !fill }">
@@ -82,7 +92,7 @@
 
               <!-- 简介 -->
               <div v-snip:js="3">
-                {{ need.goods_brief }}
+                简介：{{ need.goods_brief }}
               </div>
               <div>
                 <el-icon>
@@ -127,6 +137,9 @@ export default {
   components: { foo },
   data() {
     return {
+      
+      showAnimate: false,
+
       ButtonLeft: "求助",
       ButtonRight: "我的提供",
       needs: [
@@ -149,6 +162,10 @@ export default {
     this.loadinfo();
   },
   methods: {
+    play() {
+    this.showAnimate = true
+    console.log(this.showAnimate);
+    },
     redirect(){
       this.$router.push('/info')
     },
@@ -165,13 +182,14 @@ export default {
           }
         )
     },
-    gotoDetails(need_id) {
+    gotoDetails(need_id){
+      setTimeout(() =>{
       this.$router.push({
         path: '/details',
         query: {
           id: need_id
         }
-      })
+      })},600)
       console.log("test details")
     },
     getSorted(sort_method) {
@@ -253,6 +271,17 @@ export default {
   gap: 10px;
 }
 
+.el-card ::v-deep .el-card__header {
+  padding: 2px 10px;
+  background-color: lightgreen;
+}
+
+.el-card ::v-deep .el-card__body {
+  padding: 0px;
+  background-color: Pink;
+
+}
+
 .card-header-fold {
   display: flex;
   flex-direction: column;
@@ -284,8 +313,47 @@ export default {
   color: dimgray;
 }
 
-
-
+.el-card {
+  position: relative;
+    /*子溢出父元素隐藏 这样hover子元素的时候 不算hover父元素*/
+  overflow: hidden;
+}
+.el-card::after{
+    content: "";
+    position: absolute;
+    /*首先隐藏子元素*/
+    left: -100%;
+    top: 0;
+    /*设置和父元素一样大*/
+    width: 100%;
+    height: 100%;
+    /*添加从左往右的渐变 即模仿光照效果*/
+    background-image: -webkit-linear-gradient(0deg,hsla(0,0%,100%,0),hsla(0,0%,100%,.5),hsla(0,0%,100%,0));
+    background-image: linear-gradient(to right,hsla(0,0%,100%,0),hsla(0,0%,100%,.5),hsla(0,0%,100%,0));
+    /*光照是斜着的更好看*/
+    -o-transform: skewx(-25deg);
+    -moz-transform: skewx(-25deg);
+    -webkit-transform: skewx(-25deg);
+    transform: skewx(-25deg);
+    /*添加动画效果*/
+    transition: all .3s ease;
+    &:active {
+      left: 100%;
+    }
+}
+.el-card:active{
+  -moz-transform: translateY(-6px);
+  -webkit-transform: translateY(-6px);
+  transform: translateY(-6px);
+  /*添加一个淡一点的阴影*/
+  -moz-box-shadow: 0 26px 40px -24px rgba(0,36,100,.5);
+  -webkit-box-shadow: 0 26px 40px -24px rgba(0,36,100,.5);
+  box-shadow: 0 26px 40px -24px rgba(0,36,100,.5);
+}
+.el-card:hover::after {
+    /*鼠标放在父元素上 移动子元素*/
+    left: 100%;
+}
 
 
 #headerBack {
@@ -306,10 +374,49 @@ export default {
   background: rgb(229, 250, 231);
   background-size: cover;
 }
+
+.container{
+    width: 70px;
+    height: 70px;
+}
+.sunny{
+    width: 20px;
+    height: 140px;
+    position: absolute;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    animation: sunny 15s linear infinite;
+}
+
+@keyframes sunny {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.sunny::before{
+    content: '';
+    width: 20px;
+    height: 140px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(90deg)
+}
+.sunny::after{
+    content: '';
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 30px;
+    left: -30px;
+    background: #ffee44;
+    border-radius: 50%;
+    box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
+}
+
 </style>
-
-
-
-
 
 <style src="./css/header.css"  lang="css" scoped />
