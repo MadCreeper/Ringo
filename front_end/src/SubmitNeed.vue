@@ -159,4 +159,71 @@ const goBack = () => {
     border-radius: 4px;
     min-height: 36px;
 }
+.el-form {
+    height: 70vh;
+    width: 100%;
+    overflow: hidden;
+    background-image:  lightblue;
+    background-size: 100%;
+    font-family: "montserrat";
+    animation: bganimation 15s infinite;
+}
+.el-container{
+  height: 100vh;
+  background-image: linear-gradient(125deg,lightblue, white );
+}
+.el-form h1 {
+    margin-top: 0;
+    font-weight: 200;
+}
+.el-form-item {
+    border: 3px solid #aaa;
+    margin: 8px 0;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 30px;
+}
+.el-form-item el-input{
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    margin-top: 6px;
+    font-size: 18px;
+    color: #fff;
+}
+.el-form-item label{
+    font-size: 100px;
+}
+
+#selectForm >>> .el-form-item__label {
+  font-size: 18px;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
 </style>

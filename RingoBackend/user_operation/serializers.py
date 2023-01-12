@@ -54,9 +54,9 @@ class Base64ImageField(serializers.ImageField):
 
 class PersonalProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    owner_id = serializers.IntegerField(source='owner.id')
+    owner_id = serializers.IntegerField(source='owner.id', required = False)
     avatar = Base64ImageField(
-        max_length=None, use_url=True,
+        max_length=None, use_url=True, required = False
     )
     class Meta:
         model = PersonalProfile

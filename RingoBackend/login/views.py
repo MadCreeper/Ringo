@@ -13,27 +13,12 @@ from django.contrib.auth import authenticate
 
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
+from login.constants import *
 
 # Create your views here.
 # Constants
 
-# 通用错误码
-NO_ERR = 0
-MAIL_SEND_SUCCESS = 1
 
-EMPTY_DATA = 102
-ERR_INVALID_EMAIL = 101
-# 错误码：用户注册
-ERR_REG_USERNAME_EXIST = 1001
-ERR_REG_EMAIL_EXIST = 1002
-ERR_REG_WRONG_VERIFICATION = 1003
-ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT = 1004
-# 错误码：用户更改密码
-ERR_PWDCHANGE_EMAIL_NOTEXIST = 2001
-ERR_PWDCHANGE_VERIFY_FAIL = 2002
-ERR_PWDCHANGE_VERIFY_TOO_FREQUENT = 2003
-ERR_PWDCHANGE_WRONGPWD = 2004
-ERROR_CODE = 'errorCode'
 
 # stores 
 veriCodeHash= {}
@@ -70,7 +55,7 @@ class UserRegisterView(APIView):
                 delta = now - timestamp
                 if delta < 60:
                     # 申请验证码间隔时间过短，不允许
-                    return Response(data={ERROR_CODE: ERR_PWDCHANGE_VERIFY_TOO_FREQUENT, **dataDict})
+                    return Response(data={ERROR_CODE: ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT, **dataDict})
             veriCode = codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
             mailSend.sendMail(receiver=email, validation=veriCode,username=username)
@@ -146,7 +131,7 @@ class UserPasswordForgottenView(APIView):
                 delta = now - timestamp
                 if delta < 60:
                     # 申请验证码时间过短，不允许
-                    return Response(data={ERROR_CODE:ERR_REG_VERIFICATION_REQUEST_TOO_FREQUENT, **dataDict})
+                    return Response(data={ERROR_CODE:ERR_PWDCHANGE_VERIFY_TOO_FREQUENT, **dataDict})
             veriCode = codeGenerator.generateCode()
             veriCodeHash[email] = (datetime.datetime.now().timestamp(), veriCode)
             curr_user = User.objects.get(email = email)
@@ -156,7 +141,7 @@ class UserPasswordForgottenView(APIView):
             veriCodeStored = veriCodeHash.get(email)
             if not veriCodeStored or veriCodeStored[1] != veriCode:
                 # 验证码验证不通过
-                return Response({ERROR_CODE: ERR_REG_WRONG_VERIFICATION, **dataDict})
+                return Response({ERROR_CODE: ERR_PWDCHANGE_VERIFY_FAIL, **dataDict})
             veriCodeHash.pop(email)
             curr_user = User.objects.get(email = email)
             curr_user.set_password(password)
@@ -175,3 +160,6 @@ class CustomAuthenticationBackend(ModelBackend):
         except Exception as e:
             return None
         return None
+
+def get_curr_dict():
+    return veriCodeHash.copy()
