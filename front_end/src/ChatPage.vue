@@ -14,7 +14,7 @@
 <script>
 
 
-import { getChatHistory, getByUrl, resetUnreadMsg, addUnreadMsg} from '../api/api'
+import { getChatHistory, getByUrl, resetUnreadMsg, addUnreadMsg, getUserPhoto} from '../api/api'
 
 
 
@@ -78,8 +78,9 @@ export default {
         this.participants.push({
             id: this.to,
             name: this.to,
-            imageUrl: 'https://avatars.githubusercontent.com/u/33979935?&v=4'
+            imageUrl: 'http://127.0.0.1:8000' + await (await getUserPhoto(this.to)).data.avatar
         })
+        console.log(this.participants)
         // load history messages
         const history = await this.getHistory(this.roomid)
         console.log("history:", history)
