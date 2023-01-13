@@ -74,7 +74,6 @@ class ChatConsumer(WebsocketConsumer):
  
          # 通过websocket发送消息到客户端
          self.send(text_data=json.dumps({
-            #  'message': f'{datetime_str}:{message}',
              'message': message,
              'from_user': from_user,
              'to_user':to_user,

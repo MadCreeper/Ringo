@@ -1,0 +1,13 @@
+[run]
+branch = True
+source = .
+omit = 
+   manage.py 
+   RingoBackend\asgi.py
+   RingoBackend\wsgi.py
+   chat\consumers.py
+   chat\routing.py
+
+[report]
+show_missing = True
+skip_covered = True

@@ -1,0 +1,49 @@
+.header-searchbar {
+    margin-top: auto;
+    width: 80vw;
+}
+
+.header-bottom {
+    padding: 5px;
+    /* display: flex;
+    flex-direction: row; */
+    width: 100%;
+}
+
+.header-bottom .sortmenu {
+    width: 150px;
+    padding: 5px
+}
+
+.header-bottom .foldswitch {
+    padding: 5px
+}
+
+.grand-title {
+ width: 100px;
+}
+
+.x-center {
+    display: flex;
+    justify-content: center;
+}
+
+.y-center {
+    flex: 1;
+}
+
+.x-left {
+    justify-content: flex-start;
+}
+
+.x-right {
+    justify-content: flex-end;
+}
+
+.y-bottom {
+    align-self: flex-end;
+}
+
+.force-bottom {
+    margin-top: auto;
+}
