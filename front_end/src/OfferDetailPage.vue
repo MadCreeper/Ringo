@@ -19,10 +19,6 @@
 </i>物品简介:
 {{ this.item.goods_brief }}
 </p>
-<p class="info place" v-if="this.item.goods_desc">
-    <i class="fas fa-map-marker-alt"></i>
-   <img :src="`${this.item.goods_desc}`" class="img-display" />
-</p>
 
 <p class="info place">
     <i class="fas fa-star">

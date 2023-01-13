@@ -2,3 +2,4 @@
 {{ object.goods_brief }}
 {{ object.goods_desc }}
 {{ object.goods_sn }}
+{{ object.category.name }}

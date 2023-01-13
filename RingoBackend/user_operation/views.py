@@ -174,6 +174,7 @@ class userPhotoView(APIView):
     permission_classes = (IsAuthenticated, )
     def get(self, request, format = None):
         username = request.GET["username"]
+        print(username)
         cur_user = User.objects.get(username = username)
         profileObj = PersonalProfile.objects.get(owner = cur_user)
         serializer = PersonalProfileSerializer(profileObj)
@@ -188,7 +189,7 @@ class RecommendationView(APIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = GoodsSerializer
     result_cache = {}
-    PAGE_SIZE = 10
+    PAGE_SIZE = 200
 
     def create_response(self, id_list, page):
         respData = {'previous':'', 'next':'', 'errorCode':'', 'results':[]}

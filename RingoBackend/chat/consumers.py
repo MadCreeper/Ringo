@@ -5,18 +5,26 @@ from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.models import User
 from chat.models import Message
 import datetime
+from xpinyin import Pinyin
 
  
 
 
 class ChatConsumer(WebsocketConsumer):
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+         self.group_id = 0
+     
      def save_msg(self,from_user,to_user,room,msg):
         Message.objects.create(from_user=from_user, to_user = to_user, room=room, content=msg)
      # websocket建立连接时执行方法
      def connect(self):
          # 从url里获取聊天室名字，为每个房间建立一个频道组
+         p = Pinyin()
          self.room_name = self.scope['url_route']['kwargs']['room_name']
-         self.room_group_name = 'chat_%s' % self.room_name
+         result = p.get_pinyin(self.room_name,tone_marks='numbers')
+         self.room_group_name = ('chat_%s_%d' % (result, hash(result)))
+         print("connenting. room_name: %s, group_name:%s"%(self.room_name, self.room_group_name))
  
          # 将当前频道加入频道组
          async_to_sync(self.channel_layer.group_add)(

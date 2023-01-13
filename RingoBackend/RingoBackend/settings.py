@@ -124,7 +124,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS':   
         'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE' : 5,
+        'PAGE_SIZE' : 200,
 }
 
 # Password validation
@@ -194,4 +194,4 @@ HAYSTACK_CONNECTIONS = {
 # 当添加、修改、删除数据时，自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 6 # 指定搜索结果每页的条数
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 200 # 指定搜索结果每页的条数

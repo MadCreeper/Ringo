@@ -56,6 +56,7 @@ class resetMsgView(APIView):
         cur_user = request.user.username
         chat_user = request.data.get('chat_user')
         room_name = min(cur_user, chat_user) + '_' + max(cur_user, chat_user)
+        print(f"reset_msg. room_name:{room_name}, cur_user:{cur_user}, chat_user:{chat_user}")
         try:
             chat_msg_data = ChatGroups.objects.get(cur_user = cur_user, chat_user=chat_user)
         except:
@@ -77,6 +78,7 @@ class addUnreadMsgView(APIView):
         cur_user = request.user.username
         chat_user = request.data.get('chat_user')
         room_name = min(cur_user, chat_user) + '_' + max(cur_user, chat_user)
+        print(f"add_msg. room_name:{room_name}, cur_user:{cur_user}, chat_user:{chat_user}")
         try:
             chat_msg_data = ChatGroups.objects.get(cur_user = chat_user, chat_user=cur_user)
         except:

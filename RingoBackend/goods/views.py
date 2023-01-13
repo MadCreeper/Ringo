@@ -25,7 +25,7 @@ from django.http import JsonResponse
 
 
 class GoodsPagination(PageNumberPagination):
-    page_size = 12
+    page_size = 200
     # 向后台要多少条
     page_size_query_param = 'page_size'
     # 定制多少页的参数

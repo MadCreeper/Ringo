@@ -1,0 +1,5 @@
+代码文件在front_end以及RingoBackend两个文件夹中。
+
+单元测试的代码在Backend文件夹各个app的test.py文件中。
+
+由于本软件基于Vue和Django框架，难以打包成可执行文件。

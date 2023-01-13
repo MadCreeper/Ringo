@@ -1,7 +1,4 @@
-with open('requirements_copy.txt', 'r') as f:
-   with open('requirements.txt', 'a') as g:
-      for l in f.readlines():
-         list1 = l.split()
-         list2 = list1[:2]
-         str1 = list1[0] + "==" +  list1[1] + '\n'
-         g.write(str1)
+from xpinyin import Pinyin
+p = Pinyin()
+result = p.get_pinyin('go_to_husis_森达',tone_marks='numbers')
+print(result)
